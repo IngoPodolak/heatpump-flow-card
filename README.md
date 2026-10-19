@@ -8,8 +8,8 @@ Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin
 
 - Außengerät mit drehendem Lüfter (Verdichter läuft) und Abtau-Animation (Frost, Eiskristalle, Tropfwasser)
 - Umwälzpumpen mit drehendem Laufrad – Geschwindigkeit folgt der Pumpenleistung in %
-- Wasserfluss in den Rohren, sobald die jeweilige Pumpe läuft
-- Speicher mit temperaturabhängiger Färbung (oben/unten), glühender Heizstab
+- Wasserfluss in den Rohren mit Richtungspfeilen, sobald die jeweilige Pumpe läuft
+- Speicher mit Innengerät, Wärmetauscher-Wendel mit temperaturabhängiger Färbung, senkrechtem Heizstab und Mischer
 - Warmwasser mit Zirkulationspumpe, Sollwert, Speicherüberhöhung (leistungsstark)
 - Wärmeverteilung wählbar: **Heizkörper**, **Fußbodenheizung** oder **beides** (2 Heizkreise mit Pumpe und Mischer)
 - Strom, Wärme, COP und Betriebsmodus in der unteren Leiste
@@ -38,6 +38,8 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 |---|---|
 | `title` | Titel (optional) |
 | `heating_type` | `radiator`, `floor` oder `both` |
+| `theme_background` | `true` = Hintergrund vom HA-Theme statt dunkel |
+| `zone1_mixer` | Mischerstellung im Innengerät (mischt Heizkreis und Wärmepumpenkreis) |
 | `outdoor_temp`, `indoor_temp` | Außen-/Innentemperatur |
 | `compressor` | Verdichter läuft |
 | `defrost` | Abtauen aktiv |
@@ -48,8 +50,8 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `dhw_temp`, `dhw_setpoint` | Brauchwasser Ist / Soll |
 | `tank_top_temp`, `tank_bottom_temp` | Speicher oben / unten |
 | `dhw_active`, `dhw_boost`, `heater_rod`, `circulation` | WW-Bereitung, Überhöhung, Heizstab, Zirkulation |
-| `zone1_name`, `zone1_vl_temp`, `zone1_rl_temp`, `zone1_pump`, `zone1_pump_speed`, `zone1_mixer` | Heizkreis 1 |
-| `zone2_…` | Heizkreis 2 (nur bei `both`) |
+| `zone1_name`, `zone1_vl_temp`, `zone1_rl_temp`, `zone1_pump`, `zone1_pump_speed` | Heizkreis 1 |
+| `zone2_…`, `zone2_mixer` | Heizkreis 2 (nur bei `both`), mit eigenem Mischer |
 
 Ein-/Aus-Datenpunkte akzeptieren `binary_sensor`, `switch`, `input_boolean` oder Zahlen-Sensoren (> 0 = an).
 Ist für einen Heizkreis keine Pumpe gewählt, gilt er als aktiv, wenn die Umwälzpumpe läuft und keine Brauchwasserbereitung aktiv ist.
