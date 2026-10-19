@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.4.0";
+const HP_VERSION = "1.5.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -293,12 +293,9 @@ const HP_STYLE = `
   /* Wärmeübergabe */
   .r-top { fill: url(#UID-radbar); stroke: var(--ol); stroke-width: 1.8; stroke-linejoin: round; }
   .r-side { fill: #8b939e; stroke: var(--ol); stroke-width: 1.8; stroke-linejoin: round; }
-  .r-rib { fill: none; stroke: #b9c0c9; stroke-width: 1.2; }
   .r-back { fill: #b9bfc8; stroke: var(--ol); stroke-width: 2; }
   .r-col { fill: url(#UID-radcol); stroke: #8f97a2; stroke-width: 1; }
   .r-bar { fill: url(#UID-radbar); stroke: var(--ol); stroke-width: 1.2; }
-  .r-valve { fill: url(#UID-chrome); stroke: var(--ol); stroke-width: 1.2; }
-  .r-head { fill: #f4f5f7; stroke: var(--ol); stroke-width: 1.2; }
   .glow { fill: #f97316; opacity: 0; transition: opacity .8s; }
   .emitter.on .glow { opacity: .22; }
   .wave { fill: none; stroke: #f97316; stroke-width: 3; stroke-linecap: round; opacity: 0; }
@@ -320,6 +317,8 @@ const HP_STYLE = `
   .chrome { fill: url(#UID-chrome); stroke: var(--ol); stroke-width: 1.5; }
   .spout-ol { fill: none; stroke: var(--ol); stroke-width: 12.5; stroke-linecap: round; stroke-linejoin: round; }
   .spout { fill: none; stroke: #b7bec8; stroke-width: 9.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tapc { fill: url(#UID-chromev); stroke: var(--ol); stroke-width: 1.6; stroke-linejoin: round; }
+  .tap-band { fill: #8b939e; }
   .thread { fill: none; stroke: rgba(0,0,0,.4); stroke-width: 1; }
   .tap-hl { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 1.8; stroke-linecap: round; }
   .spout-hl { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 2; stroke-linecap: round; }
@@ -437,8 +436,8 @@ class HeatpumpFlowCard extends HTMLElement {
     front += arrow(220, 250, "u", "hot") + arrow(256, 250, "d", "cold");
 
     /* Warmwasser */
-    back += pipe(`M538 ${PY} V170 H870`, "hot");
-    back += pipe(`M907 192 V206 H562 V${PY}`, "cold");
+    back += pipe(`M538 ${PY} V170 H883`, "hot");
+    back += pipe(`M883 206 H562 V${PY}`, "cold");
     front += arrow(AX2, 170, "r", "hot") + arrow(AX2, 206, "l", "cold");
     if (has("circulation")) {
       back += pipe("M800 170 V206", "hot");
@@ -518,9 +517,6 @@ class HeatpumpFlowCard extends HTMLElement {
           ${cols}
           <rect class="r-bar" x="${EX + 1}" y="${z.y0 + 1}" width="${EW - 2}" height="9" rx="4.5"/>
           <rect class="r-bar" x="${EX + 1}" y="${z.y0 + z.h - 10}" width="${EW - 2}" height="9" rx="4.5"/>
-          <rect class="r-valve" x="${EX - 17}" y="${z.vin - 7}" width="17" height="14" rx="3"/>
-          <rect class="r-head" x="${EX - 16}" y="${z.vin - 29}" width="15" height="22" rx="4"/>
-          <path class="r-rib" d="M${EX - 13} ${z.vin - 25} V${z.vin - 11} M${EX - 8.5} ${z.vin - 25} V${z.vin - 11} M${EX - 4} ${z.vin - 25} V${z.vin - 11}"/>
           <rect class="glow" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="6"/>
           ${waves(EX, EW, z.y0 - 14)}`;
       } else {
@@ -648,28 +644,17 @@ class HeatpumpFlowCard extends HTMLElement {
         <text class="s" x="603" y="372" text-anchor="middle"><tspan data-val="zone1_mixer">–</tspan></text></g>` : ""}`;
 
     /* Zapfstelle: Wand-Auslaufventil mit Gewinde, Sechskant, Kreuzgriff und Schlauchtülle */
-    const tap = `<g transform="translate(866 170) scale(1.1) translate(-866 -170)">
-      <rect class="chrome" x="866" y="163" width="16" height="14" rx="2"/>
-      <path class="thread" d="M869.5 163.5 V176.5 M873 163.5 V176.5 M876.5 163.5 V176.5 M880 163.5 V176.5"/>
-      <rect class="chrome" x="882" y="158" width="11" height="24" rx="1.5"/>
-      <path class="thread" d="M882.5 166 H892.5 M882.5 174 H892.5"/>
-      <rect class="chrome" x="897" y="184" width="12" height="9" rx="2"/>
-      <path class="chrome" d="M893 163 Q893 157 900 157 H914 Q924 157 925 170 Q924 184 914 186 H900 Q893 186 893 180 Z"/>
-      <path class="tap-hl" d="M898 161 H913 Q919 161 920.5 168"/>
-      <rect class="chrome" x="900" y="145" width="16" height="13" rx="2"/>
-      <path class="thread" d="M900.5 149 H915.5 M900.5 153 H915.5"/>
-      <rect class="chrome" x="905" y="132" width="6" height="14" rx="1"/>
-      <ellipse class="chrome" cx="908" cy="126" rx="4" ry="6.5"/>
-      <path class="chrome" d="M886 133 Q886 128 891 128 H925 Q930 128 930 133 Q930 138 925 138 H891 Q886 138 886 133 Z"/>
-      <circle class="chrome" cx="886" cy="133" r="5.5"/><circle class="chrome" cx="930" cy="133" r="5.5"/>
-      <ellipse class="chrome" cx="908" cy="141" rx="4.5" ry="6"/>
-      <circle class="chrome" cx="908" cy="133" r="4.5"/>
-      <path class="spout-ol" d="M920 176 Q942 176 943 196 V206"/>
-      <path class="spout" d="M920 176 Q942 176 943 196 V206"/>
-      <path class="spout-hl" d="M921 172.5 Q937 173 940.5 186"/>
-      <rect class="chrome" x="936" y="204" width="14" height="8" rx="2"/>
-      <path class="chrome" d="M938 212 H948 L946.5 232 H939.5 Z"/>
-      <path class="thread" d="M938.5 218 H947.5 M939 224 H947 M939.5 229 H946.5"/></g>`;
+    const tap = `
+      <ellipse class="shadow" cx="896" cy="216" rx="24" ry="3.5" ${soft}/>
+      <path class="tapc" d="M871 214 Q871 208 878 208 H914 Q921 208 921 214 Z"/>
+      <path class="tapc" d="M883 150 H905 V194 Q905 205 914 208 H878 Q883 205 883 194 Z"/>
+      <path class="tapc" d="M905 174 L949 171 Q955 171 955 176 V180 Q955 185 949 185 L905 188 Z"/>
+      <rect class="tapc" x="943" y="184" width="9" height="5" rx="1.5"/>
+      <rect class="tap-band" x="883" y="166" width="22" height="4"/>
+      <path class="tap-hl" d="M887.5 153 V203"/>
+      <path class="tap-hl" d="M908 175.5 L948 173"/>
+      <path class="tapc" d="M882 152 Q883 141 895 139 L944 128 Q951 127 951 133 Q951 137 946 138 L900 149 Q892 151 892 156 Z"/>
+      <path class="tap-hl" d="M887 145 Q892 141.5 899 140.5 L943 130.5"/>`;
 
     /* Haus-Symbol mit Innen- und Außentemperatur (höher, mehr Abstand zu den Leitungen) */
     const house = (has("indoor_temp") || has("outdoor_temp")) ? `
@@ -737,6 +722,7 @@ class HeatpumpFlowCard extends HTMLElement {
           <defs>
             <linearGradient id="${u}-tank" x1="0" y1="0" x2="0" y2="1">
               <stop id="${u}-top" offset="0" stop-color="#e5483e"/>
+              <stop id="${u}-mid" offset=".55" stop-color="#d0506a"/>
               <stop id="${u}-bot" offset="1" stop-color="#3f7fd9"/>
             </linearGradient>
             ${lg("ufront", 0, 1, [[0, "#f3f5f7"], [1, "#c6ccd3"]])}
@@ -750,6 +736,7 @@ class HeatpumpFlowCard extends HTMLElement {
             ${lg("tcut", 1, 0, [[0, "#0d0f14"], [0.45, "#2b303a"], [1, "#101318"]])}
             ${lg("head", 0, 1, [[0, "#3c424c"], [1, "#1c1f25"]])}
             ${lg("screen", 0, 1, [[0, "#14202c"], [1, "#070a0e"]])}
+            ${lg("chromev", 1, 0, [[0, "#a3abb5"], [0.28, "#f7f9fb"], [0.55, "#d3d8de"], [1, "#8c949f"]])}
             ${lg("chrome", 0, 1, [[0, "#f6f8fa"], [0.45, "#a9b1bb"], [0.55, "#8b939e"], [1, "#e1e5ea"]])}
             ${lg("radcol", 1, 0, [[0, "#c9ced5"], [0.4, "#ffffff"], [1, "#b8bec6"]])}
             ${lg("radbar", 0, 1, [[0, "#ffffff"], [1, "#c3c8cf"]])}
@@ -786,6 +773,7 @@ class HeatpumpFlowCard extends HTMLElement {
     this._leakEl = this.shadowRoot.querySelector(".leak");
     this._stopTop = this.shadowRoot.getElementById(`${u}-top`);
     this._stopBot = this.shadowRoot.getElementById(`${u}-bot`);
+    this._stopMid = this.shadowRoot.getElementById(`${u}-mid`);
     this._entityIds = Object.keys(c).filter((k) => !HP_NON_ENTITY_KEYS.includes(k) && typeof c[k] === "string").map((k) => c[k]);
     this._last = null;
 
@@ -867,13 +855,30 @@ class HeatpumpFlowCard extends HTMLElement {
     s.setProperty("--circ-dur", "1.2s");
     s.setProperty("--soft-dur", "1.4s");
 
-    const col = (t) => {
-      if (t === null) return null;
-      const x = Math.min(1, Math.max(0, (t - 20) / 38));
-      return `hsl(${Math.round(215 + 145 * x) % 360}, 75%, 52%)`;
+    /* Speicherfarbe: oben nach Temperatur (blau → violett → rot).
+       Unten wird diese Farbe Richtung Blau gemischt – immer etwas,
+       stärker je größer die Differenz oben/unten (max. ~5 K). */
+    const rgbOf = (x) => {
+      const hh = ((215 + 145 * x) % 360) / 360, ss = 0.75, ll = 0.52;
+      const q = ll < 0.5 ? ll * (1 + ss) : ll + ss - ll * ss, pp = 2 * ll - q;
+      const f = (t) => { t = (t + 1) % 1; return t < 1 / 6 ? pp + (q - pp) * 6 * t : t < 0.5 ? q : t < 2 / 3 ? pp + (q - pp) * (2 / 3 - t) * 6 : pp; };
+      return [f(hh + 1 / 3), f(hh), f(hh - 1 / 3)].map((v) => Math.round(v * 255));
     };
-    const top = col(num("tank_top_temp") ?? num("dhw_temp"));
-    const bot = col(num("tank_bottom_temp"));
+    const BLUE = [63, 127, 217];
+    const css = (c3) => `rgb(${c3.join(",")})`;
+    const mix = (a3, w) => a3.map((v, n) => Math.round(v * (1 - w) + BLUE[n] * w));
+    const tTop = num("tank_top_temp") ?? num("dhw_temp");
+    const tBot = num("tank_bottom_temp");
+    let top = null, mid = null, bot = null;
+    const ref = tTop ?? tBot;
+    if (ref !== null) {
+      const base = rgbOf(Math.min(1, Math.max(0, (ref - 20) / 38)));
+      const diff = tTop !== null && tBot !== null ? Math.min(5, Math.max(0, tTop - tBot)) : 0;
+      top = css(base);
+      mid = css(mix(base, 0.12 + 0.08 * (diff / 5)));
+      bot = css(mix(base, 0.5 + 0.35 * (diff / 5)));
+    }
+    if (this._stopMid && mid) this._stopMid.setAttribute("stop-color", mid);
     if (this._stopTop && top) this._stopTop.setAttribute("stop-color", top);
     if (this._stopBot && bot) this._stopBot.setAttribute("stop-color", bot);
   }
