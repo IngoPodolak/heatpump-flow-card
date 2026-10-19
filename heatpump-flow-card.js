@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.5.0";
+const HP_VERSION = "1.6.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -18,7 +18,7 @@ const HP_I18N = {
       heater_rod: "Heizstab", circulation: "Zirkulation",
       power: "Strom", heat_power: "Wärme", cop: "COP", mode: "Modus",
     },
-    sec: { hp: "Wärmepumpe (Außengerät & Primärkreis)", dhw: "Speicher, Innengerät & Warmwasser", soft: "Enthärtung & Leckageschutz", energy: "Energie & Status (untere Leiste)", zone: "Heizkreis" },
+    sec: { hp: "Wärmepumpe (Außengerät & Primärkreis)", dhw: "Speicher, Innengerät & Warmwasser", soft: "Enthärtung & Leckageschutz", energy: "Energie & Status (untere Leiste)", zone: "Heizkreis", img: "Eigenes Hintergrundbild" },
     opt: { radiator: "Heizkörper", floor: "Fußbodenheizung", both: "Heizkörper + Fußbodenheizung (2 Heizkreise)", auto: "Automatisch (HA-Sprache)" },
     lbl: {
       title: "Titel (leer = kein Titel)", language: "Sprache", heating_type: "Wärmeverteilung",
@@ -32,12 +32,14 @@ const HP_I18N = {
       heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischerstellung im Innengerät",
       softener_flow: "Durchsatz (l/h)", softener_hardness: "Härtegrad", leak_alarm: "Leckage erkannt", leak_valve: "Absperrventil Leckageschutz offen",
       zname: "Name", zvl: "Vorlauftemperatur", zrl: "Rücklauftemperatur", zpump: "aktiv / Pumpe läuft", zspeed: "Pumpe Leistung (%)", zmixer: "Mischerstellung",
+      background_image: "Bild-URL (z. B. /local/waermepumpe.png)", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
       zone1_mixer: "Mischer im Innengerät – mischt Heizkreis und Wärmepumpenkreis",
       zpump: "Leer lassen: aktiv, wenn die Umwälzpumpe läuft und keine Brauchwasserbereitung aktiv ist",
       leak_alarm: "Ein = Leck erkannt (Symbol wird rot)", leak_valve: "Aus/zu = Wasser abgesperrt (Symbol wird gelb)",
+      background_image: "Leer = gezeichnete Grafik. Bild nach /config/www/ kopieren und /local/Dateiname eintragen.", overlay: "Nur Abweichungen eintragen, z. B. labels: { vl_temp: [19, 46] }",
     },
   },
   en: {
@@ -49,7 +51,7 @@ const HP_I18N = {
       heater_rod: "Heater", circulation: "Circulation",
       power: "Power", heat_power: "Heat", cop: "COP", mode: "Mode",
     },
-    sec: { hp: "Heat pump (outdoor unit & primary circuit)", dhw: "Tank, indoor unit & hot water", soft: "Water softener & leak protection", energy: "Energy & status (bottom bar)", zone: "Heating circuit" },
+    sec: { hp: "Heat pump (outdoor unit & primary circuit)", dhw: "Tank, indoor unit & hot water", soft: "Water softener & leak protection", energy: "Energy & status (bottom bar)", zone: "Heating circuit", img: "Custom background image" },
     opt: { radiator: "Radiators", floor: "Underfloor heating", both: "Radiators + underfloor heating (2 circuits)", auto: "Automatic (HA language)" },
     lbl: {
       title: "Title (empty = no title)", language: "Language", heating_type: "Heat distribution",
@@ -63,12 +65,14 @@ const HP_I18N = {
       heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Mixing valve in indoor unit",
       softener_flow: "Flow rate (l/h)", softener_hardness: "Water hardness", leak_alarm: "Leak detected", leak_valve: "Leak protection valve open",
       zname: "Name", zvl: "flow temperature", zrl: "return temperature", zpump: "active / pump running", zspeed: "pump speed (%)", zmixer: "mixing valve position",
+      background_image: "Image URL (e.g. /local/heatpump.png)", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
       pump_speed: "Also controls the speed of the pump and pipe animation",
       zone1_mixer: "Mixing valve inside the indoor unit – blends heating and heat pump circuit",
       zpump: "Leave empty: active when the circulation pump runs and no hot water heating is active",
       leak_alarm: "On = leak detected (icon turns red)", leak_valve: "Off/closed = water shut off (icon turns yellow)",
+      background_image: "Empty = drawn graphic. Copy the image to /config/www/ and enter /local/filename.", overlay: "Only enter changes, e.g. labels: { vl_temp: [19, 46] }",
     },
   },
   fr: {
@@ -80,7 +84,7 @@ const HP_I18N = {
       heater_rod: "Résistance", circulation: "Bouclage",
       power: "Électricité", heat_power: "Chaleur", cop: "COP", mode: "Mode",
     },
-    sec: { hp: "Pompe à chaleur (unité extérieure & circuit primaire)", dhw: "Ballon, unité intérieure & eau chaude", soft: "Adoucisseur & protection fuite", energy: "Énergie & état (barre inférieure)", zone: "Circuit de chauffage" },
+    sec: { hp: "Pompe à chaleur (unité extérieure & circuit primaire)", dhw: "Ballon, unité intérieure & eau chaude", soft: "Adoucisseur & protection fuite", energy: "Énergie & état (barre inférieure)", zone: "Circuit de chauffage", img: "Image de fond personnalisée" },
     opt: { radiator: "Radiateurs", floor: "Plancher chauffant", both: "Radiateurs + plancher chauffant (2 circuits)", auto: "Automatique (langue HA)" },
     lbl: {
       title: "Titre (vide = aucun)", language: "Langue", heating_type: "Émetteurs de chaleur",
@@ -94,12 +98,14 @@ const HP_I18N = {
       heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse de l'unité intérieure",
       softener_flow: "Débit (l/h)", softener_hardness: "Dureté de l'eau", leak_alarm: "Fuite détectée", leak_valve: "Vanne de protection fuite ouverte",
       zname: "Nom", zvl: "température départ", zrl: "température retour", zpump: "actif / circulateur en marche", zspeed: "vitesse circulateur (%)", zmixer: "position vanne mélangeuse",
+      background_image: "URL de l'image (ex. /local/pac.png)", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
       zone1_mixer: "Vanne mélangeuse dans l'unité intérieure – mélange circuit de chauffage et circuit PAC",
       zpump: "Laisser vide : actif quand le circulateur tourne et sans production d'eau chaude",
       leak_alarm: "Marche = fuite détectée (icône rouge)", leak_valve: "Arrêt/fermée = eau coupée (icône jaune)",
+      background_image: "Vide = graphique dessiné. Copiez l'image dans /config/www/ et indiquez /local/nomdufichier.", overlay: "Saisir seulement les écarts, ex. labels: { vl_temp: [19, 46] }",
     },
   },
   nl: {
@@ -111,7 +117,7 @@ const HP_I18N = {
       heater_rod: "Element", circulation: "Circulatie",
       power: "Stroom", heat_power: "Warmte", cop: "COP", mode: "Modus",
     },
-    sec: { hp: "Warmtepomp (buitenunit & primair circuit)", dhw: "Boiler, binnenunit & warm water", soft: "Waterontharder & lekbeveiliging", energy: "Energie & status (onderbalk)", zone: "Verwarmingscircuit" },
+    sec: { hp: "Warmtepomp (buitenunit & primair circuit)", dhw: "Boiler, binnenunit & warm water", soft: "Waterontharder & lekbeveiliging", energy: "Energie & status (onderbalk)", zone: "Verwarmingscircuit", img: "Eigen achtergrondafbeelding" },
     opt: { radiator: "Radiatoren", floor: "Vloerverwarming", both: "Radiatoren + vloerverwarming (2 circuits)", auto: "Automatisch (HA-taal)" },
     lbl: {
       title: "Titel (leeg = geen titel)", language: "Taal", heating_type: "Warmteafgifte",
@@ -125,12 +131,14 @@ const HP_I18N = {
       heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep in binnenunit",
       softener_flow: "Doorstroming (l/h)", softener_hardness: "Waterhardheid", leak_alarm: "Lek gedetecteerd", leak_valve: "Afsluiter lekbeveiliging open",
       zname: "Naam", zvl: "aanvoertemperatuur", zrl: "retourtemperatuur", zpump: "actief / pomp draait", zspeed: "pompvermogen (%)", zmixer: "mengklepstand",
+      background_image: "Afbeeldings-URL (bijv. /local/warmtepomp.png)", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
       zone1_mixer: "Mengklep in de binnenunit – mengt verwarmings- en warmtepompcircuit",
       zpump: "Leeg laten: actief als de circulatiepomp draait en er geen tapwater wordt bereid",
       leak_alarm: "Aan = lek gedetecteerd (icoon wordt rood)", leak_valve: "Uit/dicht = water afgesloten (icoon wordt geel)",
+      background_image: "Leeg = getekende afbeelding. Kopieer de afbeelding naar /config/www/ en vul /local/bestandsnaam in.", overlay: "Alleen afwijkingen invullen, bijv. labels: { vl_temp: [19, 46] }",
     },
   },
   it: {
@@ -142,7 +150,7 @@ const HP_I18N = {
       heater_rod: "Resistenza", circulation: "Ricircolo",
       power: "Potenza", heat_power: "Calore", cop: "COP", mode: "Modalità",
     },
-    sec: { hp: "Pompa di calore (unità esterna & circuito primario)", dhw: "Accumulo, unità interna & acqua calda", soft: "Addolcitore & protezione perdite", energy: "Energia & stato (barra inferiore)", zone: "Circuito di riscaldamento" },
+    sec: { hp: "Pompa di calore (unità esterna & circuito primario)", dhw: "Accumulo, unità interna & acqua calda", soft: "Addolcitore & protezione perdite", energy: "Energia & stato (barra inferiore)", zone: "Circuito di riscaldamento", img: "Immagine di sfondo personalizzata" },
     opt: { radiator: "Radiatori", floor: "Riscaldamento a pavimento", both: "Radiatori + pavimento (2 circuiti)", auto: "Automatica (lingua HA)" },
     lbl: {
       title: "Titolo (vuoto = nessuno)", language: "Lingua", heating_type: "Distribuzione del calore",
@@ -156,12 +164,14 @@ const HP_I18N = {
       heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Valvola miscelatrice unità interna",
       softener_flow: "Portata (l/h)", softener_hardness: "Durezza dell'acqua", leak_alarm: "Perdita rilevata", leak_valve: "Valvola antiallagamento aperta",
       zname: "Nome", zvl: "temperatura mandata", zrl: "temperatura ritorno", zpump: "attivo / pompa in funzione", zspeed: "velocità pompa (%)", zmixer: "posizione miscelatrice",
+      background_image: "URL immagine (es. /local/pdc.png)", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
       zone1_mixer: "Valvola miscelatrice nell'unità interna – miscela circuito di riscaldamento e circuito PdC",
       zpump: "Lasciare vuoto: attivo quando il circolatore funziona e non c'è produzione di acqua calda",
       leak_alarm: "On = perdita rilevata (icona rossa)", leak_valve: "Off/chiusa = acqua chiusa (icona gialla)",
+      background_image: "Vuoto = grafica disegnata. Copia l'immagine in /config/www/ e inserisci /local/nomefile.", overlay: "Inserire solo le modifiche, es. labels: { vl_temp: [19, 46] }",
     },
   },
 };
@@ -172,7 +182,42 @@ const hpLang = (config, hass) => {
   return HP_I18N[short] ? short : "en";
 };
 
-const HP_NON_ENTITY_KEYS = ["type", "title", "heating_type", "zone1_name", "zone2_name", "theme_background", "language", "softener"];
+
+/* Standard-Positionen für den Bild-Modus, in % von Bildbreite (x) und -höhe (y).
+   Passend zu den Altherma-4-Schemabildern; per "overlay" einzeln überschreibbar. */
+const HP_IMG_DEFAULT = {
+  labels: {
+    indoor_temp: [16, 20], outdoor_temp: [15, 30], pressure: [45, 24], zone1_mixer: [63, 23],
+    dhw_temp: [74, 20], dhw_setpoint: [79.6, 20, "start"], vl_temp: [19, 46], rl_temp: [44, 46],
+    pump_speed: [35, 41, "start"], tank_top_temp: [49, 60], tank_bottom_temp: [49, 80],
+    zone1_pump_speed: [75.5, 66.6], zone1_vl_temp: [85.5, 60], zone1_rl_temp: [85.5, 79.5],
+    softener: [89.3, 39.4], leak: [98, 38.6],
+  },
+  flows: {
+    primary_vl: "29.1,49.5 29.1,26.9 60.4,26.9 60.4,40.7",
+    primary_rl: "57.1,41.6 57.1,32.7 32.6,32.7 32.6,49.5",
+    circ: "63.6,40.4 63.6,26.9 82.9,26.9 82.9,29.5 65.9,29.5 65.9,40.7",
+    soft: "96.8,42.5 79.9,42.5 79.9,29.5 65.9,29.5 65.9,40.7",
+    z1_vl: "68.7,41.4 68.7,33.7 77.1,33.7 77.1,59.5 79.4,59.5",
+    z1_rl: "79.4,82.1 75.4,82.1 75.4,37.3 70.7,37.3 70.7,41.8",
+  },
+  pumps: { primary: [32.6, 40, 1.7], z1: [75.5, 70.5, 1.7], circ: [80, 28.2, 1.2] },
+  fan: [13.2, 67.1, 6.8, 10.6],
+  frost: "3.4,49.3 37.4,49.8 35.6,82.5 30.3,88.4 4.3,79.3",
+  compressor: [23.6, 63, 5.7, 18],
+  tank: [57.5, 58, 12.5, 25],
+  heater: [68.6, 59, 68.6, 80],
+  emitters: { z1: [79, 55, 17.4, 28] },
+};
+const HP_IMG_DEFAULT_FLOOR = {
+  labels: { zone1_vl_temp: [86, 56.5], zone1_rl_temp: [86, 73.5] },
+  flows: {
+    z1_vl: "68.7,41.4 68.7,33.7 77.1,33.7 77.1,59.5 81,59.5",
+    z1_rl: "81,69.5 79.3,69.5 79.3,82.1 75.4,82.1 75.4,37.3 70.7,37.3 70.7,41.8",
+  },
+  emitters: { z1: [80, 52, 18, 38] },
+};
+const HP_NON_ENTITY_KEYS = ["type", "title", "heating_type", "zone1_name", "zone2_name", "theme_background", "language", "softener", "background_image", "background_aspect", "overlay", "show_grid"];
 const HP_ON_STATES = ["on", "true", "running", "heating", "an", "ein", "aktiv", "active", "open", "yes", "1"];
 
 const HP_STYLE = `
@@ -180,8 +225,8 @@ const HP_STYLE = `
   ha-card { overflow: hidden; padding: 6px; box-sizing: border-box; height: 100%;
     display: flex; align-items: center; justify-content: center;
     --hp-bg: #1a1b22; --hp-text: #f1f2f4; --hp-text2: #a7adb7; --ol: #1f2329;
-    background: var(--hp-bg); }
-  ha-card.themed { --hp-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
+    background: radial-gradient(ellipse at 50% 38%, #272a35 0%, #1a1b22 58%, #131418 100%); }
+  ha-card.themed { background: var(--hp-bg); --hp-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
     --hp-text: var(--primary-text-color, #f1f2f4); --hp-text2: var(--secondary-text-color, #a7adb7); }
   svg { width: 100%; height: auto; display: block;
     max-height: calc(100vh - var(--header-height, 56px) - 24px);
@@ -193,7 +238,8 @@ const HP_STYLE = `
   .s { font-size: 17px; fill: var(--hp-text); }
   .name { font-size: 23px; }
   [data-entity-key] { cursor: pointer; }
-  .shadow { fill: #000; opacity: .5; }
+  .shadow { fill: #000; opacity: .55; }
+  .brush { fill: #fff; opacity: .55; pointer-events: none; }
   .spd { opacity: 0; transition: opacity .4s; }
   .spd.on { opacity: 1; }
 
@@ -338,6 +384,43 @@ const HP_STYLE = `
   .chip.on circle { fill: var(--chip-c); animation: hp-pulse 1.4s ease-in-out infinite; }
   .chip.on text { fill: var(--hp-text); }
   .stat rect { fill: rgba(150,156,168,.1); stroke: rgba(150,156,168,.25); }
+
+  /* Bild-Modus */
+  .ovt { font-size: 26px; font-weight: 600; fill: #fff; }
+  .ovt.small { font-size: 19px; }
+  .ovt .ovl { font-size: 17px; font-weight: 400; fill: #d5dae0; }
+  .ovf { opacity: 0; transition: opacity .5s; pointer-events: none; }
+  .ovf.on { opacity: 1; }
+  .ovf-glow { fill: none; stroke-width: 12; opacity: .55; stroke-linejoin: round; }
+  .ovf-line { fill: none; stroke-width: 4; opacity: .5; stroke-linejoin: round; stroke-linecap: round; }
+  .ovf.h .ovf-glow, .ovf.h .ovf-line { stroke: #ff5a4c; }
+  .ovf.c .ovf-glow, .ovf.c .ovf-line { stroke: #4d94ff; }
+  .ovf-dots { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1.5 16;
+    animation-name: hp-dash; animation-timing-function: linear; animation-iteration-count: infinite; }
+  .ovp-glow { fill: #22c55e; opacity: 0; transition: opacity .4s; }
+  .ovp.on .ovp-glow { opacity: .5; }
+  .ovp-hit { fill: transparent; }
+  .ovp-ring { fill: none; stroke: #22c55e; stroke-width: 3; stroke-dasharray: 7 6; opacity: 0; }
+  .ovp.on .ovp-ring { opacity: 1; animation-name: hp-spin; animation-timing-function: linear; animation-iteration-count: infinite; }
+  .ovfan { opacity: 0; transition: opacity .6s; pointer-events: none; }
+  .ovfan.on { opacity: 1; }
+  .ovfan-blur { fill: rgba(170,185,205,.16); }
+  .ovfan-blades { transform-origin: 0px 0px; }
+  .ovfan-blades path { fill: rgba(205,215,230,.42); stroke: rgba(255,255,255,.35); stroke-width: 1; }
+  .ovfan.on .ovfan-blades { animation: hp-spin .55s linear infinite; }
+  .ovcomp { opacity: .5; pointer-events: none; }
+  .ovcomp rect { fill: #22c55e; opacity: 0; }
+  .ovcomp.on rect { animation: hp-pulse 1.6s ease-in-out infinite; }
+  .ovtank { mix-blend-mode: color; opacity: .85; pointer-events: none; }
+  .ovrod { opacity: 0; transition: opacity .4s; }
+  .ovrod.on { opacity: 1; }
+  .ovrod-glow { fill: #f97316; animation: hp-pulse 1.2s ease-in-out infinite; }
+  .ovrod-core { fill: #ffb26b; }
+  .ovemit { fill: #f97316; opacity: 0; transition: opacity .8s; mix-blend-mode: screen; }
+  .emitter.on .ovemit { opacity: .3; }
+  .grid { stroke: rgba(0,255,255,.35); stroke-width: 1; }
+  .grid.major { stroke: rgba(255,230,0,.65); }
+  .gridt { font-size: 13px; fill: #ffe600; paint-order: stroke; stroke: #000; stroke-width: 3px; }
 `;
 
 class HeatpumpFlowCard extends HTMLElement {
@@ -371,6 +454,7 @@ class HeatpumpFlowCard extends HTMLElement {
   _build() {
     const c = this._config;
     if (!c) return;
+    if (c.background_image) return this._buildImage();
     this._lang = hpLang(c, this._hass);
     const T = HP_I18N[this._lang].card;
     const u = this._uid;
@@ -575,6 +659,7 @@ class HeatpumpFlowCard extends HTMLElement {
         ${grooves}
         <path class="u-top" d="M40 380 L82 348 H352 L310 380 Z"/><path class="u-hl" d="M46 380 H304"/>
         <rect class="u-front" x="40" y="380" width="270" height="230" rx="6"/>
+        <rect class="brush" x="40" y="380" width="270" height="230" rx="6" filter="url(#${u}-brushH)"/>
         ${slats}
         <circle class="fan-bezel" cx="135" cy="495" r="86"/>
         <circle class="fan-bg" cx="135" cy="495" r="77"/>
@@ -615,8 +700,10 @@ class HeatpumpFlowCard extends HTMLElement {
       <ellipse class="shadow" cx="550" cy="626" rx="102" ry="8" ${soft}/>
       <rect class="t-plinth" x="466" y="604" width="168" height="20" rx="6"/>
       <rect class="t-body" x="460" y="372" width="180" height="240" rx="16"/>
+      <rect class="brush" x="460" y="372" width="180" height="240" rx="16" filter="url(#${u}-brushV)"/>
       <rect class="t-cut" x="476" y="394" width="148" height="204" rx="10"/>
       <rect class="t-heat" x="476" y="394" width="148" height="204" rx="10" fill="url(#${u}-tank)"/>
+      <rect x="476" y="394" width="148" height="204" rx="10" fill="url(#${u}-ao)"/>
       <path class="coil-back" d="${coilB}"/>
       <line class="t-pipe" x1="540" y1="398" x2="540" y2="592"/>
       <path class="coil" d="${coilF}"/>
@@ -633,6 +720,7 @@ class HeatpumpFlowCard extends HTMLElement {
       <path class="t-headhl" d="M472 ${PY + 3} H628"/>
       ${ports}
       <rect class="t-display" x="474" y="314" width="94" height="48" rx="6"/>
+      <path d="M478 318 H540 L512 358 H478 Z" fill="url(#${u}-glass)"/>
       <g class="leds" data-on="compressor">
         <rect class="led" x="484" y="324" width="40" height="5" rx="2"/>
         <rect class="led" x="484" y="335" width="56" height="5" rx="2"/>
@@ -749,6 +837,23 @@ class HeatpumpFlowCard extends HTMLElement {
             <radialGradient id="${u}-pump" cx=".4" cy=".35"><stop offset="0" stop-color="#3a414c"/><stop offset="1" stop-color="#15181d"/></radialGradient>
             <filter id="${u}-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
             <filter id="${u}-soft" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
+            <filter id="${u}-brushH" x="0" y="0" width="1" height="1">
+              <feTurbulence type="fractalNoise" baseFrequency="0.004 0.55" numOctaves="2" seed="4" result="n"/>
+              <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.6 -0.75" result="w"/>
+              <feComposite in="w" in2="SourceGraphic" operator="in"/>
+            </filter>
+            <filter id="${u}-brushV" x="0" y="0" width="1" height="1">
+              <feTurbulence type="fractalNoise" baseFrequency="0.5 0.004" numOctaves="2" seed="9" result="n"/>
+              <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.6 -0.75" result="w"/>
+              <feComposite in="w" in2="SourceGraphic" operator="in"/>
+            </filter>
+            <linearGradient id="${u}-glass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity=".06"/><stop offset=".46" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="${u}-ao" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".12" stop-color="#000" stop-opacity="0"/>
+              <stop offset=".85" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/>
+            </linearGradient>
           </defs>
           ${back}
           ${front}
@@ -767,6 +872,11 @@ class HeatpumpFlowCard extends HTMLElement {
         </svg>
       </ha-card>`;
 
+    this._finishBuild();
+  }
+
+  _finishBuild() {
+    const c = this._config, u = this._uid;
     this._svg = this.shadowRoot.querySelector("svg");
     this._flagEls = [...this.shadowRoot.querySelectorAll("[data-on]")];
     this._valEls = [...this.shadowRoot.querySelectorAll("[data-val]")];
@@ -785,6 +895,221 @@ class HeatpumpFlowCard extends HTMLElement {
       e.detail = { entityId: id };
       this.dispatchEvent(e);
     });
+  }
+
+  /* ---------- Bild-Modus: eigenes Hintergrundbild + animierte Overlays ---------- */
+  _buildImage() {
+    const c = this._config;
+    this._lang = hpLang(c, this._hass);
+    const T = HP_I18N[this._lang].card;
+    const u = this._uid;
+    const has = (k) => !!c[k];
+    const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    const ek = (k) => (k && has(k) ? ` data-entity-key="${k}"` : "");
+    const url = c.background_image;
+
+    /* Seitenverhältnis: aus Konfiguration, Cache oder durch Laden des Bildes */
+    HeatpumpFlowCard._aspects = HeatpumpFlowCard._aspects || {};
+    let aspect = Number(c.background_aspect) || HeatpumpFlowCard._aspects[url];
+    if (!aspect) {
+      aspect = 1.266;
+      const img = new Image();
+      img.onload = () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          HeatpumpFlowCard._aspects[url] = img.naturalWidth / img.naturalHeight;
+          if (this._config && this._config.background_image === url) { this._build(); this._update(); }
+        }
+      };
+      img.src = url;
+    }
+    const W = 1000, IH = Math.round(W / aspect);
+
+    /* Positionen: Standard (passend zu den Altherma-Bildern) + eigene Werte aus "overlay" */
+    const floor = c.heating_type === "floor";
+    const def = JSON.parse(JSON.stringify(HP_IMG_DEFAULT));
+    if (floor) Object.assign(def.flows, HP_IMG_DEFAULT_FLOOR.flows), Object.assign(def.labels, HP_IMG_DEFAULT_FLOOR.labels), (def.emitters = HP_IMG_DEFAULT_FLOOR.emitters);
+    const ov = c.overlay && typeof c.overlay === "object" ? c.overlay : {};
+    const pick = (grp) => ({ ...def[grp], ...(ov[grp] || {}) });
+    const L = pick("labels"), F = pick("flows"), P = pick("pumps"), E = pick("emitters");
+    const one = (k) => (ov[k] !== undefined ? ov[k] : def[k]);
+    const X = (p) => (Number(p) * W) / 100, Y = (p) => (Number(p) * IH) / 100;
+    const pts = (s) => String(s).trim().split(/\s+/).map((pr) => pr.split(",").map(Number)).filter((a) => a.length === 2 && !a.some(isNaN));
+    const dOf = (s) => pts(s).map(([x, y], n) => `${n ? "L" : "M"}${X(x).toFixed(1)} ${Y(y).toFixed(1)}`).join(" ");
+
+    /* Fluss-Pfade (nur Leuchten + wandernde Punkte, das Rohr ist im Bild) */
+    const flowDefs = [
+      ["primary_vl", "primary", "h", true], ["primary_rl", "primary", "c", true],
+      ["circ", "circ", "h", has("circulation")], ["soft", "soft", "c", !!c.softener],
+      ["z1_vl", "z1", "h", true], ["z1_rl", "z1", "c", true],
+      ["z2_vl", "z2", "h", c.heating_type === "both"], ["z2_rl", "z2", "c", c.heating_type === "both"],
+    ];
+    const flows = flowDefs.filter(([k, , , show]) => show && F[k]).map(([k, flag, col]) => {
+      const d = dOf(F[k]);
+      return `<g class="ovf ${col}" data-on="${flag}">
+        <path class="ovf-glow" d="${d}" filter="url(#${u}-blur)"/>
+        <path class="ovf-line" d="${d}"/>
+        <path class="ovf-dots" d="${d}" style="animation-duration:var(--${flag}-dur,1.2s)"/>
+      </g>`;
+    }).join("");
+
+    /* Pumpen: grüner Leuchtring mit drehendem Ring (nur wenn Entität vorhanden) */
+    const zkey = (i) => has(`zone${i}_pump`) ? `zone${i}_pump` : has(`zone${i}_pump_speed`) ? `zone${i}_pump_speed` : null;
+    const pumpKeys = { primary: has("pump") ? "pump" : has("pump_speed") ? "pump_speed" : null, z1: zkey(1), z2: zkey(2), circ: has("circulation") ? "circulation" : null };
+    const pumps = Object.entries(pumpKeys).filter(([f, k]) => k && P[f]).map(([f, k]) => {
+      const [px, py, pr] = P[f]; const cx = X(px), cy = Y(py), r = X(pr || 1.7);
+      return `<g class="ovp" data-on="${f}"${ek(k)}>
+        <circle class="ovp-glow" cx="${cx}" cy="${cy}" r="${r + 6}" filter="url(#${u}-blur)"/>
+        <circle class="ovp-hit" cx="${cx}" cy="${cy}" r="${r + 4}"/>
+        <circle class="ovp-ring" cx="${cx}" cy="${cy}" r="${r + 4}" style="transform-origin:${cx}px ${cy}px;animation-duration:var(--${f}-dur,1s)"/>
+      </g>`;
+    }).join("");
+
+    /* Lüfter: halbtransparente drehende Flügel über dem Foto */
+    let fan = "";
+    const fp = one("fan");
+    if (fp && has("compressor")) {
+      const [fx, fy, frx, fry] = fp; const cx = X(fx), cy = Y(fy), rx = X(frx), ry = Y(fry || frx * aspect);
+      const blades = [0, 120, 240].map((a) => `<path d="M0 0 C-8 -${rx * 0.4} 3 -${rx * 0.8} ${rx * 0.38} -${rx * 0.86} C${rx * 0.55} -${rx * 0.55} ${rx * 0.36} -${rx * 0.16} 0 0Z" transform="rotate(${a})"/>`).join("");
+      fan = `<g class="ovfan" data-on="fan" transform="translate(${cx} ${cy}) scale(1 ${(ry / rx).toFixed(3)})">
+        <circle class="ovfan-blur" r="${rx * 0.9}"/>
+        <g class="ovfan-blades">${blades}</g></g>`;
+    }
+
+    /* Abtauen: Frost, Eiskristalle, Tropfwasser */
+    let frost = "";
+    const fr = one("frost");
+    if (fr && has("defrost")) {
+      const poly = typeof fr === "string" ? pts(fr) : (() => { const [x, y, w, h] = fr.map(Number); return [[x, y], [x + w, y], [x + w, y + h], [x, y + h]]; })();
+      const xs = poly.map((q) => X(q[0])), ys = poly.map((q) => Y(q[1]));
+      const x0 = Math.min(...xs), y0 = Math.min(...ys), ww = Math.max(...xs) - x0, hh = Math.max(...ys) - y0;
+      const fl = (fx, fy, s) => `<path class="flake" d="M${fx} ${fy - s} V${fy + s} M${fx - s * 0.866} ${fy - s / 2} L${fx + s * 0.866} ${fy + s / 2} M${fx - s * 0.866} ${fy + s / 2} L${fx + s * 0.866} ${fy - s / 2}"/>`;
+      frost = `<g class="defrost" data-on="defrost">
+        <polygon class="frost" points="${poly.map((q) => `${X(q[0]).toFixed(1)},${Y(q[1]).toFixed(1)}`).join(" ")}"/>
+        ${[[0.15, 0.2, 12], [0.55, 0.15, 9], [0.3, 0.7, 10], [0.7, 0.55, 13], [0.85, 0.3, 8]].map(([a, b, s]) => fl(x0 + ww * a, y0 + hh * b, s)).join("")}
+        ${[0.2, 0.45, 0.7, 0.85].map((a, n) => `<circle class="drip" cx="${x0 + ww * a}" cy="${y0 + hh * 0.95}" r="3.5" style="animation-delay:${n * 0.35}s"/>`).join("")}
+      </g>`;
+    }
+
+    /* Verdichter-Leuchten */
+    let comp = "";
+    const cp = one("compressor");
+    if (cp && has("compressor")) {
+      const [x, y, w, h] = cp.map(Number);
+      comp = `<g class="ovcomp" data-on="compressor"${ek("compressor")}><rect x="${X(x)}" y="${Y(y)}" width="${X(w)}" height="${Y(h)}" rx="12" filter="url(#${u}-blur)"/></g>`;
+    }
+
+    /* Speicher-Färbung (nur Farbton, Helligkeit bleibt vom Foto) */
+    let tank = "";
+    const tp = one("tank");
+    if (tp && (has("tank_top_temp") || has("tank_bottom_temp") || has("dhw_temp"))) {
+      const [x, y, w, h] = tp.map(Number);
+      tank = `<rect class="ovtank" x="${X(x)}" y="${Y(y)}" width="${X(w)}" height="${Y(h)}" rx="10" fill="url(#${u}-tank)"/>`;
+    }
+
+    /* Heizstab: glühende Linie */
+    let rod = "";
+    const hp = one("heater");
+    if (hp && has("heater_rod")) {
+      const [x1, y1, x2, y2] = hp.map(Number);
+      const rx0 = Math.min(X(x1), X(x2)), ry0 = Math.min(Y(y1), Y(y2)), rw = Math.abs(X(x2) - X(x1)), rh = Math.abs(Y(y2) - Y(y1));
+      rod = `<g class="ovrod" data-on="heater_rod"${ek("heater_rod")}>
+        <rect class="ovrod-glow" x="${rx0 - 9}" y="${ry0 - 9}" width="${rw + 18}" height="${rh + 18}" rx="9" filter="url(#${u}-blur)"/>
+        <rect class="ovrod-core" x="${rx0 - 3}" y="${ry0}" width="${rw + 6}" height="${rh}" rx="3"/></g>`;
+    }
+
+    /* Heizkörper / FBH: warmes Leuchten + aufsteigende Wärme */
+    const emit = ["z1", "z2"].filter((z) => E[z] && (z === "z1" || c.heating_type === "both")).map((z) => {
+      const [x, y, w, h] = E[z].map(Number); const x0 = X(x), y0 = Y(y), ww = X(w), hh = Y(h);
+      const wv = [0.2, 0.5, 0.8].map((f, n) => `<path class="wave" style="animation-delay:${n * 0.6}s" d="M${x0 + ww * f} ${y0 - 6} q 7 -6 0 -12 q -7 -6 0 -12"/>`).join("");
+      return `<g class="emitter" data-on="${z}"${ek(zkey(z === "z1" ? 1 : 2))}><rect class="ovemit" x="${x0}" y="${y0}" width="${ww}" height="${hh}" rx="8" filter="url(#${u}-blur)"/>${wv}</g>`;
+    }).join("");
+
+    /* Werte */
+    const pref = { indoor_temp: T.indoor + " ", outdoor_temp: T.outdoor + " ", vl_temp: T.vl, rl_temp: T.rl, dhw_setpoint: T.set + " " };
+    const tags = { zone1_vl_temp: "h", zone1_rl_temp: "c", zone2_vl_temp: "h", zone2_rl_temp: "c" };
+    const spdFlag = { pump_speed: "primary", zone1_pump_speed: "z1", zone2_pump_speed: "z2" };
+    const labels = Object.entries(L).filter(([k, p]) => k !== "softener" && k !== "leak" && has(k) && Array.isArray(p)).map(([k, p]) => {
+      const x = X(p[0]), y = Y(p[1]), anchor = p[2] || "middle";
+      if (tags[k]) return `<g class="tag ${tags[k]}"${ek(k)}><rect x="${x - 37}" y="${y - 13}" width="74" height="26" rx="13"/>
+        <text x="${x}" y="${y + 6}" text-anchor="middle" data-val="${k}">–</text></g>`;
+      const fl = spdFlag[k];
+      const big = !(fl || k === "zone1_mixer" || k === "zone2_mixer" || k === "dhw_setpoint");
+      return `<text filter="url(#${u}-halo)" class="ovt${big ? "" : " small"}${fl ? " spd" : ""}"${fl ? ` data-on="${fl}"` : ""} x="${x}" y="${y}" text-anchor="${anchor}"${ek(k)}>${pref[k] ? `<tspan class="ovl">${pref[k]}</tspan>` : ""}<tspan data-val="${k}">–</tspan></text>`;
+    }).join("");
+
+    /* Enthärtung: Werte + Leckageschutz */
+    let soft = "";
+    if (c.softener) {
+      const sp = L.softener || [89.3, 39.4], lp = L.leak || [98, 38.6];
+      const data = [has("softener_flow") ? `<tspan data-val="softener_flow"${ek("softener_flow")}>–</tspan>` : "", has("softener_hardness") ? `<tspan data-val="softener_hardness"${ek("softener_hardness")}>–</tspan>` : ""].filter(Boolean).join(`<tspan class="ovl"> · </tspan>`);
+      if (data) soft += `<text filter="url(#${u}-halo)" class="ovt small" x="${X(sp[0])}" y="${Y(sp[1])}" text-anchor="middle">${data}</text>`;
+      if (has("leak_alarm") || has("leak_valve")) {
+        const sx = X(lp[0]), sy = Y(lp[1]), lk = has("leak_alarm") ? "leak_alarm" : "leak_valve";
+        soft += `<g class="leak"${ek(lk)}>
+          <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
+          <path class="drop" d="M${sx} ${sy - 8} C${sx + 5} ${sy - 2} ${sx + 6} ${sy + 2} ${sx + 6} ${sy + 4} A6 6 0 0 1 ${sx - 6} ${sy + 4} C${sx - 6} ${sy + 2} ${sx - 5} ${sy - 2} ${sx} ${sy - 8} Z"/></g>`;
+      }
+    }
+
+    /* Positionier-Raster */
+    let grid = "";
+    if (c.show_grid) {
+      for (let p = 5; p < 100; p += 5) {
+        const major = p % 10 === 0;
+        grid += `<line class="grid${major ? " major" : ""}" x1="${X(p)}" y1="0" x2="${X(p)}" y2="${IH}"/><line class="grid${major ? " major" : ""}" x1="0" y1="${Y(p)}" x2="${W}" y2="${Y(p)}"/>`;
+        if (major) grid += `<text class="gridt" x="${X(p) + 3}" y="14">${p}</text><text class="gridt" x="3" y="${Y(p) - 3}">${p}</text>`;
+      }
+    }
+
+    /* Chips & untere Leiste unterhalb des Bildes */
+    const chipDefs = [["compressor", "#22c55e"], ["defrost", "#38bdf8"], ["dhw_active", "#f59e0b"], ["dhw_boost", "#ef4444"], ["heater_rod", "#f97316"], ["circulation", "#a78bfa"]].filter(([k]) => has(k));
+    const CW = 150, CG = 10, cx0 = 500 - (chipDefs.length * CW + (chipDefs.length - 1) * CG) / 2;
+    const chipY = IH + 16;
+    const chips = chipDefs.map(([k, col], n) => {
+      const x = cx0 + n * (CW + CG);
+      return `<g class="chip" data-on="${k}"${ek(k)} style="--chip-c:${col}"><rect x="${x}" y="${chipY}" width="${CW}" height="34" rx="17"/>
+        <circle cx="${x + 19}" cy="${chipY + 17}" r="5.5"/><text x="${x + 33}" y="${chipY + 23}">${T[k]}</text></g>`;
+    }).join("");
+    const bottomKeys = ["power", "heat_power", "cop", "mode"].filter(has);
+    const statY = chipDefs.length ? chipY + 50 : IH + 16;
+    const H = bottomKeys.length ? statY + 72 : chipDefs.length ? chipY + 46 : IH;
+    const gap = 12, bw = bottomKeys.length ? (940 - gap * (bottomKeys.length - 1)) / bottomKeys.length : 0;
+    const stats = bottomKeys.map((k, n) => {
+      const x = 30 + n * (bw + gap);
+      return `<g class="stat"${ek(k)}><rect x="${x}" y="${statY}" width="${bw}" height="62" rx="12"/>
+        <text class="l" x="${x + bw / 2}" y="${statY + 24}" text-anchor="middle">${T[k]}</text>
+        <text class="v" x="${x + bw / 2}" y="${statY + 52}" text-anchor="middle" data-val="${k}">–</text></g>`;
+    }).join("");
+
+    this.shadowRoot.innerHTML = `
+      <style>${HP_STYLE.replace(/UID/g, u)}</style>
+      <ha-card class="${c.theme_background ? "themed" : ""}">
+        <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="${u}-tank" x1="0" y1="0" x2="0" y2="1">
+              <stop id="${u}-top" offset="0" stop-color="#e5483e"/>
+              <stop id="${u}-mid" offset=".55" stop-color="#d0506a"/>
+              <stop id="${u}-bot" offset="1" stop-color="#3f7fd9"/>
+            </linearGradient>
+            <filter id="${u}-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+            <filter id="${u}-halo" x="-10%" y="-40%" width="120%" height="180%">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="2.4" result="d"/>
+              <feGaussianBlur in="d" stdDeviation="1.2" result="b"/>
+              <feFlood flood-color="#000" flood-opacity=".85"/><feComposite in2="b" operator="in" result="s"/>
+              <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <clipPath id="${u}-clip"><rect x="0" y="0" width="${W}" height="${IH}" rx="10"/></clipPath>
+          </defs>
+          <g clip-path="url(#${u}-clip)">
+            <image href="${esc(url)}" x="0" y="0" width="${W}" height="${IH}" preserveAspectRatio="none"/>
+            ${tank}${comp}${emit}${rod}${flows}${fan}${frost}${pumps}
+            ${c.title ? `<text filter="url(#${u}-halo)" class="title ovt" x="500" y="58" text-anchor="middle">${esc(c.title)}</text>` : ""}
+            ${labels}${soft}${grid}
+          </g>
+          ${chips}${stats}
+        </svg>
+      </ha-card>`;
+    this._finishBuild();
   }
 
   /* ---------- Werte & Animationen aktualisieren ---------- */
@@ -967,6 +1292,13 @@ class HeatpumpFlowCardEditor extends HTMLElement {
       zone(1),
     ];
     if (both) schema.push(zone(2));
+    schema.push({
+      type: "expandable", name: "sec_img", flatten: true, title: t.sec.img,
+      schema: [
+        { name: "background_image", selector: { text: {} } },
+        ...(this._config.background_image ? [{ name: "show_grid", selector: { boolean: {} } }, { name: "overlay", selector: { object: {} } }] : []),
+      ],
+    });
     return schema;
   }
 
