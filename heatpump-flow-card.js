@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.3.0";
+const HP_VERSION = "1.4.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -179,7 +179,7 @@ const HP_STYLE = `
   :host { display: block; }
   ha-card { overflow: hidden; padding: 6px; box-sizing: border-box; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    --hp-bg: #1a1b22; --hp-text: #f1f2f4; --hp-text2: #a7adb7; --ol: #2b3038;
+    --hp-bg: #1a1b22; --hp-text: #f1f2f4; --hp-text2: #a7adb7; --ol: #1f2329;
     background: var(--hp-bg); }
   ha-card.themed { --hp-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
     --hp-text: var(--primary-text-color, #f1f2f4); --hp-text2: var(--secondary-text-color, #a7adb7); }
@@ -226,7 +226,8 @@ const HP_STYLE = `
   .u-top { fill: url(#UID-utop); stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
   .u-side { fill: url(#UID-uside); stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
   .u-groove { stroke: rgba(0,0,0,.18); stroke-width: 1.5; }
-  .u-edge { fill: none; stroke: var(--ol); stroke-width: 2.2; }
+  .u-edge { fill: none; stroke: var(--ol); stroke-width: 2.6; }
+  .u-hl { fill: none; stroke: #ffffff; stroke-width: 1.5; opacity: .9; }
   .slat-d { stroke: #a9b0b9; stroke-width: 1.6; } .slat-l { stroke: #ffffff; stroke-width: 1.2; opacity: .8; }
   .u-foot { fill: #4b5260; stroke: var(--ol); stroke-width: 1.5; }
   .fan-bezel { fill: url(#UID-bezel); stroke: var(--ol); stroke-width: 2; }
@@ -254,7 +255,7 @@ const HP_STYLE = `
   .defrost.on .drip { animation: hp-drip 1.4s ease-in infinite; }
 
   /* Speicher */
-  .t-body { fill: url(#UID-tbody); stroke: var(--ol); stroke-width: 2.2; }
+  .t-body { fill: url(#UID-tbody); stroke: var(--ol); stroke-width: 2.6; }
   .t-plinth { fill: url(#UID-plinth); stroke: var(--ol); stroke-width: 2; }
   .t-cut { fill: url(#UID-tcut); stroke: var(--ol); stroke-width: 2; }
   .t-heat { opacity: .22; }
@@ -263,6 +264,9 @@ const HP_STYLE = `
   .coil-hl { fill: none; stroke: rgba(255,255,255,.4); stroke-width: 1.4; }
   .t-pipe { stroke: url(#UID-metal); stroke-width: 6; }
   .t-head { fill: url(#UID-head); stroke: var(--ol); stroke-width: 2.2; }
+  .t-top { fill: #4a515c; stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
+  .t-side { fill: #16191e; stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
+  .port-top { fill: #e3e7eb; stroke: var(--ol); stroke-width: 1; }
   .t-headhl { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 1.5; }
   .t-display { fill: url(#UID-screen); stroke: #4b525d; stroke-width: 1.5; }
   .port { fill: url(#UID-metal); stroke: var(--ol); stroke-width: 1.2; }
@@ -287,6 +291,9 @@ const HP_STYLE = `
   .pump.on .impeller { animation-name: hp-spin; animation-timing-function: linear; animation-iteration-count: infinite; }
 
   /* Wärmeübergabe */
+  .r-top { fill: url(#UID-radbar); stroke: var(--ol); stroke-width: 1.8; stroke-linejoin: round; }
+  .r-side { fill: #8b939e; stroke: var(--ol); stroke-width: 1.8; stroke-linejoin: round; }
+  .r-rib { fill: none; stroke: #b9c0c9; stroke-width: 1.2; }
   .r-back { fill: #b9bfc8; stroke: var(--ol); stroke-width: 2; }
   .r-col { fill: url(#UID-radcol); stroke: #8f97a2; stroke-width: 1; }
   .r-bar { fill: url(#UID-radbar); stroke: var(--ol); stroke-width: 1.2; }
@@ -311,8 +318,10 @@ const HP_STYLE = `
 
   /* Zapfstelle & Enthärtung */
   .chrome { fill: url(#UID-chrome); stroke: var(--ol); stroke-width: 1.5; }
-  .spout-ol { fill: none; stroke: var(--ol); stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
-  .spout { fill: none; stroke: url(#UID-chrome); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+  .spout-ol { fill: none; stroke: var(--ol); stroke-width: 12.5; stroke-linecap: round; stroke-linejoin: round; }
+  .spout { fill: none; stroke: #b7bec8; stroke-width: 9.5; stroke-linecap: round; stroke-linejoin: round; }
+  .thread { fill: none; stroke: rgba(0,0,0,.4); stroke-width: 1; }
+  .tap-hl { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 1.8; stroke-linecap: round; }
   .spout-hl { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 2; stroke-linecap: round; }
   .leak path.shield { fill: rgba(34,197,94,.15); stroke: #22c55e; stroke-width: 2.5; stroke-linejoin: round; transition: all .4s; }
   .leak path.drop { fill: #22c55e; transition: fill .4s; }
@@ -428,8 +437,8 @@ class HeatpumpFlowCard extends HTMLElement {
     front += arrow(220, 250, "u", "hot") + arrow(256, 250, "d", "cold");
 
     /* Warmwasser */
-    back += pipe(`M538 ${PY} V170 H866`, "hot");
-    back += pipe(`M866 206 H562 V${PY}`, "cold");
+    back += pipe(`M538 ${PY} V170 H870`, "hot");
+    back += pipe(`M907 192 V206 H562 V${PY}`, "cold");
     front += arrow(AX2, 170, "r", "hot") + arrow(AX2, 206, "l", "cold");
     if (has("circulation")) {
       back += pipe("M800 170 V206", "hot");
@@ -439,18 +448,18 @@ class HeatpumpFlowCard extends HTMLElement {
     /* Enthärtung (optional) */
     let softSvg = "";
     if (c.softener) {
-      back += pipe("M985 256 H830 V206", "dw");
-      back += flowOnly(`M985 256 H830 V206 H562 V${PY}`, "soft");
-      front += arrow(905, 256, "l", "dw");
+      back += pipe("M985 264 H830 V206", "dw");
+      back += flowOnly(`M985 264 H830 V206 H562 V${PY}`, "soft");
+      front += arrow(905, 264, "l", "dw");
       const hasLeak = has("leak_alarm") || has("leak_valve");
       const lk = has("leak_alarm") ? "leak_alarm" : "leak_valve";
-      const sx = 846, sy = 286;
+      const sx = 846, sy = 294;
       const data = [
         has("softener_flow") ? `<tspan data-val="softener_flow"${ek("softener_flow")}>–</tspan>` : "",
         has("softener_hardness") ? `<tspan data-val="softener_hardness"${ek("softener_hardness")}>–</tspan>` : "",
       ].filter(Boolean).join(`<tspan class="l"> · </tspan>`);
       softSvg = `
-        <text class="l" x="985" y="244" text-anchor="end">${T.softener}</text>
+        <text class="l" x="985" y="253" text-anchor="end">${T.softener}</text>
         ${hasLeak ? `<g class="leak"${ek(lk)}>
           <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
           <path class="drop" d="M${sx} ${sy - 8} C${sx + 5} ${sy - 2} ${sx + 6} ${sy + 2} ${sx + 6} ${sy + 4} A6 6 0 0 1 ${sx - 6} ${sy + 4} C${sx - 6} ${sy + 2} ${sx - 5} ${sy - 2} ${sx} ${sy - 8} Z"/>
@@ -464,36 +473,37 @@ class HeatpumpFlowCard extends HTMLElement {
     const zkey = (i) => has(`zone${i}_pump`) ? `zone${i}_pump` : has(`zone${i}_pump_speed`) ? `zone${i}_pump_speed` : null;
     if (type === "both") {
       zones = [
-        { i: 1, kind: "radiator", y0: 318, h: 92, vin: 333, rout: 395 },
-        { i: 2, kind: "floor", y0: 476, h: 80, vin: 496, rout: 536, loopEnd: 628 },
+        { i: 1, kind: "radiator", y0: 338, h: 82, vin: 352, rout: 406 },
+        { i: 2, kind: "floor", y0: 486, h: 76, vin: 504, rout: 544, loopEnd: 630 },
       ];
-      back += pipe(`M${EX} 536 H${RX} V395`, "cold", "z2");
-      back += pipe(`M${EX} 395 H${RX}`, "cold", "z1");
-      back += pipe(`M${RX} 395 V278 H610 V${PY}`, "cold", "zany");
-      back += pipe(`M586 ${PY} V242 H${VX} V333`, "hot", "zany");
-      back += pipe(`M${VX} 333 H${EX}`, "hot", "z1");
-      back += pipe(`M${VX} 333 V496 H${EX}`, "hot", "z2");
-      pumps += pumpG(RX, 345, 15, "z1", zkey(1)) + small("zone1_pump_speed", RX - 26, 351, "end", "z1");
-      pumps += pumpG(RX, 440, 15, "z2", zkey(2)) + small("zone2_pump_speed", RX - 26, 446, "end", "z2");
+      back += pipe(`M${EX} 544 H${RX} V406`, "cold", "z2");
+      back += pipe(`M${EX} 406 H${RX}`, "cold", "z1");
+      back += pipe(`M${RX} 406 V278 H610 V${PY}`, "cold", "zany");
+      back += pipe(`M586 ${PY} V242 H${VX} V352`, "hot", "zany");
+      back += pipe(`M${VX} 352 H${EX}`, "hot", "z1");
+      back += pipe(`M${VX} 352 V504 H${EX}`, "hot", "z2");
+      if (zkey(1)) pumps += pumpG(RX, 350, 15, "z1", zkey(1)) + small("zone1_pump_speed", RX - 26, 356, "end", "z1");
+      if (zkey(2)) pumps += pumpG(RX, 460, 15, "z2", zkey(2)) + small("zone2_pump_speed", RX - 26, 466, "end", "z2");
       if (has("zone2_mixer")) {
         pumps += `<g${ek("zone2_mixer")}>
-          <path class="mixer" d="M${VX - 9} 461 L${VX + 9} 485 L${VX - 9} 485 L${VX + 9} 461 Z M${VX} 473 L${VX - 15} 464 L${VX - 15} 482 Z"/></g>`;
-        pumps += small("zone2_mixer", RX - 26, 480, "end");
+          <path class="mixer" d="M${VX - 9} 466 L${VX + 9} 490 L${VX - 9} 490 L${VX + 9} 466 Z M${VX} 478 L${VX - 15} 469 L${VX - 15} 487 Z"/></g>`;
+        pumps += small("zone2_mixer", RX - 26, 500, "end");
       }
     } else {
       const z = type === "floor"
-        ? { i: 1, kind: "floor", y0: 330, h: 120, vin: 365, rout: 420, loopEnd: 610 }
-        : { i: 1, kind: "radiator", y0: 330, h: 230, vin: 350, rout: 540 };
+        ? { i: 1, kind: "floor", y0: 352, h: 112, vin: 384, rout: 436, loopEnd: 616 }
+        : { i: 1, kind: "radiator", y0: 362, h: 200, vin: 380, rout: 544 };
       zones = [z];
       back += pipe(`M${EX} ${z.rout} H${RX} V278 H610 V${PY}`, "cold", "z1");
       back += pipe(`M586 ${PY} V242 H${VX} V${z.vin} H${EX}`, "hot", "z1");
       const py = Math.round((278 + z.rout) / 2) + 10;
-      pumps += pumpG(RX, py, 16, "z1", zkey(1)) + small("zone1_pump_speed", RX - 28, py + 6, "end", "z1");
+      if (zkey(1)) pumps += pumpG(RX, py, 16, "z1", zkey(1)) + small("zone1_pump_speed", RX - 28, py + 6, "end", "z1");
     }
     front += arrow(AX2, 242, "r", "hot") + arrow(AX2, 278, "l", "cold");
     front += arrow(VX, 300, "d", "hot") + arrow(RX, 300, "u", "cold");
 
     let zoneSvg = "";
+    const D = 12, DY = 9;
     zones.forEach((z) => {
       const k = `z${z.i}`, p = `zone${z.i}_`;
       let em = "";
@@ -501,15 +511,18 @@ class HeatpumpFlowCard extends HTMLElement {
         let cols = "";
         for (let x = EX + 8; x <= EX + EW - 18; x += 13) cols += `<rect class="r-col" x="${x}" y="${z.y0 + 9}" width="11" height="${z.h - 18}" rx="5.5"/>`;
         em = `
-          <ellipse class="shadow" cx="${EX + EW / 2}" cy="${z.y0 + z.h + 7}" rx="${EW / 2}" ry="5" ${soft}/>
+          <ellipse class="shadow" cx="${EX + EW / 2 + 6}" cy="${z.y0 + z.h + 6}" rx="${EW / 2 + 8}" ry="5" ${soft}/>
+          <path class="r-side" d="M${EX + EW} ${z.y0 + 4} L${EX + EW + D} ${z.y0 - DY + 4} V${z.y0 + z.h - DY - 2} L${EX + EW} ${z.y0 + z.h - 2} Z"/>
+          <path class="r-top" d="M${EX + 4} ${z.y0} L${EX + D + 4} ${z.y0 - DY} H${EX + EW + D} L${EX + EW} ${z.y0} Z"/>
           <rect class="r-back" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="6"/>
           ${cols}
           <rect class="r-bar" x="${EX + 1}" y="${z.y0 + 1}" width="${EW - 2}" height="9" rx="4.5"/>
           <rect class="r-bar" x="${EX + 1}" y="${z.y0 + z.h - 10}" width="${EW - 2}" height="9" rx="4.5"/>
-          <rect class="r-valve" x="${EX + EW - 2}" y="${z.y0 + 1}" width="10" height="9" rx="2"/>
-          <rect class="r-head" x="${EX + EW + 7}" y="${z.y0 - 2}" width="10" height="15" rx="3"/>
+          <rect class="r-valve" x="${EX - 17}" y="${z.vin - 7}" width="17" height="14" rx="3"/>
+          <rect class="r-head" x="${EX - 16}" y="${z.vin - 29}" width="15" height="22" rx="4"/>
+          <path class="r-rib" d="M${EX - 13} ${z.vin - 25} V${z.vin - 11} M${EX - 8.5} ${z.vin - 25} V${z.vin - 11} M${EX - 4} ${z.vin - 25} V${z.vin - 11}"/>
           <rect class="glow" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="6"/>
-          ${waves(EX, EW, z.y0 - 8)}`;
+          ${waves(EX, EW, z.y0 - 14)}`;
       } else {
         let caps = "", heads = "", loops = "", flows = "";
         const yb = z.y0 + z.h;
@@ -527,6 +540,8 @@ class HeatpumpFlowCard extends HTMLElement {
         em = `
           ${loops}${flows}
           <ellipse class="shadow" cx="${EX + EW / 2}" cy="${yb + 4}" rx="${EW / 2}" ry="4" ${soft}/>
+          <path class="r-side" d="M${EX + EW} ${z.y0 + 2} L${EX + EW + D} ${z.y0 - DY + 2} V${z.y0 + z.h - DY - 1} L${EX + EW} ${z.y0 + z.h - 1} Z"/>
+          <path class="r-top" d="M${EX + 2} ${z.y0} L${EX + D + 2} ${z.y0 - DY} H${EX + EW + D} L${EX + EW} ${z.y0} Z"/>
           <rect class="cab" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="4"/>
           <rect class="cab-in" x="${EX + 6}" y="${z.y0 + 6}" width="${EW - 12}" height="${z.h - 12}" rx="3"/>
           <rect class="bar-h" x="${EX + 8}" y="${z.vin - 7}" width="${EW - 16}" height="14" rx="7"/>
@@ -536,7 +551,7 @@ class HeatpumpFlowCard extends HTMLElement {
       }
       const name = esc(c[p + "name"] || (z.kind === "radiator" ? T.radiator : T.floor));
       const compact = type === "both" && z.i === 1;
-      const ny = compact ? 436 : 662;
+      const ny = compact ? 448 : 662;
       zoneSvg += `
         <g class="emitter" data-on="${k}"${ek(zkey(z.i))}>${em}</g>
         ${tag(p + "vl_temp", EX + 4, z.vin, "h")}
@@ -547,7 +562,7 @@ class HeatpumpFlowCard extends HTMLElement {
     /* Außengerät (gezeichnet, 3D) */
     let slats = "", grooves = "", spokes = "";
     for (let y = 392; y <= 602; y += 9) slats += `<line class="slat-d" x1="48" y1="${y}" x2="232" y2="${y}"/><line class="slat-l" x1="48" y1="${y + 1.6}" x2="232" y2="${y + 1.6}"/>`;
-    for (let x = 316; x <= 330; x += 7) grooves += `<line class="u-groove" x1="${x}" y1="${380 - (x - 310) * 0.9}" x2="${x}" y2="${606 - (x - 310) * 0.9}"/>`;
+    for (let x = 318; x <= 346; x += 7) grooves += `<line class="u-groove" x1="${x}" y1="${(380 - (x - 310) * 0.76).toFixed(1)}" x2="${x}" y2="${(606 - (x - 310) * 0.76).toFixed(1)}"/>`;
     for (let a = 0; a < 360; a += 22.5) {
       const r1 = 14, r2 = 76, rad = (a * Math.PI) / 180;
       spokes += `M${(135 + r1 * Math.cos(rad)).toFixed(1)} ${(495 + r1 * Math.sin(rad)).toFixed(1)} L${(135 + r2 * Math.cos(rad)).toFixed(1)} ${(495 + r2 * Math.sin(rad)).toFixed(1)} `;
@@ -556,12 +571,13 @@ class HeatpumpFlowCard extends HTMLElement {
       `<path d="M135 495 C124 462 136 428 168 423 C183 449 167 481 135 495Z" transform="rotate(${a} 135 495)"/>`).join("");
     const unit = `
       <g${ek("compressor")}>
-        <ellipse class="shadow" cx="190" cy="622" rx="160" ry="9" ${soft}/>
+        <ellipse class="shadow" cx="200" cy="620" rx="172" ry="10" ${soft}/>
         <rect class="u-foot" x="62" y="604" width="38" height="16" rx="3"/>
         <rect class="u-foot" x="250" y="604" width="38" height="16" rx="3"/>
-        <path class="u-side" d="M310 380 L334 358 V586 L310 610 Z"/>
+        <path class="u-foot" d="M300 600 L334 574 V588 L300 614 Z"/>
+        <path class="u-side" d="M310 380 L352 348 V578 L310 610 Z"/>
         ${grooves}
-        <path class="u-top" d="M40 380 L64 358 H334 L310 380 Z"/>
+        <path class="u-top" d="M40 380 L82 348 H352 L310 380 Z"/><path class="u-hl" d="M46 380 H304"/>
         <rect class="u-front" x="40" y="380" width="270" height="230" rx="6"/>
         ${slats}
         <circle class="fan-bezel" cx="135" cy="495" r="86"/>
@@ -598,7 +614,7 @@ class HeatpumpFlowCard extends HTMLElement {
       coilF += `M492 ${y} A 48 7 0 0 0 588 ${y} `;
       coilH += `M500 ${y + 3} A 40 5 0 0 0 580 ${y + 3} `;
     }
-    const ports = [490, 514, 538, 562, 586, 610].map((x) => `<rect class="port" x="${x - 7}" y="${PY - 8}" width="14" height="10" rx="2"/>`).join("");
+    const ports = [490, 514, 538, 562, 586, 610].map((x) => `<ellipse class="port" cx="${x}" cy="${PY - 5}" rx="7.5" ry="3.5"/><rect class="port" x="${x - 6}" y="${PY - 14}" width="12" height="9" rx="1.5"/><ellipse class="port-top" cx="${x}" cy="${PY - 14}" rx="6" ry="2.5"/>`).join("");
     const tank = `
       <ellipse class="shadow" cx="550" cy="626" rx="102" ry="8" ${soft}/>
       <rect class="t-plinth" x="466" y="604" width="168" height="20" rx="6"/>
@@ -615,6 +631,8 @@ class HeatpumpFlowCard extends HTMLElement {
         <rect class="rod" x="603" y="380" width="9" height="182" rx="4.5"/>
         <rect class="rod-tint" x="603" y="380" width="9" height="182" rx="4.5"/>
       </g>` : ""}
+      <path class="t-side" d="M638 ${PY + 6} L654 ${PY - 6} V${PY + 70} L638 ${PY + 80} Z"/>
+      <path class="t-top" d="M468 ${PY} L482 ${PY - 11} H652 L638 ${PY} Z"/>
       <rect class="t-head" x="460" y="${PY}" width="180" height="82" rx="12"/>
       <path class="t-headhl" d="M472 ${PY + 3} H628"/>
       ${ports}
@@ -629,18 +647,29 @@ class HeatpumpFlowCard extends HTMLElement {
         <path class="mixer" d="M591 322 L615 338 L615 322 L591 338 Z M603 330 L595 345 L611 345 Z"/>
         <text class="s" x="603" y="372" text-anchor="middle"><tspan data-val="zone1_mixer">–</tspan></text></g>` : ""}`;
 
-    /* Zapfstelle (Chrom) */
-    const tap = `
-      <rect class="chrome" x="864" y="160" width="20" height="56" rx="5"/>
-      <rect class="chrome" x="860" y="166" width="28" height="7" rx="2"/>
-      <rect class="chrome" x="860" y="200" width="28" height="7" rx="2"/>
-      <rect class="chrome" x="870" y="138" width="8" height="24" rx="2"/>
-      <rect class="chrome" x="856" y="132" width="36" height="9" rx="4.5"/>
-      <circle class="chrome" cx="856" cy="136.5" r="5.5"/><circle class="chrome" cx="892" cy="136.5" r="5.5"/>
-      <path class="spout-ol" d="M884 180 H904 Q922 180 922 198 V214"/>
-      <path class="spout" d="M884 180 H904 Q922 180 922 198 V214"/>
-      <path class="spout-hl" d="M886 177.5 H904 Q919 177.5 919.5 192"/>
-      <rect class="chrome" x="914" y="212" width="16" height="10" rx="2"/>`;
+    /* Zapfstelle: Wand-Auslaufventil mit Gewinde, Sechskant, Kreuzgriff und Schlauchtülle */
+    const tap = `<g transform="translate(866 170) scale(1.1) translate(-866 -170)">
+      <rect class="chrome" x="866" y="163" width="16" height="14" rx="2"/>
+      <path class="thread" d="M869.5 163.5 V176.5 M873 163.5 V176.5 M876.5 163.5 V176.5 M880 163.5 V176.5"/>
+      <rect class="chrome" x="882" y="158" width="11" height="24" rx="1.5"/>
+      <path class="thread" d="M882.5 166 H892.5 M882.5 174 H892.5"/>
+      <rect class="chrome" x="897" y="184" width="12" height="9" rx="2"/>
+      <path class="chrome" d="M893 163 Q893 157 900 157 H914 Q924 157 925 170 Q924 184 914 186 H900 Q893 186 893 180 Z"/>
+      <path class="tap-hl" d="M898 161 H913 Q919 161 920.5 168"/>
+      <rect class="chrome" x="900" y="145" width="16" height="13" rx="2"/>
+      <path class="thread" d="M900.5 149 H915.5 M900.5 153 H915.5"/>
+      <rect class="chrome" x="905" y="132" width="6" height="14" rx="1"/>
+      <ellipse class="chrome" cx="908" cy="126" rx="4" ry="6.5"/>
+      <path class="chrome" d="M886 133 Q886 128 891 128 H925 Q930 128 930 133 Q930 138 925 138 H891 Q886 138 886 133 Z"/>
+      <circle class="chrome" cx="886" cy="133" r="5.5"/><circle class="chrome" cx="930" cy="133" r="5.5"/>
+      <ellipse class="chrome" cx="908" cy="141" rx="4.5" ry="6"/>
+      <circle class="chrome" cx="908" cy="133" r="4.5"/>
+      <path class="spout-ol" d="M920 176 Q942 176 943 196 V206"/>
+      <path class="spout" d="M920 176 Q942 176 943 196 V206"/>
+      <path class="spout-hl" d="M921 172.5 Q937 173 940.5 186"/>
+      <rect class="chrome" x="936" y="204" width="14" height="8" rx="2"/>
+      <path class="chrome" d="M938 212 H948 L946.5 232 H939.5 Z"/>
+      <path class="thread" d="M938.5 218 H947.5 M939 224 H947 M939.5 229 H946.5"/></g>`;
 
     /* Haus-Symbol mit Innen- und Außentemperatur (höher, mehr Abstand zu den Leitungen) */
     const house = (has("indoor_temp") || has("outdoor_temp")) ? `
@@ -740,7 +769,7 @@ class HeatpumpFlowCard extends HTMLElement {
           ${tank}
           ${tap}
           ${zoneSvg}
-          ${pumpG(256, 300, 17, "primary", primaryKey)}
+          ${primaryKey ? pumpG(256, 300, 17, "primary", primaryKey) : ""}
           ${has("circulation") ? pumpG(800, 188, 10, "circ", "circulation") : ""}
           ${pumps}
           ${house}
