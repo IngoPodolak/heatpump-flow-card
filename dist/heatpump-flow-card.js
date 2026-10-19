@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.9.0";
+const HP_VERSION = "1.10.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -25,7 +25,7 @@ const HP_I18N = {
     lbl: {
       title: "Titel (leer = kein Titel)", language: "Sprache", heating_type: "Wärmeverteilung",
       theme_background: "Hintergrund vom HA-Theme übernehmen (statt dunkel)", softener: "Strang „Enthärtung“ anzeigen",
-      outdoor_temp: "Außentemperatur", indoor_temp: "Innentemperatur", compressor: "Verdichter läuft", defrost: "Abtauen / Enteisung aktiv",
+      outdoor_temp: "Außentemperatur", indoor_temp: "Innentemperatur", indoor_setpoint: "Solltemperatur innen", compressor: "Verdichter läuft", defrost: "Abtauen / Enteisung aktiv",
       vl_temp: "Vorlauftemperatur Wärmepumpe", rl_temp: "Rücklauftemperatur Wärmepumpe", pump: "Umwälzpumpe läuft",
       pump_speed: "Umwälzpumpe Leistung (%)", pressure: "Druck im Heizsystem", power: "Stromverbrauch Wärmepumpe",
       heat_power: "Erzeugte Wärme (thermische Leistung)", cop: "COP", mode: "Aktueller Betriebsmodus",
@@ -37,6 +37,7 @@ const HP_I18N = {
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
+      indoor_setpoint: "Sensor, Zahl oder Klima-Entität (bei Klima wird die Zieltemperatur verwendet)",
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
       zone1_mixer: "Mischer im Innengerät für den Speicher – wird mit „Speicher“ beschriftet", bypass_valve: "Zweiter Mischer im Innengerät – wird mit „Bypass“ beschriftet",
       zpump: "Leer lassen: aktiv, wenn die Umwälzpumpe läuft und keine Brauchwasserbereitung aktiv ist",
@@ -60,7 +61,7 @@ const HP_I18N = {
     lbl: {
       title: "Title (empty = no title)", language: "Language", heating_type: "Heat distribution",
       theme_background: "Use HA theme background (instead of dark)", softener: "Show water softener line",
-      outdoor_temp: "Outdoor temperature", indoor_temp: "Indoor temperature", compressor: "Compressor running", defrost: "Defrost active",
+      outdoor_temp: "Outdoor temperature", indoor_temp: "Indoor temperature", indoor_setpoint: "Indoor target temperature", compressor: "Compressor running", defrost: "Defrost active",
       vl_temp: "Heat pump flow temperature", rl_temp: "Heat pump return temperature", pump: "Circulation pump running",
       pump_speed: "Circulation pump speed (%)", pressure: "System pressure", power: "Heat pump power consumption",
       heat_power: "Heat output (thermal power)", cop: "COP", mode: "Current operating mode",
@@ -72,6 +73,7 @@ const HP_I18N = {
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
+      indoor_setpoint: "Sensor, number or climate entity (for climate the target temperature is used)",
       pump_speed: "Also controls the speed of the pump and pipe animation",
       zone1_mixer: "Mixing valve in the indoor unit for the tank – labelled “Tank”", bypass_valve: "Second valve in the indoor unit – labelled “Bypass”",
       zpump: "Leave empty: active when the circulation pump runs and no hot water heating is active",
@@ -95,7 +97,7 @@ const HP_I18N = {
     lbl: {
       title: "Titre (vide = aucun)", language: "Langue", heating_type: "Émetteurs de chaleur",
       theme_background: "Utiliser le fond du thème HA (au lieu de sombre)", softener: "Afficher la ligne adoucisseur",
-      outdoor_temp: "Température extérieure", indoor_temp: "Température intérieure", compressor: "Compresseur en marche", defrost: "Dégivrage actif",
+      outdoor_temp: "Température extérieure", indoor_temp: "Température intérieure", indoor_setpoint: "Consigne température intérieure", compressor: "Compresseur en marche", defrost: "Dégivrage actif",
       vl_temp: "Température départ PAC", rl_temp: "Température retour PAC", pump: "Circulateur en marche",
       pump_speed: "Vitesse du circulateur (%)", pressure: "Pression de l'installation", power: "Consommation électrique PAC",
       heat_power: "Chaleur produite (puissance thermique)", cop: "COP", mode: "Mode de fonctionnement",
@@ -107,6 +109,7 @@ const HP_I18N = {
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
+      indoor_setpoint: "Capteur, nombre ou entité climat (pour climat, la consigne est utilisée)",
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
       zone1_mixer: "Vanne de l'unité intérieure pour le ballon – libellé « Ballon »", bypass_valve: "Deuxième vanne de l'unité intérieure – libellé « Bypass »",
       zpump: "Laisser vide : actif quand le circulateur tourne et sans production d'eau chaude",
@@ -130,7 +133,7 @@ const HP_I18N = {
     lbl: {
       title: "Titel (leeg = geen titel)", language: "Taal", heating_type: "Warmteafgifte",
       theme_background: "Achtergrond van HA-thema gebruiken (i.p.v. donker)", softener: "Lijn waterontharder tonen",
-      outdoor_temp: "Buitentemperatuur", indoor_temp: "Binnentemperatuur", compressor: "Compressor draait", defrost: "Ontdooien actief",
+      outdoor_temp: "Buitentemperatuur", indoor_temp: "Binnentemperatuur", indoor_setpoint: "Gewenste binnentemperatuur", compressor: "Compressor draait", defrost: "Ontdooien actief",
       vl_temp: "Aanvoertemperatuur warmtepomp", rl_temp: "Retourtemperatuur warmtepomp", pump: "Circulatiepomp draait",
       pump_speed: "Circulatiepomp vermogen (%)", pressure: "Systeemdruk", power: "Stroomverbruik warmtepomp",
       heat_power: "Geproduceerde warmte (thermisch vermogen)", cop: "COP", mode: "Huidige bedrijfsmodus",
@@ -142,6 +145,7 @@ const HP_I18N = {
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
+      indoor_setpoint: "Sensor, getal of klimaat-entiteit (bij klimaat wordt de doeltemperatuur gebruikt)",
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
       zone1_mixer: "Mengklep in de binnenunit voor de boiler – label „Boiler“", bypass_valve: "Tweede klep in de binnenunit – label „Bypass“",
       zpump: "Leeg laten: actief als de circulatiepomp draait en er geen tapwater wordt bereid",
@@ -165,7 +169,7 @@ const HP_I18N = {
     lbl: {
       title: "Titolo (vuoto = nessuno)", language: "Lingua", heating_type: "Distribuzione del calore",
       theme_background: "Usa lo sfondo del tema HA (invece di scuro)", softener: "Mostra linea addolcitore",
-      outdoor_temp: "Temperatura esterna", indoor_temp: "Temperatura interna", compressor: "Compressore in funzione", defrost: "Sbrinamento attivo",
+      outdoor_temp: "Temperatura esterna", indoor_temp: "Temperatura interna", indoor_setpoint: "Temperatura interna impostata", compressor: "Compressore in funzione", defrost: "Sbrinamento attivo",
       vl_temp: "Temperatura mandata PdC", rl_temp: "Temperatura ritorno PdC", pump: "Circolatore in funzione",
       pump_speed: "Velocità circolatore (%)", pressure: "Pressione impianto", power: "Consumo elettrico PdC",
       heat_power: "Calore prodotto (potenza termica)", cop: "COP", mode: "Modalità di funzionamento",
@@ -177,6 +181,7 @@ const HP_I18N = {
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
+      indoor_setpoint: "Sensore, numero o entità clima (per clima viene usata la temperatura impostata)",
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
       zone1_mixer: "Miscelatrice nell'unità interna per l'accumulo – etichetta «Accumulo»", bypass_valve: "Seconda valvola nell'unità interna – etichetta «Bypass»",
       zpump: "Lasciare vuoto: attivo quando il circolatore funziona e non c'è produzione di acqua calda",
@@ -795,12 +800,13 @@ class HeatpumpFlowCard extends HTMLElement {
       <path class="tap-hl" d="M887 145 Q892 141.5 899 140.5 L943 130.5"/>`;
 
     /* Haus-Symbol mit Innen- und Außentemperatur (höher, mehr Abstand zu den Leitungen) */
-    const house = (has("indoor_temp") || has("outdoor_temp")) ? `
+    const house = (has("indoor_temp") || has("outdoor_temp") || has("indoor_setpoint")) ? `
       <path class="house" d="M30 72 L97 26 L164 72 M42 64 V134 H152 V64 M128 46 V30 H142 V56"/>
       ${has("indoor_temp") ? `<g${ek("indoor_temp")}><text class="l" x="97" y="93" text-anchor="middle" style="font-size:15px">${T.indoor}</text>
         <text class="v" x="97" y="122" text-anchor="middle" style="font-size:22px" data-val="indoor_temp">–</text></g>` : ""}
       ${has("outdoor_temp") ? `<g${ek("outdoor_temp")}><text class="l" x="176" y="93" style="font-size:15px">${T.outdoor}</text>
-        <text class="v" x="176" y="122" style="font-size:22px" data-val="outdoor_temp">–</text></g>` : ""}` : "";
+        <text class="v" x="176" y="122" style="font-size:22px" data-val="outdoor_temp">–</text></g>` : ""}
+      ${has("indoor_setpoint") ? `<text x="97" y="157" text-anchor="middle"${ek("indoor_setpoint")}><tspan class="l" style="font-size:15px">${T.set} </tspan><tspan class="v" style="font-size:18px" data-val="indoor_setpoint">–</tspan></text>` : ""}` : "";
 
     /* Status-Chips (eine Zeile) */
     const chipDefs = [
@@ -1168,7 +1174,7 @@ class HeatpumpFlowCard extends HTMLElement {
     /* Haus-Symbol mit Innen- und Außentemperatur */
     let house = "";
     const hs = one("house");
-    if (hs && (has("indoor_temp") || has("outdoor_temp"))) {
+    if (hs && (has("indoor_temp") || has("outdoor_temp") || has("indoor_setpoint"))) {
       const hx = X(hs[0]), hy = Y(hs[1]);
       house = `<g transform="translate(${hx - 30} ${hy - 26})">
         <path class="house img" d="M30 72 L97 26 L164 72 M42 64 V134 H152 V64 M128 46 V30 H142 V56"/>
@@ -1176,6 +1182,7 @@ class HeatpumpFlowCard extends HTMLElement {
           <text ${halo} class="ovt" x="97" y="122" text-anchor="middle" style="font-size:23px" data-val="indoor_temp">–</text></g>` : ""}
         ${has("outdoor_temp") ? `<g${ek("outdoor_temp")}><text ${halo} class="ovt ovl" x="176" y="93" style="font-size:15px">${T.outdoor}</text>
           <text ${halo} class="ovt" x="176" y="122" style="font-size:23px" data-val="outdoor_temp">–</text></g>` : ""}
+        ${has("indoor_setpoint") ? `<text ${halo} class="ovt" x="97" y="160" text-anchor="middle"${ek("indoor_setpoint")}><tspan class="ovl" style="font-size:15px">${T.set} </tspan><tspan style="font-size:19px" data-val="indoor_setpoint">–</tspan></text>` : ""}
       </g>`;
     }
 
@@ -1313,7 +1320,7 @@ class HeatpumpFlowCard extends HTMLElement {
       soft: (num("softener_flow") || 0) > 0,
     };
     this._flagEls.forEach((el) => el.classList.toggle("on", !!flags[el.dataset.on]));
-    this._valEls.forEach((el) => { el.textContent = this._fmt(c[el.dataset.val]); });
+    this._valEls.forEach((el) => { el.textContent = this._fmt(c[el.dataset.val], el.dataset.val); });
     this.shadowRoot.querySelectorAll(".tag[data-cx]").forEach((g) => {
       try {
         const t = g.querySelector("text"), r = g.querySelector("rect"), w = t.getComputedTextLength() + 24, cx = Number(g.dataset.cx);
@@ -1365,11 +1372,18 @@ class HeatpumpFlowCard extends HTMLElement {
     if (this._stopBot && bot) this._stopBot.setAttribute("stop-color", bot);
   }
 
-  _fmt(id) {
+  _fmt(id, key) {
     const h = this._hass;
     const s = id && h.states[id];
     if (!s) return "n/a";
     if (s.state === "unavailable" || s.state === "unknown") return "–";
+    /* Klima-Entität: Soll- bzw. Ist-Temperatur aus den Attributen */
+    if (String(id).startsWith("climate.")) {
+      const v = s.attributes && s.attributes[key === "indoor_temp" ? "current_temperature" : "temperature"];
+      if (v === undefined || v === null) return "–";
+      const unit = (h.config && h.config.unit_system && h.config.unit_system.temperature) || "°C";
+      return `${Number(v).toLocaleString(h.locale?.language || h.language || undefined, { maximumFractionDigits: 1 })} ${unit}`;
+    }
     if (typeof h.formatEntityState === "function") {
       try { return h.formatEntityState(s); } catch (e) { /* Fallback unten */ }
     }
@@ -1471,7 +1485,7 @@ class HeatpumpFlowCardEditor extends HTMLElement {
       { name: "theme_background", selector: { boolean: {} } },
       {
         type: "expandable", name: "sec_hp", flatten: true, title: t.sec.hp,
-        schema: ["outdoor_temp", "indoor_temp", "compressor", "defrost", "vl_temp", "rl_temp", "pump", "pump_speed", "pressure"].map(e),
+        schema: ["outdoor_temp", "indoor_temp", "indoor_setpoint", "compressor", "defrost", "vl_temp", "rl_temp", "pump", "pump_speed", "pressure"].map(e),
       },
       {
         type: "expandable", name: "sec_dhw", flatten: true, title: t.sec.dhw,

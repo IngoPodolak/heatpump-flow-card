@@ -108,6 +108,7 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `zone1_mixer` | Mischer Speicher im Innengerät (Stellung), beschriftet mit „Speicher“ |
 | `bypass_valve` | Zweiter Mischer im Innengerät (Stellung), beschriftet mit „Bypass“ |
 | `outdoor_temp`, `indoor_temp` | Außen-/Innentemperatur |
+| `indoor_setpoint` | Solltemperatur innen (unter dem Haus) – Sensor, Zahl oder Klima-Entität |
 | `compressor` | Verdichter läuft |
 | `defrost` | Abtauen aktiv |
 | `vl_temp`, `rl_temp` | Vor-/Rücklauf Wärmepumpe |
