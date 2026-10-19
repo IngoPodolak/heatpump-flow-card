@@ -2,12 +2,18 @@
 
 Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin Altherma 4 mit ECH₂O-Speicher**, aber mit jeder Wärmepumpe nutzbar.
 
+### Gezeichnete Grafik
+
 ![Vorschau](images/preview.png)
 
-**Bild-Modus** (integriertes Altherma-Bild, dunkel und mit hellem Theme):
+### Mit integrierten Daikin-Altherma-4-Grafiken
 
-![Bild-Modus](images/preview-bild.png)
-![Bild-Modus hell](images/preview-hell.png)
+| | Dunkel | Helles Theme |
+|---|---|---|
+| **Heizkörper** | ![Heizkörper dunkel](images/altherma-heizkoerper-dunkel.png) | ![Heizkörper hell](images/altherma-heizkoerper-hell.png) |
+| **Fußbodenheizung** | ![FBH dunkel](images/altherma-fbh-dunkel.png) | ![FBH hell](images/altherma-fbh-hell.png) |
+
+Oben links: mit Enthärtung und Leckageschutz. Unten rechts: Abtauen aktiv, Absperrventil geschlossen (gelbes Schild).
 
 ## Funktionen
 
