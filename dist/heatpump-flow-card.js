@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.8.0";
+const HP_VERSION = "1.8.1";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -945,7 +945,7 @@ class HeatpumpFlowCard extends HTMLElement {
 
   async _resolveBg(key) {
     if (key.startsWith("builtin:")) {
-      HeatpumpFlowCard._imgMod = HeatpumpFlowCard._imgMod || import(new URL("./heatpump-flow-card-images.js", import.meta.url).href);
+      HeatpumpFlowCard._imgMod = HeatpumpFlowCard._imgMod || import(new URL(`./heatpump-flow-card-images.js?v=${HP_VERSION}`, import.meta.url).href);
       const mod = await HeatpumpFlowCard._imgMod;
       const img = mod.HP_IMAGES[key.slice(8)];
       if (!img) throw new Error("Bild nicht gefunden");
