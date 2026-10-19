@@ -1,0 +1,32 @@
+type: custom:heatpump-flow-card
+title: Daikin Altherma 4
+heating_type: radiator        # radiator | floor | both
+# --- Wärmepumpe / Primärkreis ---
+outdoor_temp: sensor.daikin_altherma_4_eingaberegister_aussenlufttemperatur
+indoor_temp: sensor.daikin_altherma_4_eingaberegister_fernbedienung_raumtemperatur_haupt
+compressor: binary_sensor.daikin_altherma_4_eingaberegister_verdichter_lauft
+defrost: binary_sensor.daikin_altherma_4_diskrete_eingange_enteisen
+vl_temp: sensor.daikin_altherma_4_eingaberegister_vorlauftemperatur_phe_plattenwarmetauscher
+rl_temp: sensor.daikin_altherma_4_eingaberegister_temperatur_der_kaltemittel_flussigkeit
+pump: binary_sensor.daikin_altherma_4_eingaberegister_umwalzpumpe_lauft
+pump_speed: sensor.daikin_altherma_4_eingaberegister_drehzahl_umwalzpumpe
+pressure: sensor.daikin_altherma_4_eingaberegister_wasserdruck
+# --- Speicher & Warmwasser ---
+dhw_temp: sensor.daikin_altherma_4_eingaberegister_brauchwassertemperatur
+tank_top_temp: sensor.daikin_altherma_4_eingaberegister_brauchwasser_obere_temperatur
+tank_bottom_temp: sensor.daikin_altherma_4_eingaberegister_brauchwasser_untere_temperatur
+dhw_active: binary_sensor.daikin_altherma_4_diskrete_eingange_brauchwasser_lauft
+dhw_boost: switch.daikin_altherma_4_halteregister_brauchwasser_zusatzheizungsmodus_leistungsstark
+heater_rod: binary_sensor.daikin_altherma_4_diskrete_eingange_reserveheizung_relais_1
+# dhw_setpoint:  (im Editor auswählen)
+# circulation:   (im Editor auswählen)
+# --- untere Leiste ---
+power: sensor.daikin_altherma_4_eingaberegister_stromverbrauch_warmepumpe
+heat_power: sensor.daikin_altherma_4_erweitert_thermische_leistung
+cop: sensor.daikin_altherma_4_erweitert_leistungszahl_cop
+# mode:          (im Editor auswählen)
+# --- Heizkreis 1 ---
+zone1_pump: binary_sensor.daikin_altherma_4_diskrete_eingange_hauptzone_lauft
+zone1_pump_speed: sensor.daikin_altherma_4_eingaberegister_direkte_pumpe_pwm_im_mischsatz
+zone1_mixer: sensor.daikin_altherma_4_eingaberegister_bypass_ventil_stellung
+# zone1_vl_temp / zone1_rl_temp: (im Editor auswählen)
