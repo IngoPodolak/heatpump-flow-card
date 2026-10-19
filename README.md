@@ -8,7 +8,11 @@ Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin
 
 - Außengerät mit drehendem Lüfter (Verdichter läuft) und Abtau-Animation (Frost, Eiskristalle, Tropfwasser)
 - Umwälzpumpen mit drehendem Laufrad – Geschwindigkeit folgt der Pumpenleistung in %
-- Wasserfluss in den Rohren mit Richtungspfeilen, sobald die jeweilige Pumpe läuft
+- Wasserfluss in den Rohren mit einheitlich ausgerichteten Richtungspfeilen, sobald die jeweilige Pumpe läuft
+- Innen-/Außentemperatur als Haus-Symbol
+- VL/RL-Temperaturen direkt an den Anschlüssen von Heizkörper bzw. FBH
+- Optionaler Strang „Enthärtung“ mit Durchsatz, Härtegrad und Leckageschutz-Symbol (grün = ok, gelb = abgesperrt, rot = Leck)
+- Sprachen: Deutsch, English, Français, Nederlands, Italiano
 - Speicher mit Innengerät, Wärmetauscher-Wendel mit temperaturabhängiger Färbung, senkrechtem Heizstab und Mischer
 - Warmwasser mit Zirkulationspumpe, Sollwert, Speicherüberhöhung (leistungsstark)
 - Wärmeverteilung wählbar: **Heizkörper**, **Fußbodenheizung** oder **beides** (2 Heizkreise mit Pumpe und Mischer)
@@ -38,6 +42,10 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 |---|---|
 | `title` | Titel (optional) |
 | `heating_type` | `radiator`, `floor` oder `both` |
+| `language` | `auto` (HA-Sprache), `de`, `en`, `fr`, `nl`, `it` |
+| `softener` | `true` = Strang „Enthärtung“ anzeigen |
+| `softener_flow`, `softener_hardness` | Durchsatz (l/h) und Härtegrad der Enthärtung |
+| `leak_alarm`, `leak_valve` | Leckage erkannt (an = Alarm) / Absperrventil offen |
 | `theme_background` | `true` = Hintergrund vom HA-Theme statt dunkel |
 | `zone1_mixer` | Mischerstellung im Innengerät (mischt Heizkreis und Wärmepumpenkreis) |
 | `outdoor_temp`, `indoor_temp` | Außen-/Innentemperatur |

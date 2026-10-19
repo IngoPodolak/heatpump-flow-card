@@ -1,6 +1,8 @@
 type: custom:heatpump-flow-card
 title: Daikin Altherma 4
 heating_type: radiator        # radiator | floor | both
+language: auto                # auto | de | en | fr | nl | it
+softener: false               # true = Strang Enthärtung anzeigen
 # --- Wärmepumpe / Primärkreis ---
 outdoor_temp: sensor.daikin_altherma_4_eingaberegister_aussenlufttemperatur
 indoor_temp: sensor.daikin_altherma_4_eingaberegister_fernbedienung_raumtemperatur_haupt
@@ -18,6 +20,7 @@ tank_bottom_temp: sensor.daikin_altherma_4_eingaberegister_brauchwasser_untere_t
 dhw_active: binary_sensor.daikin_altherma_4_diskrete_eingange_brauchwasser_lauft
 dhw_boost: switch.daikin_altherma_4_halteregister_brauchwasser_zusatzheizungsmodus_leistungsstark
 heater_rod: binary_sensor.daikin_altherma_4_diskrete_eingange_reserveheizung_relais_1
+zone1_mixer: sensor.daikin_altherma_4_eingaberegister_bypass_ventil_stellung   # Mischer im Innengerät
 # dhw_setpoint:  (im Editor auswählen)
 # circulation:   (im Editor auswählen)
 # --- untere Leiste ---
@@ -28,5 +31,4 @@ cop: sensor.daikin_altherma_4_erweitert_leistungszahl_cop
 # --- Heizkreis 1 ---
 zone1_pump: binary_sensor.daikin_altherma_4_diskrete_eingange_hauptzone_lauft
 zone1_pump_speed: sensor.daikin_altherma_4_eingaberegister_direkte_pumpe_pwm_im_mischsatz
-zone1_mixer: sensor.daikin_altherma_4_eingaberegister_bypass_ventil_stellung
 # zone1_vl_temp / zone1_rl_temp: (im Editor auswählen)
