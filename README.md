@@ -105,7 +105,8 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `show_grid` | Positionier-Raster im Bild anzeigen |
 | `overlay` | Positionen im Bild-Modus anpassen (siehe oben) |
 | `theme_background` | `true` = Hintergrund vom HA-Theme statt dunkel |
-| `zone1_mixer` | Mischerstellung im Innengerät (mischt Heizkreis und Wärmepumpenkreis) |
+| `zone1_mixer` | Mischer Speicher im Innengerät (Stellung), beschriftet mit „Speicher“ |
+| `bypass_valve` | Zweiter Mischer im Innengerät (Stellung), beschriftet mit „Bypass“ |
 | `outdoor_temp`, `indoor_temp` | Außen-/Innentemperatur |
 | `compressor` | Verdichter läuft |
 | `defrost` | Abtauen aktiv |

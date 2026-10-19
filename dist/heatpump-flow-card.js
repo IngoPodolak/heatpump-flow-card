@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.8.1";
+const HP_VERSION = "1.9.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -13,6 +13,7 @@ const HP_I18N = {
     card: {
       primary: "Primärkreis", heatpump: "(Wärmepumpe)", dhw: "Brauchwasserkreis", set: "Soll",
       tank: "Speicher", unit: "Außengerät", radiator: "Heizkörper", floor: "Fußbodenheizung",
+      bypass: "Bypass",
       softener: "Enthärtung", indoor: "innen", outdoor: "außen", vl: "VL ", rl: "RL ",
       compressor: "Verdichter", defrost: "Abtauen", dhw_active: "Warmwasser", dhw_boost: "Überhöhung",
       heater_rod: "Heizstab", circulation: "Zirkulation",
@@ -30,14 +31,14 @@ const HP_I18N = {
       heat_power: "Erzeugte Wärme (thermische Leistung)", cop: "COP", mode: "Aktueller Betriebsmodus",
       dhw_temp: "Brauchwassertemperatur", dhw_setpoint: "Sollwert Brauchwasser", tank_top_temp: "Speicher obere Temperatur",
       tank_bottom_temp: "Speicher untere Temperatur", dhw_active: "Brauchwasserbereitung aktiv", dhw_boost: "Speicherüberhöhung (leistungsstark)",
-      heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischerstellung im Innengerät",
+      heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischer Speicher (Stellung)", bypass_valve: "Mischer Bypass (Stellung)",
       softener_flow: "Durchsatz (l/h)", softener_hardness: "Härtegrad", leak_alarm: "Leckage erkannt", leak_valve: "Absperrventil Leckageschutz offen",
       zname: "Name", zvl: "Vorlauftemperatur", zrl: "Rücklauftemperatur", zpump: "aktiv / Pumpe läuft", zspeed: "Pumpe Leistung (%)", zmixer: "Mischerstellung",
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
-      zone1_mixer: "Mischer im Innengerät – mischt Heizkreis und Wärmepumpenkreis",
+      zone1_mixer: "Mischer im Innengerät für den Speicher – wird mit „Speicher“ beschriftet", bypass_valve: "Zweiter Mischer im Innengerät – wird mit „Bypass“ beschriftet",
       zpump: "Leer lassen: aktiv, wenn die Umwälzpumpe läuft und keine Brauchwasserbereitung aktiv ist",
       leak_alarm: "Ein = Leck erkannt (Symbol wird rot)", leak_valve: "Aus/zu = Wasser abgesperrt (Symbol wird gelb)",
       background: "Altherma-Bild gibt es für Heizkörper und Fußbodenheizung; bei 2 Heizkreisen wird die gezeichnete Grafik verwendet.", background_image: "z. B. /local/bild.png, https://… oder media-source://… – oder unten hochladen bzw. aus den Medien wählen", overlay: "Nur Abweichungen eintragen, z. B. labels: { vl_temp: [19, 46] }",
@@ -47,6 +48,7 @@ const HP_I18N = {
     card: {
       primary: "Primary circuit", heatpump: "(heat pump)", dhw: "Domestic hot water", set: "Target",
       tank: "Tank", unit: "Outdoor unit", radiator: "Radiators", floor: "Underfloor heating",
+      bypass: "Bypass",
       softener: "Water softener", indoor: "indoor", outdoor: "outdoor", vl: "Flow ", rl: "Return ",
       compressor: "Compressor", defrost: "Defrost", dhw_active: "Hot water", dhw_boost: "Boost",
       heater_rod: "Heater", circulation: "Circulation",
@@ -64,14 +66,14 @@ const HP_I18N = {
       heat_power: "Heat output (thermal power)", cop: "COP", mode: "Current operating mode",
       dhw_temp: "Hot water temperature", dhw_setpoint: "Hot water setpoint", tank_top_temp: "Tank top temperature",
       tank_bottom_temp: "Tank bottom temperature", dhw_active: "Hot water heating active", dhw_boost: "Tank boost (powerful)",
-      heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Mixing valve in indoor unit",
+      heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Tank mixing valve (position)", bypass_valve: "Bypass valve (position)",
       softener_flow: "Flow rate (l/h)", softener_hardness: "Water hardness", leak_alarm: "Leak detected", leak_valve: "Leak protection valve open",
       zname: "Name", zvl: "flow temperature", zrl: "return temperature", zpump: "active / pump running", zspeed: "pump speed (%)", zmixer: "mixing valve position",
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
       pump_speed: "Also controls the speed of the pump and pipe animation",
-      zone1_mixer: "Mixing valve inside the indoor unit – blends heating and heat pump circuit",
+      zone1_mixer: "Mixing valve in the indoor unit for the tank – labelled “Tank”", bypass_valve: "Second valve in the indoor unit – labelled “Bypass”",
       zpump: "Leave empty: active when the circulation pump runs and no hot water heating is active",
       leak_alarm: "On = leak detected (icon turns red)", leak_valve: "Off/closed = water shut off (icon turns yellow)",
       background: "The Altherma image exists for radiators and underfloor heating; with 2 circuits the drawn graphic is used.", background_image: "e.g. /local/image.png, https://… or media-source://… – or upload / choose from media below", overlay: "Only enter changes, e.g. labels: { vl_temp: [19, 46] }",
@@ -81,6 +83,7 @@ const HP_I18N = {
     card: {
       primary: "Circuit primaire", heatpump: "(pompe à chaleur)", dhw: "Eau chaude sanitaire", set: "Consigne",
       tank: "Ballon", unit: "Unité extérieure", radiator: "Radiateurs", floor: "Plancher chauffant",
+      bypass: "Bypass",
       softener: "Adoucisseur", indoor: "intérieur", outdoor: "extérieur", vl: "Départ ", rl: "Retour ",
       compressor: "Compresseur", defrost: "Dégivrage", dhw_active: "Eau chaude", dhw_boost: "Boost",
       heater_rod: "Résistance", circulation: "Bouclage",
@@ -98,14 +101,14 @@ const HP_I18N = {
       heat_power: "Chaleur produite (puissance thermique)", cop: "COP", mode: "Mode de fonctionnement",
       dhw_temp: "Température eau chaude", dhw_setpoint: "Consigne eau chaude", tank_top_temp: "Température haut du ballon",
       tank_bottom_temp: "Température bas du ballon", dhw_active: "Production d'eau chaude active", dhw_boost: "Surchauffe du ballon (puissant)",
-      heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse de l'unité intérieure",
+      heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse ballon (position)", bypass_valve: "Vanne bypass (position)",
       softener_flow: "Débit (l/h)", softener_hardness: "Dureté de l'eau", leak_alarm: "Fuite détectée", leak_valve: "Vanne de protection fuite ouverte",
       zname: "Nom", zvl: "température départ", zrl: "température retour", zpump: "actif / circulateur en marche", zspeed: "vitesse circulateur (%)", zmixer: "position vanne mélangeuse",
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
-      zone1_mixer: "Vanne mélangeuse dans l'unité intérieure – mélange circuit de chauffage et circuit PAC",
+      zone1_mixer: "Vanne de l'unité intérieure pour le ballon – libellé « Ballon »", bypass_valve: "Deuxième vanne de l'unité intérieure – libellé « Bypass »",
       zpump: "Laisser vide : actif quand le circulateur tourne et sans production d'eau chaude",
       leak_alarm: "Marche = fuite détectée (icône rouge)", leak_valve: "Arrêt/fermée = eau coupée (icône jaune)",
       background: "L'image Altherma existe pour radiateurs et plancher chauffant ; avec 2 circuits, le graphique dessiné est utilisé.", background_image: "ex. /local/image.png, https://… ou media-source://… – ou envoyer / choisir dans les médias ci-dessous", overlay: "Saisir seulement les écarts, ex. labels: { vl_temp: [19, 46] }",
@@ -115,6 +118,7 @@ const HP_I18N = {
     card: {
       primary: "Primair circuit", heatpump: "(warmtepomp)", dhw: "Tapwater", set: "Doel",
       tank: "Boiler", unit: "Buitenunit", radiator: "Radiatoren", floor: "Vloerverwarming",
+      bypass: "Bypass",
       softener: "Waterontharder", indoor: "binnen", outdoor: "buiten", vl: "Aanvoer ", rl: "Retour ",
       compressor: "Compressor", defrost: "Ontdooien", dhw_active: "Warm water", dhw_boost: "Boost",
       heater_rod: "Element", circulation: "Circulatie",
@@ -132,14 +136,14 @@ const HP_I18N = {
       heat_power: "Geproduceerde warmte (thermisch vermogen)", cop: "COP", mode: "Huidige bedrijfsmodus",
       dhw_temp: "Tapwatertemperatuur", dhw_setpoint: "Doeltemperatuur tapwater", tank_top_temp: "Boiler temperatuur boven",
       tank_bottom_temp: "Boiler temperatuur onder", dhw_active: "Tapwaterbereiding actief", dhw_boost: "Boiler boost (krachtig)",
-      heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep in binnenunit",
+      heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep boiler (stand)", bypass_valve: "Bypassklep (stand)",
       softener_flow: "Doorstroming (l/h)", softener_hardness: "Waterhardheid", leak_alarm: "Lek gedetecteerd", leak_valve: "Afsluiter lekbeveiliging open",
       zname: "Naam", zvl: "aanvoertemperatuur", zrl: "retourtemperatuur", zpump: "actief / pomp draait", zspeed: "pompvermogen (%)", zmixer: "mengklepstand",
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
-      zone1_mixer: "Mengklep in de binnenunit – mengt verwarmings- en warmtepompcircuit",
+      zone1_mixer: "Mengklep in de binnenunit voor de boiler – label „Boiler“", bypass_valve: "Tweede klep in de binnenunit – label „Bypass“",
       zpump: "Leeg laten: actief als de circulatiepomp draait en er geen tapwater wordt bereid",
       leak_alarm: "Aan = lek gedetecteerd (icoon wordt rood)", leak_valve: "Uit/dicht = water afgesloten (icoon wordt geel)",
       background: "De Altherma-afbeelding bestaat voor radiatoren en vloerverwarming; bij 2 circuits wordt de getekende afbeelding gebruikt.", background_image: "bijv. /local/afbeelding.png, https://… of media-source://… – of hieronder uploaden / uit media kiezen", overlay: "Alleen afwijkingen invullen, bijv. labels: { vl_temp: [19, 46] }",
@@ -149,6 +153,7 @@ const HP_I18N = {
     card: {
       primary: "Circuito primario", heatpump: "(pompa di calore)", dhw: "Acqua calda sanitaria", set: "Target",
       tank: "Accumulo", unit: "Unità esterna", radiator: "Radiatori", floor: "Riscaldamento a pavimento",
+      bypass: "Bypass",
       softener: "Addolcitore", indoor: "interno", outdoor: "esterno", vl: "Mandata ", rl: "Ritorno ",
       compressor: "Compressore", defrost: "Sbrinamento", dhw_active: "Acqua calda", dhw_boost: "Boost",
       heater_rod: "Resistenza", circulation: "Ricircolo",
@@ -166,14 +171,14 @@ const HP_I18N = {
       heat_power: "Calore prodotto (potenza termica)", cop: "COP", mode: "Modalità di funzionamento",
       dhw_temp: "Temperatura acqua calda", dhw_setpoint: "Setpoint acqua calda", tank_top_temp: "Temperatura alta accumulo",
       tank_bottom_temp: "Temperatura bassa accumulo", dhw_active: "Produzione acqua calda attiva", dhw_boost: "Sovratemperatura accumulo (potente)",
-      heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Valvola miscelatrice unità interna",
+      heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Miscelatrice accumulo (posizione)", bypass_valve: "Valvola bypass (posizione)",
       softener_flow: "Portata (l/h)", softener_hardness: "Durezza dell'acqua", leak_alarm: "Perdita rilevata", leak_valve: "Valvola antiallagamento aperta",
       zname: "Nome", zvl: "temperatura mandata", zrl: "temperatura ritorno", zpump: "attivo / pompa in funzione", zspeed: "velocità pompa (%)", zmixer: "posizione miscelatrice",
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
-      zone1_mixer: "Valvola miscelatrice nell'unità interna – miscela circuito di riscaldamento e circuito PdC",
+      zone1_mixer: "Miscelatrice nell'unità interna per l'accumulo – etichetta «Accumulo»", bypass_valve: "Seconda valvola nell'unità interna – etichetta «Bypass»",
       zpump: "Lasciare vuoto: attivo quando il circolatore funziona e non c'è produzione di acqua calda",
       leak_alarm: "On = perdita rilevata (icona rossa)", leak_valve: "Off/chiusa = acqua chiusa (icona gialla)",
       background: "L'immagine Altherma esiste per radiatori e pavimento; con 2 circuiti viene usata la grafica disegnata.", background_image: "es. /local/immagine.png, https://… o media-source://… – oppure carica / scegli dai media qui sotto", overlay: "Inserire solo le modifiche, es. labels: { vl_temp: [19, 46] }",
@@ -192,7 +197,7 @@ const hpLang = (config, hass) => {
    Passend zu den Altherma-4-Schemabildern; per "overlay" einzeln überschreibbar. */
 const HP_IMG_DEFAULT = {
   labels: {
-    pressure: [45.5, 23.4], zone1_mixer: [68.6, 53.2],
+    pressure: [45.5, 23.4],
     dhw_temp: [74, 20.2], dhw_setpoint: [79.8, 20.2, "start"], vl_temp: [23.6, 46.6], rl_temp: [38.1, 47.1],
     pump_speed: [35.3, 41, "start"], tank_top_temp: [49, 60], tank_bottom_temp: [49, 80],
     zone1_pump_speed: [75.5, 66.6], zone1_vl_temp: [85.5, 60], zone1_rl_temp: [85.5, 79.5],
@@ -214,7 +219,9 @@ const HP_IMG_DEFAULT = {
   softener_pipe: "100,42.45 79.95,42.45 79.95,29.5",
   circ_pipe: "77.6,26.9 77.6,29.5",
   house: [3, 13.2],
-  mixer: [68.6, 47.4],
+  mixer: [68.6, 48],
+  mixer1: [65.2, 48],
+  mixer2: [70.8, 48],
   fan: [13.2, 67.1, 6.8, 10.6],
   frost: "3.4,49.3 37.4,49.8 35.6,82.5 30.3,88.4 4.3,79.3",
   compressor: [23.6, 63, 5.7, 18],
@@ -231,6 +238,14 @@ const HP_IMG_DEFAULT_FLOOR = {
   },
   emitters: { z1: [80, 52, 18, 38] },
 };
+
+/* Mischer-Symbol mit Beschriftung und Stellung; cls = Zusatzklasse für Text (Bild-Modus) */
+const hpMixer = (key, name, cx, cy, sc, ek, txt = "", flt = "") => `
+  <g class="mixgrp"${ek(key)}>
+    <text class="mixname${txt}" ${flt} x="${cx}" y="${cy - 13 * sc}" text-anchor="middle">${name}</text>
+    <path class="mixer" transform="translate(${cx} ${cy}) scale(${sc})" d="M-11 -7 L11 7 L11 -7 L-11 7 Z M0 0 L-7 13 L7 13 Z"/>
+    <text class="mixval${txt}" ${flt} x="${cx}" y="${cy + 31 * sc}" text-anchor="middle"><tspan data-val="${key}">–</tspan></text>
+  </g>`;
 const HP_NON_ENTITY_KEYS = ["type", "title", "heating_type", "zone1_name", "zone2_name", "theme_background", "language", "softener", "background", "background_image", "background_aspect", "overlay", "show_grid"];
 const HP_ON_STATES = ["on", "true", "running", "heating", "an", "ein", "aktiv", "active", "open", "yes", "1"];
 
@@ -337,6 +352,11 @@ const HP_STYLE = `
   .rod-glow { fill: #f97316; opacity: 0; }
   .heater.on .rod-tint { opacity: .85; }
   .heater.on .rod-glow { animation: hp-pulse 1.2s ease-in-out infinite; }
+  .mixname { font-size: 10.5px; fill: var(--hp-text2); }
+  .mixval { font-size: 14px; fill: var(--hp-text); }
+  .mixname.ov { font-size: 12px; fill: #d5dae0; font-weight: 500; }
+  .mixval.ov { font-size: 16px; fill: #fff; font-weight: 600; }
+  ha-card.themed .mixname.ov { fill: var(--hp-text2); } ha-card.themed .mixval.ov { fill: var(--hp-text); }
   .mixer { fill: #b56cf0; stroke: #4c1d7a; stroke-width: 1.4; stroke-linejoin: round; }
 
   /* Pumpen (Laufrad) */
@@ -716,6 +736,10 @@ class HeatpumpFlowCard extends HTMLElement {
         <rect class="u-edge" x="40" y="380" width="270" height="230" rx="6"/>
       </g>`;
 
+    /* Mischer im Innengerät: Speicher und optional Bypass */
+    const mixKeys = ["zone1_mixer", "bypass_valve"].filter(has);
+    const twoMix = mixKeys.length === 2;
+
     /* Speicher mit Innengerät (gezeichnet) */
     let coilF = "", coilB = "", coilH = "";
     for (let y = 412; y <= 584; y += 11) {
@@ -747,17 +771,15 @@ class HeatpumpFlowCard extends HTMLElement {
       <rect class="t-head" x="460" y="${PY}" width="180" height="82" rx="12"/>
       <path class="t-headhl" d="M472 ${PY + 3} H628"/>
       ${ports}
-      <rect class="t-display" x="474" y="314" width="94" height="48" rx="6"/>
-      <path d="M478 318 H540 L512 358 H478 Z" fill="url(#${u}-glass)"/>
+      <rect class="t-display" x="474" y="314" width="${twoMix ? 64 : 94}" height="48" rx="6"/>
+      <path d="M478 318 H${twoMix ? 526 : 540} L${twoMix ? 504 : 512} 358 H478 Z" fill="url(#${u}-glass)"/>
       <g class="leds" data-on="compressor">
-        <rect class="led" x="484" y="324" width="40" height="5" rx="2"/>
-        <rect class="led" x="484" y="335" width="56" height="5" rx="2"/>
+        <rect class="led" x="484" y="324" width="${twoMix ? 30 : 40}" height="5" rx="2"/>
+        <rect class="led" x="484" y="335" width="${twoMix ? 40 : 56}" height="5" rx="2"/>
         <rect class="led" x="484" y="346" width="28" height="5" rx="2"/>
-        <rect class="led" x="548" y="324" width="12" height="12" rx="3"/>
+        <rect class="led" x="${twoMix ? 520 : 548}" y="324" width="12" height="12" rx="3"/>
       </g>
-      ${has("zone1_mixer") ? `<g${ek("zone1_mixer")}>
-        <path class="mixer" d="M591 322 L615 338 L615 322 L591 338 Z M603 330 L595 345 L611 345 Z"/>
-        <text class="s" x="603" y="372" text-anchor="middle"><tspan data-val="zone1_mixer">–</tspan></text></g>` : ""}`;
+      ${mixKeys.map((k, n) => hpMixer(k, k === "bypass_valve" ? T.bypass : T.tank, twoMix ? (n ? 616 : 568) : 603, 337, twoMix ? 0.85 : 1, ek)).join("")}`;
 
     /* Zapfstelle: Wand-Auslaufventil mit Gewinde, Sechskant, Kreuzgriff und Schlauchtülle */
     const tap = `
@@ -1060,11 +1082,11 @@ class HeatpumpFlowCard extends HTMLElement {
 
     /* Mischer im Innengerät */
     let mixer = "";
-    const mp = one("mixer");
-    if (mp && has("zone1_mixer")) {
-      const mx = X(mp[0]), my = Y(mp[1]);
-      mixer = `<path class="mixer"${ek("zone1_mixer")} d="M${mx - 12} ${my - 8} L${mx + 12} ${my + 8} L${mx + 12} ${my - 8} L${mx - 12} ${my + 8} Z M${mx} ${my} L${mx - 8} ${my + 15} L${mx + 8} ${my + 15} Z"/>`;
-    }
+    const mixKeys = ["zone1_mixer", "bypass_valve"].filter(has);
+    mixKeys.forEach((k, n) => {
+      const pos = mixKeys.length === 2 ? one(n ? "mixer2" : "mixer1") : one("mixer");
+      if (pos) mixer += hpMixer(k, k === "bypass_valve" ? T.bypass : T.tank, X(pos[0]), Y(pos[1]), mixKeys.length === 2 ? 0.9 : 1, ek, " ov", halo);
+    });
 
     /* Lüfter: halbtransparente drehende Flügel */
     let fan = "";
@@ -1130,7 +1152,7 @@ class HeatpumpFlowCard extends HTMLElement {
     const tags = { vl_temp: ["h", T.vl], rl_temp: ["c", T.rl], zone1_vl_temp: ["h"], zone1_rl_temp: ["c"], zone2_vl_temp: ["h"], zone2_rl_temp: ["c"] };
     const pref = { dhw_setpoint: T.set + " " };
     const spdFlag = { pump_speed: "primary", zone1_pump_speed: "z1", zone2_pump_speed: "z2" };
-    const skip = ["softener", "leak", "indoor_temp", "outdoor_temp"];
+    const skip = ["softener", "leak", "indoor_temp", "outdoor_temp", "zone1_mixer", "bypass_valve"];
     const labels = Object.entries(L).filter(([k, p]) => !skip.includes(k) && has(k) && Array.isArray(p)).map(([k, p]) => {
       const x = X(p[0]), y = Y(p[1]), anchor = p[2] || "middle";
       if (tags[k]) {
@@ -1453,7 +1475,7 @@ class HeatpumpFlowCardEditor extends HTMLElement {
       },
       {
         type: "expandable", name: "sec_dhw", flatten: true, title: t.sec.dhw,
-        schema: ["dhw_temp", "dhw_setpoint", "tank_top_temp", "tank_bottom_temp", "zone1_mixer", "dhw_active", "dhw_boost", "heater_rod", "circulation"].map(e),
+        schema: ["dhw_temp", "dhw_setpoint", "tank_top_temp", "tank_bottom_temp", "zone1_mixer", "bypass_valve", "dhw_active", "dhw_boost", "heater_rod", "circulation"].map(e),
       },
       {
         type: "expandable", name: "sec_soft", flatten: true, title: t.sec.soft,
