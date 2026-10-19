@@ -3,7 +3,7 @@ title: Daikin Altherma 4
 heating_type: radiator        # radiator | floor | both
 language: auto                # auto | de | en | fr | nl | it
 softener: false               # true = Strang Enthärtung anzeigen
-# background_image: /local/altherma_hk.png   # eigenes Bild statt Zeichnung (Bild in /config/www/)
+background: altherma          # drawn | altherma | custom (dann background_image)
 # --- Wärmepumpe / Primärkreis ---
 outdoor_temp: sensor.daikin_altherma_4_eingaberegister_aussenlufttemperatur
 indoor_temp: sensor.daikin_altherma_4_eingaberegister_fernbedienung_raumtemperatur_haupt

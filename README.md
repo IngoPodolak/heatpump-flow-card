@@ -25,22 +25,38 @@ Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin
 - Klick auf einen Wert öffnet den Detail-Dialog der Entität
 - Skaliert von der kleinen Karte bis zum Vollbild-Panel
 
-## Bild-Modus (eigenes Hintergrundbild)
+## Darstellung / Hintergrund
 
-Statt der gezeichneten Grafik kann ein eigenes Bild verwendet werden. Die Karte legt Wasserfluss, Lüfter, Abtauen, Heizstab, Pumpen, Speicherfärbung und alle Werte darüber.
+Im Editor unter **„Hintergrund“** wählbar – es muss nichts manuell kopiert werden:
 
-1. Bild nach `/config/www/` kopieren (Dateiname ohne Leerzeichen), z. B. `/config/www/altherma_hk.png`
-2. Im Editor unter „Eigenes Hintergrundbild“ `/local/altherma_hk.png` eintragen
-3. Die Standard-Positionen passen zu den Altherma-4-Schemabildern. Für andere Bilder „Positionier-Raster anzeigen“ einschalten und unter „Positionen anpassen“ nur die Abweichungen eintragen (Angaben in % von Bildbreite/-höhe):
+| Option | Beschreibung |
+|---|---|
+| Gezeichnete Grafik | Standard, komplett dynamisch, für jede Wärmepumpe |
+| Bild: Daikin Altherma 4 (integriert) | Mitgelieferte Bilder für Heizkörper bzw. Fußbodenheizung. Bei 2 Heizkreisen wird die gezeichnete Grafik verwendet. |
+| Eigenes Bild | Direkt im Editor hochladen, URL eintragen oder `media-source://…` aus dem Medienbrowser |
+
+Die integrierten Bilder enthalten keine Texte, Pumpen oder Fühler – Beschriftungen (in der gewählten Sprache), Pumpen, Temperaturen, Haus-Symbol, Mischer, Enthärtungs-Strang und Zirkulation ergänzt die Karte dynamisch und nur, wenn eine Entität hinterlegt ist.
+
+Darüber liegen die Animationen: Wasserfluss, Lüfter, Abtauen, Verdichter, Heizstab, Pumpen, Speicherfärbung und Wärmeabgabe.
+
+### Positionen für eigene Bilder
+
+„Positionier-Raster anzeigen“ einschalten und unter „Positionen anpassen“ nur die Abweichungen eintragen (Angaben in % von Bildbreite/-höhe):
 
 ```yaml
 overlay:
   labels:                 # [x, y] oder [x, y, "start"|"end"]
-    vl_temp: [19, 46]
+    vl_temp: [23.6, 46.6]
+  captions:               # Beschriftungen: primary, primary2, dhw, unit, tank, emitter, softener
+    unit: [18.6, 96.8]
   flows:                  # Punkte "x,y x,y ..." entlang des Rohrs
     primary_vl: "29.1,49.5 29.1,26.9 60.4,26.9 60.4,40.7"
   pumps:                  # [x, y, Radius]
-    primary: [32.6, 40, 1.7]
+    primary: [32.64, 40.09, 1.7]
+  house: [3, 13.2]                      # Haus-Symbol links oben
+  mixer: [68.6, 47.4]                   # Mischer-Symbol
+  softener_pipe: "100,42.45 79.95,42.45 79.95,29.5"
+  circ_pipe: "77.6,26.9 77.6,29.5"
   fan: [13.2, 67.1, 6.8, 10.6]          # Mitte x, y, Radius x, Radius y
   frost: "3.4,49.3 37.4,49.8 35.6,82.5 30.3,88.4 4.3,79.3"   # Umriss Außengerät
   compressor: [23.6, 63, 5.7, 18]       # x, y, Breite, Höhe
@@ -61,7 +77,7 @@ Fluss-Schlüssel: `primary_vl`, `primary_rl`, `circ`, `soft`, `z1_vl`, `z1_rl`, 
 
 ## Manuelle Installation
 
-1. `heatpump-flow-card.js` nach `/config/www/` kopieren
+1. Beide Dateien aus `dist/` (`heatpump-flow-card.js` und `heatpump-flow-card-images.js`) nach `/config/www/` kopieren
 2. Einstellungen → Dashboards → ⋮ → Ressourcen → `/local/heatpump-flow-card.js` als JavaScript-Modul hinzufügen
 
 ## Konfiguration
@@ -77,7 +93,8 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `softener` | `true` = Strang „Enthärtung“ anzeigen |
 | `softener_flow`, `softener_hardness` | Durchsatz (l/h) und Härtegrad der Enthärtung |
 | `leak_alarm`, `leak_valve` | Leckage erkannt (an = Alarm) / Absperrventil offen |
-| `background_image` | Eigenes Hintergrundbild, z. B. `/local/altherma_hk.png` |
+| `background` | `drawn` (Standard), `altherma` (integriertes Bild) oder `custom` |
+| `background_image` | Eigenes Bild bei `custom`: Upload, URL oder `media-source://…` |
 | `show_grid` | Positionier-Raster im Bild anzeigen |
 | `overlay` | Positionen im Bild-Modus anpassen (siehe oben) |
 | `theme_background` | `true` = Hintergrund vom HA-Theme statt dunkel |
