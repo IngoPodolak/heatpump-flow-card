@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.2.0";
+const HP_VERSION = "1.3.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -179,7 +179,7 @@ const HP_STYLE = `
   :host { display: block; }
   ha-card { overflow: hidden; padding: 6px; box-sizing: border-box; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    --hp-bg: #1a1b22; --hp-text: #f1f2f4; --hp-text2: #a7adb7;
+    --hp-bg: #1a1b22; --hp-text: #f1f2f4; --hp-text2: #a7adb7; --ol: #2b3038;
     background: var(--hp-bg); }
   ha-card.themed { --hp-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
     --hp-text: var(--primary-text-color, #f1f2f4); --hp-text2: var(--secondary-text-color, #a7adb7); }
@@ -193,16 +193,22 @@ const HP_STYLE = `
   .s { font-size: 17px; fill: var(--hp-text); }
   .name { font-size: 23px; }
   [data-entity-key] { cursor: pointer; }
+  .shadow { fill: #000; opacity: .5; }
+  .spd { opacity: 0; transition: opacity .4s; }
+  .spd.on { opacity: 1; }
 
-  .casing { fill: none; stroke: var(--hp-bg); stroke-width: 15; stroke-linecap: butt; stroke-linejoin: round; }
+  /* Rohre: Ummantelung, Glühen, Kontur, Rohr, Glanzlicht */
+  .casing { fill: none; stroke: var(--hp-bg); stroke-width: 16; stroke-linecap: butt; stroke-linejoin: round; }
+  .p-glow { fill: none; stroke-width: 12; opacity: .28; stroke-linejoin: round; }
+  .p-ol { fill: none; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
   .pipe { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
-  .hot { stroke: var(--hp-hot-color, #d8463c); }
-  .cold { stroke: var(--hp-cold-color, #3f7fd9); }
-  .dw { stroke: #5c6b85; }
-  .arrow.hot { fill: var(--hp-hot-color, #d8463c); stroke: none; }
-  .arrow.cold { fill: var(--hp-cold-color, #3f7fd9); stroke: none; }
-  .arrow.dw { fill: #5c6b85; stroke: none; }
-  .flow { fill: none; stroke: rgba(255,255,255,.85); stroke-width: 2.5; stroke-linecap: round;
+  .p-hl { fill: none; stroke: rgba(255,255,255,.42); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .hot.pipe, .hot.p-glow { stroke: var(--hp-hot-color, #e0483d); } .hot.p-ol { stroke: #7e231d; }
+  .cold.pipe, .cold.p-glow { stroke: var(--hp-cold-color, #4386e6); } .cold.p-ol { stroke: #1d4686; }
+  .dw.pipe { stroke: #6b7a94; } .dw.p-ol { stroke: #343d4d; } .dw.p-glow { stroke: #6b7a94; opacity: .12; }
+  .arrow { stroke: rgba(0,0,0,.45); stroke-width: 1; }
+  .arrow.hot { fill: #ff6a5c; } .arrow.cold { fill: #6aa5ff; } .arrow.dw { fill: #93a1b8; }
+  .flow { fill: none; stroke: rgba(255,255,255,.9); stroke-width: 2.5; stroke-linecap: round;
     stroke-dasharray: 1.5 15; opacity: 0; transition: opacity .5s; }
   .flow.on { opacity: 1; animation-name: hp-dash; animation-timing-function: linear; animation-iteration-count: infinite; }
   @keyframes hp-dash { to { stroke-dashoffset: -16.5; } }
@@ -213,26 +219,31 @@ const HP_STYLE = `
   @keyframes hp-rise { 0% { transform: translateY(6px); opacity: 0; } 40% { opacity: .9; } 100% { transform: translateY(-12px); opacity: 0; } }
 
   /* Haus-Symbol */
-  .house { fill: rgba(150,156,168,.08); stroke: var(--hp-text2); stroke-width: 2.5; stroke-linejoin: round; }
+  .house { fill: rgba(150,156,168,.07); stroke: var(--hp-text2); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 
   /* Außengerät */
-  .u-front { fill: url(#UID-ufront); stroke: #a3aab4; stroke-width: 1.5; }
-  .u-top { fill: #eef0f3; stroke: #a3aab4; stroke-width: 1.5; stroke-linejoin: round; }
-  .u-side { fill: #b4bac3; stroke: #8f97a2; stroke-width: 1.5; stroke-linejoin: round; }
-  .louver { stroke: #c4c9d0; stroke-width: 1.5; }
-  .u-foot { fill: #6b7280; }
-  .fan-bezel { fill: #cfd3d9; stroke: #aab1ba; }
-  .fan-bg { fill: #1f232a; }
-  .blades path { fill: #4a5361; }
+  .u-front { fill: url(#UID-ufront); }
+  .u-top { fill: url(#UID-utop); stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
+  .u-side { fill: url(#UID-uside); stroke: var(--ol); stroke-width: 2; stroke-linejoin: round; }
+  .u-groove { stroke: rgba(0,0,0,.18); stroke-width: 1.5; }
+  .u-edge { fill: none; stroke: var(--ol); stroke-width: 2.2; }
+  .slat-d { stroke: #a9b0b9; stroke-width: 1.6; } .slat-l { stroke: #ffffff; stroke-width: 1.2; opacity: .8; }
+  .u-foot { fill: #4b5260; stroke: var(--ol); stroke-width: 1.5; }
+  .fan-bezel { fill: url(#UID-bezel); stroke: var(--ol); stroke-width: 2; }
+  .fan-bg { fill: url(#UID-fanbg); }
+  .blades path { fill: url(#UID-blade); stroke: #1a1d23; stroke-width: 1.2; }
   .fan.on .blades { animation: hp-spin .8s linear infinite; }
-  .fan.on .blades path { fill: #6d7888; }
-  .fan-hub { fill: #9aa3ae; }
-  .grille { fill: none; stroke: rgba(255,255,255,.2); stroke-width: 1.5; }
-  .u-cut { fill: #262a31; stroke: #8f97a2; stroke-width: 1.5; }
-  .copper { fill: none; stroke: #c07a46; stroke-width: 4; stroke-linecap: round; }
-  .comp { fill: #3a3f47; stroke: #555c66; transition: fill .4s; }
+  .fan-hub { fill: url(#UID-bezel); stroke: var(--ol); stroke-width: 1.5; }
+  .grille { fill: none; stroke: rgba(225,230,236,.38); stroke-width: 1.3; }
+  .u-cut { fill: url(#UID-cutbg); stroke: var(--ol); stroke-width: 2; }
+  .pcb { fill: #353b45; stroke: #59606b; stroke-width: 1; }
+  .copper { fill: none; stroke: #b86d3a; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  .copper-hl { fill: none; stroke: #f1b48a; stroke-width: 1.4; stroke-linecap: round; opacity: .8; }
+  .comp { fill: url(#UID-metal); stroke: var(--ol); stroke-width: 1.5; }
+  .comp-top { fill: #c3c9d1; stroke: var(--ol); stroke-width: 1.2; }
+  .comp-tint { fill: #22c55e; opacity: 0; transition: opacity .4s; }
   .comp-glow { fill: #22c55e; opacity: 0; }
-  .compressor.on .comp { fill: #1f8f4a; }
+  .compressor.on .comp-tint { opacity: .4; }
   .compressor.on .comp-glow { animation: hp-pulse 1.6s ease-in-out infinite; }
   .defrost { opacity: 0; transition: opacity .6s; pointer-events: none; }
   .defrost.on { opacity: 1; }
@@ -243,25 +254,30 @@ const HP_STYLE = `
   .defrost.on .drip { animation: hp-drip 1.4s ease-in infinite; }
 
   /* Speicher */
-  .t-body { fill: url(#UID-tbody); stroke: #a3aab4; stroke-width: 1.5; }
-  .t-cut { fill: #1d2028; stroke: #8f97a2; stroke-width: 1.5; }
-  .t-heat { opacity: .3; }
-  .coil-back { fill: none; stroke: url(#UID-tank); stroke-width: 3; opacity: .35; }
-  .coil { fill: none; stroke: url(#UID-tank); stroke-width: 4; stroke-linecap: round; }
-  .t-pipe { stroke: #8f97a2; stroke-width: 4; }
-  .t-head { fill: #2a2e36; stroke: #454b55; stroke-width: 1.5; }
-  .t-display { fill: #0d1015; stroke: #3a3f48; }
-  .port { fill: #6b7280; }
+  .t-body { fill: url(#UID-tbody); stroke: var(--ol); stroke-width: 2.2; }
+  .t-plinth { fill: url(#UID-plinth); stroke: var(--ol); stroke-width: 2; }
+  .t-cut { fill: url(#UID-tcut); stroke: var(--ol); stroke-width: 2; }
+  .t-heat { opacity: .22; }
+  .coil-back { fill: none; stroke: #6d3b1c; stroke-width: 4; opacity: .7; }
+  .coil { fill: none; stroke: url(#UID-tank); stroke-width: 5.5; stroke-linecap: round; }
+  .coil-hl { fill: none; stroke: rgba(255,255,255,.4); stroke-width: 1.4; }
+  .t-pipe { stroke: url(#UID-metal); stroke-width: 6; }
+  .t-head { fill: url(#UID-head); stroke: var(--ol); stroke-width: 2.2; }
+  .t-headhl { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 1.5; }
+  .t-display { fill: url(#UID-screen); stroke: #4b525d; stroke-width: 1.5; }
+  .port { fill: url(#UID-metal); stroke: var(--ol); stroke-width: 1.2; }
   .led { fill: #39404b; transition: fill .4s; }
   .leds.on .led { fill: #4fd1e8; }
-  .rod { fill: #6b7280; stroke: #3f454f; stroke-width: 1; transition: fill .4s; }
+  .rod { fill: url(#UID-metal); stroke: var(--ol); stroke-width: 1.2; }
+  .rod-tint { fill: #fb923c; opacity: 0; transition: opacity .4s; }
   .rod-glow { fill: #f97316; opacity: 0; }
-  .heater.on .rod { fill: #fb923c; }
+  .heater.on .rod-tint { opacity: .85; }
   .heater.on .rod-glow { animation: hp-pulse 1.2s ease-in-out infinite; }
-  .mixer { fill: #b56cf0; stroke: #6b2fa0; stroke-width: 1.2; stroke-linejoin: round; }
+  .mixer { fill: #b56cf0; stroke: #4c1d7a; stroke-width: 1.4; stroke-linejoin: round; }
 
   /* Pumpen (Laufrad) */
-  .pump-body { fill: var(--hp-bg); stroke: #94a3b8; stroke-width: 3; transition: stroke .4s; }
+  .pump-body { fill: url(#UID-pump); stroke: #94a3b8; stroke-width: 3; transition: stroke .4s; }
+  .pump-ol { fill: none; stroke: var(--ol); stroke-width: 1.5; }
   .impeller path { fill: none; stroke: #94a3b8; stroke-width: 3; stroke-linecap: round; transition: stroke .4s; }
   .pump-hub { fill: #94a3b8; }
   .pump-glow { fill: #22c55e; opacity: 0; transition: opacity .4s; }
@@ -271,27 +287,33 @@ const HP_STYLE = `
   .pump.on .impeller { animation-name: hp-spin; animation-timing-function: linear; animation-iteration-count: infinite; }
 
   /* Wärmeübergabe */
-  .r-back { fill: #dfe2e7; stroke: #a3aab4; stroke-width: 1.5; }
-  .r-col { fill: #f6f7f9; stroke: #c3c8cf; stroke-width: 1; }
-  .r-bar { fill: #e9ebef; stroke: #b3b9c2; stroke-width: 1; }
+  .r-back { fill: #b9bfc8; stroke: var(--ol); stroke-width: 2; }
+  .r-col { fill: url(#UID-radcol); stroke: #8f97a2; stroke-width: 1; }
+  .r-bar { fill: url(#UID-radbar); stroke: var(--ol); stroke-width: 1.2; }
+  .r-valve { fill: url(#UID-chrome); stroke: var(--ol); stroke-width: 1.2; }
+  .r-head { fill: #f4f5f7; stroke: var(--ol); stroke-width: 1.2; }
   .glow { fill: #f97316; opacity: 0; transition: opacity .8s; }
-  .emitter.on .glow { opacity: .25; }
+  .emitter.on .glow { opacity: .22; }
   .wave { fill: none; stroke: #f97316; stroke-width: 3; stroke-linecap: round; opacity: 0; }
   .emitter.on .wave { animation: hp-rise 2.4s ease-in-out infinite; }
-  .cab { fill: #d5d9df; stroke: #9aa3ae; stroke-width: 1.5; }
-  .cab-in { fill: #c3c8cf; }
-  .bar-h { fill: #c9463d; } .bar-c { fill: #3f72c4; }
-  .vhead { fill: #f4f5f7; stroke: #a3aab4; }
-  .loop-h { fill: none; stroke: #d8463c; stroke-width: 4; stroke-linecap: round; }
-  .loop-c { fill: none; stroke: #3f7fd9; stroke-width: 4; stroke-linecap: round; }
-  .tag rect { fill: rgba(16,18,24,.88); stroke-width: 2; }
-  .tag.h rect { stroke: #d8463c; } .tag.c rect { stroke: #3f7fd9; }
+  .cab { fill: url(#UID-cab); stroke: var(--ol); stroke-width: 2; }
+  .cab-in { fill: #8d949f; stroke: rgba(0,0,0,.3); }
+  .bar-h { fill: url(#UID-barh); stroke: #5e1712; stroke-width: 1.2; }
+  .bar-c { fill: url(#UID-barc); stroke: #163a70; stroke-width: 1.2; }
+  .brass { fill: url(#UID-brass); stroke: #6b4a10; stroke-width: 1; }
+  .vhead { fill: #f4f5f7; stroke: var(--ol); stroke-width: 1; }
+  .loop-ol { fill: none; stroke: rgba(0,0,0,.55); stroke-width: 6.5; stroke-linecap: round; }
+  .loop-h { fill: none; stroke: #e0483d; stroke-width: 4; stroke-linecap: round; }
+  .loop-c { fill: none; stroke: #4386e6; stroke-width: 4; stroke-linecap: round; }
+  .tag rect { fill: rgba(16,18,24,.9); stroke-width: 2; }
+  .tag.h rect { stroke: #e0483d; } .tag.c rect { stroke: #4386e6; }
   .tag text { font-size: 16px; font-weight: 500; fill: #f1f2f4; }
 
   /* Zapfstelle & Enthärtung */
-  .tap { fill: none; stroke: url(#UID-chrome); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
-  .tap-body { fill: url(#UID-chrome); stroke: #7c8591; }
-  .tap-h { fill: none; stroke: #b9c0c9; stroke-width: 5; stroke-linecap: round; }
+  .chrome { fill: url(#UID-chrome); stroke: var(--ol); stroke-width: 1.5; }
+  .spout-ol { fill: none; stroke: var(--ol); stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
+  .spout { fill: none; stroke: url(#UID-chrome); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+  .spout-hl { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 2; stroke-linecap: round; }
   .leak path.shield { fill: rgba(34,197,94,.15); stroke: #22c55e; stroke-width: 2.5; stroke-linejoin: round; transition: all .4s; }
   .leak path.drop { fill: #22c55e; transition: fill .4s; }
   .leak.closed path.shield { fill: rgba(245,158,11,.18); stroke: #f59e0b; }
@@ -348,24 +370,27 @@ class HeatpumpFlowCard extends HTMLElement {
     const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
     const ek = (k) => (k && has(k) ? ` data-entity-key="${k}"` : "");
     const type = ["radiator", "floor", "both"].includes(c.heating_type) ? c.heating_type : "radiator";
+    const blur = `filter="url(#${u}-blur)"`, soft = `filter="url(#${u}-soft)"`;
 
-    /* Rohr mit Ummantelung (saubere Kreuzungen) und optionalem Fluss */
+    /* Rohr: Ummantelung (saubere Kreuzungen), Glühen, Kontur, Rohr, Glanzlicht, optional Fluss */
     const flowOnly = (d, flow) =>
       `<path class="flow" data-on="${flow}" style="animation-duration:var(--${flow}-dur,1.2s)" d="${d}"/>`;
     const pipe = (d, cls, flow) =>
-      `<path class="casing" d="${d}"/><path class="pipe ${cls}" d="${d}"/>` + (flow ? flowOnly(d, flow) : "");
+      `<path class="casing" d="${d}"/><path class="p-glow ${cls}" d="${d}" ${blur}/><path class="p-ol ${cls}" d="${d}"/>` +
+      `<path class="pipe ${cls}" d="${d}"/><path class="p-hl" d="${d}" transform="translate(-1 -1)"/>` + (flow ? flowOnly(d, flow) : "");
 
     /* Richtungspfeil */
     const arrow = (x, y, dir, cls) => {
-      const s = 8, rot = { r: 0, d: 90, l: 180, u: 270 }[dir];
+      const s = 8.5, rot = { r: 0, d: 90, l: 180, u: 270 }[dir];
       return `<path class="arrow ${cls}" transform="rotate(${rot} ${x} ${y})" d="M${x + s} ${y} L${x - s} ${y - s} L${x - s * 0.45} ${y} L${x - s} ${y + s} Z"/>`;
     };
 
     /* Pumpe mit drehendem Laufrad */
     const pumpG = (cx, cy, r, flag, key) => `
       <g class="pump" data-on="${flag}"${ek(key)}>
-        <circle class="pump-glow" cx="${cx}" cy="${cy}" r="${r + 5}" filter="url(#${u}-blur)"/>
+        <circle class="pump-glow" cx="${cx}" cy="${cy}" r="${r + 5}" ${blur}/>
         <circle class="pump-body" cx="${cx}" cy="${cy}" r="${r}"/>
+        <circle class="pump-ol" cx="${cx}" cy="${cy}" r="${r + 2}"/>
         <g class="impeller" style="transform-origin:${cx}px ${cy}px;animation-duration:var(--${flag}-dur,1s)">
           ${[0, 90, 180, 270].map((a) => `<path d="M${cx} ${cy} q ${r * 0.55} ${-r * 0.12} ${r * 0.68} ${-r * 0.68}" transform="rotate(${a} ${cx} ${cy})"/>`).join("")}
         </g>
@@ -376,16 +401,16 @@ class HeatpumpFlowCard extends HTMLElement {
       has(key)
         ? `<text x="${x}" y="${y}" text-anchor="${anchor}"${ek(key)}>${prefix ? `<tspan class="l">${prefix}</tspan>` : ""}<tspan class="v" data-val="${key}">–</tspan></text>`
         : "";
-    const small = (key, x, y, anchor = "middle") =>
-      has(key) ? `<text class="s" x="${x}" y="${y}" text-anchor="${anchor}"${ek(key)}><tspan data-val="${key}">–</tspan></text>` : "";
-    /* Temperatur-Schild direkt am Anschluss */
+    /* kleiner Wert; mit flag nur sichtbar, solange die zugehörige Pumpe läuft */
+    const small = (key, x, y, anchor = "middle", flag) =>
+      has(key) ? `<text class="s${flag ? " spd" : ""}"${flag ? ` data-on="${flag}"` : ""} x="${x}" y="${y}" text-anchor="${anchor}"${ek(key)}><tspan data-val="${key}">–</tspan></text>` : "";
     const tag = (key, x, y, kind) =>
       has(key) ? `<g class="tag ${kind}"${ek(key)}><rect x="${x}" y="${y - 12}" width="74" height="24" rx="12"/>
         <text x="${x + 37}" y="${y + 6}" text-anchor="middle" data-val="${key}">–</text></g>` : "";
 
     const flake = (x, y, s) =>
       `<path class="flake" d="M${x} ${y - s} V${y + s} M${x - s * 0.866} ${y - s / 2} L${x + s * 0.866} ${y + s / 2} M${x - s * 0.866} ${y + s / 2} L${x + s * 0.866} ${y - s / 2}"/>`;
-    const waves = (x0, w, y) => [0.2, 0.5, 0.8].map((f, n) =>
+    const waves = (x0, w, y) => (c.softener ? [0.5, 0.8] : [0.2, 0.5, 0.8]).map((f, n) =>
       `<path class="wave" style="animation-delay:${n * 0.6}s" d="M${x0 + w * f} ${y} q 6 -5 0 -10 q -6 -5 0 -10"/>`).join("");
 
     /* ===== Geometrie =====
@@ -403,8 +428,8 @@ class HeatpumpFlowCard extends HTMLElement {
     front += arrow(220, 250, "u", "hot") + arrow(256, 250, "d", "cold");
 
     /* Warmwasser */
-    back += pipe(`M538 ${PY} V170 H872`, "hot");
-    back += pipe(`M872 206 H562 V${PY}`, "cold");
+    back += pipe(`M538 ${PY} V170 H866`, "hot");
+    back += pipe(`M866 206 H562 V${PY}`, "cold");
     front += arrow(AX2, 170, "r", "hot") + arrow(AX2, 206, "l", "cold");
     if (has("circulation")) {
       back += pipe("M800 170 V206", "hot");
@@ -412,7 +437,7 @@ class HeatpumpFlowCard extends HTMLElement {
     }
 
     /* Enthärtung (optional) */
-    let soft = "";
+    let softSvg = "";
     if (c.softener) {
       back += pipe("M985 256 H830 V206", "dw");
       back += flowOnly(`M985 256 H830 V206 H562 V${PY}`, "soft");
@@ -424,7 +449,7 @@ class HeatpumpFlowCard extends HTMLElement {
         has("softener_flow") ? `<tspan data-val="softener_flow"${ek("softener_flow")}>–</tspan>` : "",
         has("softener_hardness") ? `<tspan data-val="softener_hardness"${ek("softener_hardness")}>–</tspan>` : "",
       ].filter(Boolean).join(`<tspan class="l"> · </tspan>`);
-      soft = `
+      softSvg = `
         <text class="l" x="985" y="244" text-anchor="end">${T.softener}</text>
         ${hasLeak ? `<g class="leak"${ek(lk)}>
           <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
@@ -436,6 +461,7 @@ class HeatpumpFlowCard extends HTMLElement {
     /* Heizkreise */
     const VX = 780, RX = 744, EX = 800, EW = 160;
     let zones, pumps = "";
+    const zkey = (i) => has(`zone${i}_pump`) ? `zone${i}_pump` : has(`zone${i}_pump_speed`) ? `zone${i}_pump_speed` : null;
     if (type === "both") {
       zones = [
         { i: 1, kind: "radiator", y0: 318, h: 92, vin: 333, rout: 395 },
@@ -447,10 +473,8 @@ class HeatpumpFlowCard extends HTMLElement {
       back += pipe(`M586 ${PY} V242 H${VX} V333`, "hot", "zany");
       back += pipe(`M${VX} 333 H${EX}`, "hot", "z1");
       back += pipe(`M${VX} 333 V496 H${EX}`, "hot", "z2");
-      pumps += pumpG(RX, 345, 15, "z1", has("zone1_pump") ? "zone1_pump" : has("zone1_pump_speed") ? "zone1_pump_speed" : null);
-      pumps += small("zone1_pump_speed", RX - 26, 351, "end");
-      pumps += pumpG(RX, 440, 15, "z2", has("zone2_pump") ? "zone2_pump" : has("zone2_pump_speed") ? "zone2_pump_speed" : null);
-      pumps += small("zone2_pump_speed", RX - 26, 446, "end");
+      pumps += pumpG(RX, 345, 15, "z1", zkey(1)) + small("zone1_pump_speed", RX - 26, 351, "end", "z1");
+      pumps += pumpG(RX, 440, 15, "z2", zkey(2)) + small("zone2_pump_speed", RX - 26, 446, "end", "z2");
       if (has("zone2_mixer")) {
         pumps += `<g${ek("zone2_mixer")}>
           <path class="mixer" d="M${VX - 9} 461 L${VX + 9} 485 L${VX - 9} 485 L${VX + 9} 461 Z M${VX} 473 L${VX - 15} 464 L${VX - 15} 482 Z"/></g>`;
@@ -464,8 +488,7 @@ class HeatpumpFlowCard extends HTMLElement {
       back += pipe(`M${EX} ${z.rout} H${RX} V278 H610 V${PY}`, "cold", "z1");
       back += pipe(`M586 ${PY} V242 H${VX} V${z.vin} H${EX}`, "hot", "z1");
       const py = Math.round((278 + z.rout) / 2) + 10;
-      pumps += pumpG(RX, py, 16, "z1", has("zone1_pump") ? "zone1_pump" : has("zone1_pump_speed") ? "zone1_pump_speed" : null);
-      pumps += small("zone1_pump_speed", RX - 28, py + 6, "end");
+      pumps += pumpG(RX, py, 16, "z1", zkey(1)) + small("zone1_pump_speed", RX - 28, py + 6, "end", "z1");
     }
     front += arrow(AX2, 242, "r", "hot") + arrow(AX2, 278, "l", "cold");
     front += arrow(VX, 300, "d", "hot") + arrow(RX, 300, "u", "cold");
@@ -476,102 +499,126 @@ class HeatpumpFlowCard extends HTMLElement {
       let em = "";
       if (z.kind === "radiator") {
         let cols = "";
-        for (let x = EX + 9; x <= EX + EW - 18; x += 13) cols += `<rect class="r-col" x="${x}" y="${z.y0 + 10}" width="10" height="${z.h - 20}" rx="5"/>`;
+        for (let x = EX + 8; x <= EX + EW - 18; x += 13) cols += `<rect class="r-col" x="${x}" y="${z.y0 + 9}" width="11" height="${z.h - 18}" rx="5.5"/>`;
         em = `
+          <ellipse class="shadow" cx="${EX + EW / 2}" cy="${z.y0 + z.h + 7}" rx="${EW / 2}" ry="5" ${soft}/>
           <rect class="r-back" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="6"/>
-          <rect class="r-bar" x="${EX + 2}" y="${z.y0 + 3}" width="${EW - 4}" height="8" rx="4"/>
-          <rect class="r-bar" x="${EX + 2}" y="${z.y0 + z.h - 11}" width="${EW - 4}" height="8" rx="4"/>
           ${cols}
-          <rect class="r-bar" x="${EX + EW - 2}" y="${z.y0 + 6}" width="12" height="9" rx="3"/>
+          <rect class="r-bar" x="${EX + 1}" y="${z.y0 + 1}" width="${EW - 2}" height="9" rx="4.5"/>
+          <rect class="r-bar" x="${EX + 1}" y="${z.y0 + z.h - 10}" width="${EW - 2}" height="9" rx="4.5"/>
+          <rect class="r-valve" x="${EX + EW - 2}" y="${z.y0 + 1}" width="10" height="9" rx="2"/>
+          <rect class="r-head" x="${EX + EW + 7}" y="${z.y0 - 2}" width="10" height="15" rx="3"/>
           <rect class="glow" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="6"/>
-          ${waves(EX, EW, z.y0 - 6)}`;
+          ${waves(EX, EW, z.y0 - 8)}`;
       } else {
         let caps = "", heads = "", loops = "", flows = "";
         const yb = z.y0 + z.h;
         for (let n = 0; n < 5; n++) {
           const xv = EX + 26 + n * 27;
-          caps += `<rect class="bar-h" x="${xv - 4}" y="${z.vin - 17}" width="8" height="11" rx="2"/>`;
-          heads += `<rect class="vhead" x="${xv - 6}" y="${z.rout - 21}" width="12" height="14" rx="3"/>`;
+          caps += `<rect class="brass" x="${xv - 4}" y="${z.vin - 19}" width="8" height="13" rx="2"/>`;
+          heads += `<rect class="vhead" x="${xv - 6}" y="${z.rout - 22}" width="12" height="15" rx="3"/>`;
           const xl = EX + 20 + n * 28, w = 14, bot = z.loopEnd;
+          const dU = `M${xl} ${yb} V${bot - w / 2} A ${w / 2} ${w / 2} 0 0 0 ${xl + w} ${bot - w / 2} V${yb}`;
+          loops += `<path class="loop-ol" d="${dU}"/>`;
           loops += `<path class="loop-h" d="M${xl} ${yb} V${bot - w / 2} A ${w / 2} ${w / 2} 0 0 0 ${xl + w / 2} ${bot}"/>`;
           loops += `<path class="loop-c" d="M${xl + w / 2} ${bot} A ${w / 2} ${w / 2} 0 0 0 ${xl + w} ${bot - w / 2} V${yb}"/>`;
-          flows += flowOnly(`M${xl} ${yb} V${bot - w / 2} A ${w / 2} ${w / 2} 0 0 0 ${xl + w} ${bot - w / 2} V${yb}`, k);
+          flows += flowOnly(dU, k);
         }
         em = `
           ${loops}${flows}
+          <ellipse class="shadow" cx="${EX + EW / 2}" cy="${yb + 4}" rx="${EW / 2}" ry="4" ${soft}/>
           <rect class="cab" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="4"/>
           <rect class="cab-in" x="${EX + 6}" y="${z.y0 + 6}" width="${EW - 12}" height="${z.h - 12}" rx="3"/>
-          <rect class="bar-h" x="${EX + 8}" y="${z.vin - 6}" width="${EW - 16}" height="12" rx="6"/>
-          <rect class="bar-c" x="${EX + 8}" y="${z.rout - 6}" width="${EW - 16}" height="12" rx="6"/>
+          <rect class="bar-h" x="${EX + 8}" y="${z.vin - 7}" width="${EW - 16}" height="14" rx="7"/>
+          <rect class="bar-c" x="${EX + 8}" y="${z.rout - 7}" width="${EW - 16}" height="14" rx="7"/>
           ${caps}${heads}
           <rect class="glow" x="${EX}" y="${z.y0}" width="${EW}" height="${z.h}" rx="4"/>`;
       }
       const name = esc(c[p + "name"] || (z.kind === "radiator" ? T.radiator : T.floor));
       const compact = type === "both" && z.i === 1;
       const ny = compact ? 436 : 662;
-      const zoneKey = has(p + "pump") ? p + "pump" : has(p + "pump_speed") ? p + "pump_speed" : null;
       zoneSvg += `
-        <g class="emitter" data-on="${k}"${ek(zoneKey)}>${em}</g>
+        <g class="emitter" data-on="${k}"${ek(zkey(z.i))}>${em}</g>
         ${tag(p + "vl_temp", EX + 4, z.vin, "h")}
         ${tag(p + "rl_temp", EX + 4, z.rout, "c")}
         <text class="name" x="${EX + EW / 2}" y="${ny}" text-anchor="middle"${compact ? ' style="font-size:20px"' : ""}>${name}</text>`;
     });
 
-    /* Außengerät (3D) */
-    let louvers = "";
-    for (let y = 392; y <= 600; y += 10) louvers += `<line class="louver" x1="48" y1="${y}" x2="232" y2="${y}"/>`;
+    /* Außengerät (gezeichnet, 3D) */
+    let slats = "", grooves = "", spokes = "";
+    for (let y = 392; y <= 602; y += 9) slats += `<line class="slat-d" x1="48" y1="${y}" x2="232" y2="${y}"/><line class="slat-l" x1="48" y1="${y + 1.6}" x2="232" y2="${y + 1.6}"/>`;
+    for (let x = 316; x <= 330; x += 7) grooves += `<line class="u-groove" x1="${x}" y1="${380 - (x - 310) * 0.9}" x2="${x}" y2="${606 - (x - 310) * 0.9}"/>`;
+    for (let a = 0; a < 360; a += 22.5) {
+      const r1 = 14, r2 = 76, rad = (a * Math.PI) / 180;
+      spokes += `M${(135 + r1 * Math.cos(rad)).toFixed(1)} ${(495 + r1 * Math.sin(rad)).toFixed(1)} L${(135 + r2 * Math.cos(rad)).toFixed(1)} ${(495 + r2 * Math.sin(rad)).toFixed(1)} `;
+    }
     const blades = [0, 120, 240].map((a) =>
-      `<path d="M135 495 C126 462 137 430 166 425 C180 449 165 479 135 495Z" transform="rotate(${a} 135 495)"/>`).join("");
+      `<path d="M135 495 C124 462 136 428 168 423 C183 449 167 481 135 495Z" transform="rotate(${a} 135 495)"/>`).join("");
     const unit = `
       <g${ek("compressor")}>
-        <rect class="u-foot" x="62" y="606" width="34" height="14" rx="3"/>
-        <rect class="u-foot" x="252" y="606" width="34" height="14" rx="3"/>
-        <path class="u-side" d="M310 380 L332 360 V588 L310 610 Z"/>
-        <path class="u-top" d="M40 380 L62 360 H332 L310 380 Z"/>
-        <rect class="u-front" x="40" y="380" width="270" height="230" rx="5"/>
-        ${louvers}
-        <circle class="fan-bezel" cx="135" cy="495" r="84"/>
-        <circle class="fan-bg" cx="135" cy="495" r="75"/>
+        <ellipse class="shadow" cx="190" cy="622" rx="160" ry="9" ${soft}/>
+        <rect class="u-foot" x="62" y="604" width="38" height="16" rx="3"/>
+        <rect class="u-foot" x="250" y="604" width="38" height="16" rx="3"/>
+        <path class="u-side" d="M310 380 L334 358 V586 L310 610 Z"/>
+        ${grooves}
+        <path class="u-top" d="M40 380 L64 358 H334 L310 380 Z"/>
+        <rect class="u-front" x="40" y="380" width="270" height="230" rx="6"/>
+        ${slats}
+        <circle class="fan-bezel" cx="135" cy="495" r="86"/>
+        <circle class="fan-bg" cx="135" cy="495" r="77"/>
         <g class="fan" data-on="fan"><g class="blades" style="transform-origin:135px 495px">${blades}</g></g>
-        <circle class="fan-hub" cx="135" cy="495" r="12"/>
-        <circle class="grille" cx="135" cy="495" r="30"/><circle class="grille" cx="135" cy="495" r="52"/><circle class="grille" cx="135" cy="495" r="72"/>
-        <path class="grille" d="M60 495 H210 M135 420 V570"/>
+        <path class="grille" d="${spokes}"/>
+        <circle class="grille" cx="135" cy="495" r="26"/><circle class="grille" cx="135" cy="495" r="42"/>
+        <circle class="grille" cx="135" cy="495" r="58"/><circle class="grille" cx="135" cy="495" r="74"/>
+        <circle class="fan-hub" cx="135" cy="495" r="13"/>
         <rect class="u-cut" x="240" y="392" width="62" height="206" rx="4"/>
-        <path class="copper" d="M258 470 V425 Q258 410 272 410 H290 M282 470 V440 Q282 430 292 430"/>
+        <rect class="pcb" x="246" y="398" width="50" height="30" rx="2"/>
+        <circle cx="256" cy="408" r="2.5" fill="#4ade80"/><rect x="264" y="404" width="24" height="4" rx="1" fill="#8b929c"/><rect x="264" y="412" width="18" height="4" rx="1" fill="#8b929c"/>
+        <path class="copper" d="M262 478 V452 Q262 440 274 440 H292"/><path class="copper-hl" d="M260.5 478 V452 Q260.5 438.5 274 438.5 H292"/>
+        <path class="copper" d="M282 478 V458 Q282 450 292 450"/><path class="copper-hl" d="M280.5 478 V458 Q280.5 448.5 292 448.5"/>
         <g class="compressor" data-on="compressor">
-          <rect class="comp-glow" x="246" y="466" width="44" height="122" rx="16" filter="url(#${u}-blur)"/>
-          <rect class="comp" x="250" y="470" width="36" height="114" rx="14"/>
-          <path class="copper" d="M262 500 H274"/>
+          <rect class="comp-glow" x="248" y="474" width="46" height="118" rx="16" ${blur}/>
+          <rect class="comp" x="254" y="480" width="34" height="106" rx="9"/>
+          <rect class="comp-tint" x="254" y="480" width="34" height="106" rx="9"/>
+          <ellipse class="comp-top" cx="271" cy="481" rx="17" ry="5"/>
+          <path class="copper" d="M264 520 H252"/><path class="copper-hl" d="M264 518.5 H252"/>
         </g>
         <g class="defrost" data-on="defrost">
-          <rect class="frost" x="40" y="380" width="270" height="230" rx="5"/>
-          ${flake(86, 432, 11)}${flake(190, 450, 9)}${flake(104, 562, 9)}${flake(178, 548, 12)}${flake(271, 420, 8)}
+          <rect class="frost" x="40" y="380" width="270" height="230" rx="6"/>
+          ${flake(86, 432, 11)}${flake(190, 450, 9)}${flake(104, 562, 9)}${flake(178, 548, 12)}${flake(271, 425, 8)}
           ${[80, 135, 190, 270].map((x, n) => `<circle class="drip" cx="${x}" cy="622" r="3.5" style="animation-delay:${n * 0.35}s"/>`).join("")}
         </g>
+        <rect class="u-edge" x="40" y="380" width="270" height="230" rx="6"/>
       </g>`;
 
-    /* Speicher mit Innengerät */
-    let coilF = "", coilB = "";
-    for (let y = 410; y <= 584; y += 11) {
-      coilB += `M490 ${y} A 50 7 0 0 1 590 ${y} `;
-      coilF += `M490 ${y} A 50 7 0 0 0 590 ${y} `;
+    /* Speicher mit Innengerät (gezeichnet) */
+    let coilF = "", coilB = "", coilH = "";
+    for (let y = 412; y <= 584; y += 11) {
+      coilB += `M492 ${y} A 48 7 0 0 1 588 ${y} `;
+      coilF += `M492 ${y} A 48 7 0 0 0 588 ${y} `;
+      coilH += `M500 ${y + 3} A 40 5 0 0 0 580 ${y + 3} `;
     }
-    const ports = [490, 514, 538, 562, 586, 610].map((x) => `<rect class="port" x="${x - 6}" y="${PY - 6}" width="12" height="8" rx="2"/>`).join("");
+    const ports = [490, 514, 538, 562, 586, 610].map((x) => `<rect class="port" x="${x - 7}" y="${PY - 8}" width="14" height="10" rx="2"/>`).join("");
     const tank = `
-      <rect class="t-body" x="460" y="372" width="180" height="250" rx="16"/>
-      <rect class="t-cut" x="476" y="394" width="148" height="208" rx="10"/>
-      <rect class="t-heat" x="476" y="394" width="148" height="208" rx="10" fill="url(#${u}-tank)"/>
-      <line class="t-pipe" x1="540" y1="400" x2="540" y2="592"/>
+      <ellipse class="shadow" cx="550" cy="626" rx="102" ry="8" ${soft}/>
+      <rect class="t-plinth" x="466" y="604" width="168" height="20" rx="6"/>
+      <rect class="t-body" x="460" y="372" width="180" height="240" rx="16"/>
+      <rect class="t-cut" x="476" y="394" width="148" height="204" rx="10"/>
+      <rect class="t-heat" x="476" y="394" width="148" height="204" rx="10" fill="url(#${u}-tank)"/>
       <path class="coil-back" d="${coilB}"/>
+      <line class="t-pipe" x1="540" y1="398" x2="540" y2="592"/>
       <path class="coil" d="${coilF}"/>
+      <path class="coil-hl" d="${coilH}"/>
       ${has("heater_rod") ? `
       <g class="heater" data-on="heater_rod"${ek("heater_rod")}>
-        <rect class="rod-glow" x="599" y="384" width="18" height="186" rx="9" filter="url(#${u}-blur)"/>
-        <rect class="rod" x="604" y="380" width="8" height="182" rx="4"/>
+        <rect class="rod-glow" x="597" y="384" width="20" height="186" rx="10" ${blur}/>
+        <rect class="rod" x="603" y="380" width="9" height="182" rx="4.5"/>
+        <rect class="rod-tint" x="603" y="380" width="9" height="182" rx="4.5"/>
       </g>` : ""}
       <rect class="t-head" x="460" y="${PY}" width="180" height="82" rx="12"/>
+      <path class="t-headhl" d="M472 ${PY + 3} H628"/>
       ${ports}
-      <rect class="t-display" x="474" y="314" width="94" height="48" rx="5"/>
+      <rect class="t-display" x="474" y="314" width="94" height="48" rx="6"/>
       <g class="leds" data-on="compressor">
         <rect class="led" x="484" y="324" width="40" height="5" rx="2"/>
         <rect class="led" x="484" y="335" width="56" height="5" rx="2"/>
@@ -582,19 +629,26 @@ class HeatpumpFlowCard extends HTMLElement {
         <path class="mixer" d="M591 322 L615 338 L615 322 L591 338 Z M603 330 L595 345 L611 345 Z"/>
         <text class="s" x="603" y="372" text-anchor="middle"><tspan data-val="zone1_mixer">–</tspan></text></g>` : ""}`;
 
-    /* Zapfstelle */
+    /* Zapfstelle (Chrom) */
     const tap = `
-      <rect class="tap-body" x="866" y="160" width="22" height="56" rx="6"/>
-      <path class="tap-h" d="M877 160 V140 M862 140 H892"/>
-      <path class="tap" d="M888 176 H906 Q922 176 922 192 V212"/>`;
+      <rect class="chrome" x="864" y="160" width="20" height="56" rx="5"/>
+      <rect class="chrome" x="860" y="166" width="28" height="7" rx="2"/>
+      <rect class="chrome" x="860" y="200" width="28" height="7" rx="2"/>
+      <rect class="chrome" x="870" y="138" width="8" height="24" rx="2"/>
+      <rect class="chrome" x="856" y="132" width="36" height="9" rx="4.5"/>
+      <circle class="chrome" cx="856" cy="136.5" r="5.5"/><circle class="chrome" cx="892" cy="136.5" r="5.5"/>
+      <path class="spout-ol" d="M884 180 H904 Q922 180 922 198 V214"/>
+      <path class="spout" d="M884 180 H904 Q922 180 922 198 V214"/>
+      <path class="spout-hl" d="M886 177.5 H904 Q919 177.5 919.5 192"/>
+      <rect class="chrome" x="914" y="212" width="16" height="10" rx="2"/>`;
 
-    /* Haus-Symbol mit Innen- und Außentemperatur */
+    /* Haus-Symbol mit Innen- und Außentemperatur (höher, mehr Abstand zu den Leitungen) */
     const house = (has("indoor_temp") || has("outdoor_temp")) ? `
-      <path class="house" d="M30 112 L97 66 L164 112 M42 104 V174 H152 V104"/>
-      ${has("indoor_temp") ? `<g${ek("indoor_temp")}><text class="l" x="97" y="133" text-anchor="middle" style="font-size:15px">${T.indoor}</text>
-        <text class="v" x="97" y="162" text-anchor="middle" style="font-size:22px" data-val="indoor_temp">–</text></g>` : ""}
-      ${has("outdoor_temp") ? `<g${ek("outdoor_temp")}><text class="l" x="176" y="133" style="font-size:15px">${T.outdoor}</text>
-        <text class="v" x="176" y="162" style="font-size:22px" data-val="outdoor_temp">–</text></g>` : ""}` : "";
+      <path class="house" d="M30 72 L97 26 L164 72 M42 64 V134 H152 V64 M128 46 V30 H142 V56"/>
+      ${has("indoor_temp") ? `<g${ek("indoor_temp")}><text class="l" x="97" y="93" text-anchor="middle" style="font-size:15px">${T.indoor}</text>
+        <text class="v" x="97" y="122" text-anchor="middle" style="font-size:22px" data-val="indoor_temp">–</text></g>` : ""}
+      ${has("outdoor_temp") ? `<g${ek("outdoor_temp")}><text class="l" x="176" y="93" style="font-size:15px">${T.outdoor}</text>
+        <text class="v" x="176" y="122" style="font-size:22px" data-val="outdoor_temp">–</text></g>` : ""}` : "";
 
     /* Status-Chips (eine Zeile) */
     const chipDefs = [
@@ -633,7 +687,7 @@ class HeatpumpFlowCard extends HTMLElement {
       ${label("pressure", AX1, 156, "", "middle")}
       ${label("vl_temp", 206, 345, T.vl, "end")}
       ${label("rl_temp", 282, 345, T.rl, "start")}
-      ${small("pump_speed", 284, 306, "start")}
+      ${small("pump_speed", 284, 306, "start", "primary")}
       <text class="l" x="${AX2 + 15}" y="104" text-anchor="middle">${T.dhw}</text>
       ${has("dhw_temp") || has("dhw_setpoint") ? `<text x="${AX2 + 15}" y="156" text-anchor="middle">
         ${has("dhw_temp") ? `<tspan class="v" data-val="dhw_temp"${ek("dhw_temp")}>–</tspan>` : ""}
@@ -645,6 +699,7 @@ class HeatpumpFlowCard extends HTMLElement {
       <text class="name" x="550" y="662" text-anchor="middle">${T.tank}</text>`;
 
     const primaryKey = has("pump") ? "pump" : has("pump_speed") ? "pump_speed" : null;
+    const lg = (id, x2, y2, stops) => `<linearGradient id="${u}-${id}" x1="0" y1="0" x2="${x2}" y2="${y2}">${stops.map(([o, col]) => `<stop offset="${o}" stop-color="${col}"/>`).join("")}</linearGradient>`;
 
     this.shadowRoot.innerHTML = `
       <style>${HP_STYLE.replace(/UID/g, u)}</style>
@@ -655,16 +710,29 @@ class HeatpumpFlowCard extends HTMLElement {
               <stop id="${u}-top" offset="0" stop-color="#e5483e"/>
               <stop id="${u}-bot" offset="1" stop-color="#3f7fd9"/>
             </linearGradient>
-            <linearGradient id="${u}-ufront" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#eceef1"/><stop offset="1" stop-color="#cdd2d8"/>
-            </linearGradient>
-            <linearGradient id="${u}-tbody" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#d7dbe0"/><stop offset=".35" stop-color="#f7f8fa"/><stop offset="1" stop-color="#c9ced5"/>
-            </linearGradient>
-            <linearGradient id="${u}-chrome" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#eef1f4"/><stop offset=".5" stop-color="#9aa3ae"/><stop offset="1" stop-color="#d5dae0"/>
-            </linearGradient>
+            ${lg("ufront", 0, 1, [[0, "#f3f5f7"], [1, "#c6ccd3"]])}
+            ${lg("utop", 0, 1, [[0, "#ffffff"], [1, "#dde1e6"]])}
+            ${lg("uside", 0, 1, [[0, "#b7bdc6"], [1, "#868e99"]])}
+            ${lg("cutbg", 1, 0, [[0, "#14171c"], [0.5, "#2d323b"], [1, "#171a20"]])}
+            ${lg("metal", 1, 0, [[0, "#5b636f"], [0.35, "#e2e6ea"], [0.6, "#a3abb5"], [1, "#4b525d"]])}
+            ${lg("blade", 0, 1, [[0, "#8a96a6"], [1, "#3b4350"]])}
+            ${lg("tbody", 1, 0, [[0, "#c2c8cf"], [0.3, "#fbfcfd"], [0.55, "#eef0f3"], [1, "#b3bac3"]])}
+            ${lg("plinth", 0, 1, [[0, "#9aa2ad"], [1, "#6b7380"]])}
+            ${lg("tcut", 1, 0, [[0, "#0d0f14"], [0.45, "#2b303a"], [1, "#101318"]])}
+            ${lg("head", 0, 1, [[0, "#3c424c"], [1, "#1c1f25"]])}
+            ${lg("screen", 0, 1, [[0, "#14202c"], [1, "#070a0e"]])}
+            ${lg("chrome", 0, 1, [[0, "#f6f8fa"], [0.45, "#a9b1bb"], [0.55, "#8b939e"], [1, "#e1e5ea"]])}
+            ${lg("radcol", 1, 0, [[0, "#c9ced5"], [0.4, "#ffffff"], [1, "#b8bec6"]])}
+            ${lg("radbar", 0, 1, [[0, "#ffffff"], [1, "#c3c8cf"]])}
+            ${lg("cab", 0, 1, [[0, "#eceef1"], [1, "#b5bcc5"]])}
+            ${lg("barh", 0, 1, [[0, "#ff8a7e"], [0.4, "#d8463c"], [1, "#8f2a24"]])}
+            ${lg("barc", 0, 1, [[0, "#8fbaff"], [0.4, "#3f7fd9"], [1, "#1d4686"]])}
+            ${lg("brass", 1, 0, [[0, "#8a6418"], [0.45, "#f3d27a"], [1, "#9a7020"]])}
+            <radialGradient id="${u}-fanbg"><stop offset="0" stop-color="#2f3640"/><stop offset="1" stop-color="#0f1216"/></radialGradient>
+            <radialGradient id="${u}-bezel" cx=".4" cy=".35"><stop offset="0" stop-color="#f2f4f6"/><stop offset="1" stop-color="#9ea6b0"/></radialGradient>
+            <radialGradient id="${u}-pump" cx=".4" cy=".35"><stop offset="0" stop-color="#3a414c"/><stop offset="1" stop-color="#15181d"/></radialGradient>
             <filter id="${u}-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+            <filter id="${u}-soft" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
           </defs>
           ${back}
           ${front}
@@ -676,7 +744,7 @@ class HeatpumpFlowCard extends HTMLElement {
           ${has("circulation") ? pumpG(800, 188, 10, "circ", "circulation") : ""}
           ${pumps}
           ${house}
-          ${soft}
+          ${softSvg}
           ${texts}
           ${chips}
           ${stats}
