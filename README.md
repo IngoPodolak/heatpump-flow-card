@@ -4,9 +4,10 @@ Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin
 
 ![Vorschau](images/preview.png)
 
-**Bild-Modus** mit eigenem Hintergrundbild:
+**Bild-Modus** (integriertes Altherma-Bild, dunkel und mit hellem Theme):
 
 ![Bild-Modus](images/preview-bild.png)
+![Bild-Modus hell](images/preview-hell.png)
 
 ## Funktionen
 
@@ -33,9 +34,9 @@ Im Editor unter **„Hintergrund“** wählbar – es muss nichts manuell kopier
 |---|---|
 | Gezeichnete Grafik | Standard, komplett dynamisch, für jede Wärmepumpe |
 | Bild: Daikin Altherma 4 (integriert) | Mitgelieferte Bilder für Heizkörper bzw. Fußbodenheizung. Bei 2 Heizkreisen wird die gezeichnete Grafik verwendet. |
-| Eigenes Bild | Direkt im Editor hochladen, URL eintragen oder `media-source://…` aus dem Medienbrowser |
+| Eigenes Bild | Im Editor per **Bild hochladen**, **Aus Medien wählen** (mit Suche über alle Bilder in „Meine Medien“ und hochgeladenen Bildern) oder URL eintragen |
 
-Die integrierten Bilder enthalten keine Texte, Pumpen oder Fühler – Beschriftungen (in der gewählten Sprache), Pumpen, Temperaturen, Haus-Symbol, Mischer, Enthärtungs-Strang und Zirkulation ergänzt die Karte dynamisch und nur, wenn eine Entität hinterlegt ist.
+Die integrierten Bilder haben einen transparenten Hintergrund und passen sich so dem Dashboard an (mit „Hintergrund vom HA-Theme übernehmen“ auch hellen Themes). Sie enthalten keine Texte, Pumpen oder Fühler – Beschriftungen (in der gewählten Sprache), Pumpen, Temperaturen, Haus-Symbol, Mischer, Enthärtungs-Strang und Zirkulation ergänzt die Karte dynamisch und nur, wenn eine Entität hinterlegt ist.
 
 Darüber liegen die Animationen: Wasserfluss, Lüfter, Abtauen, Verdichter, Heizstab, Pumpen, Speicherfärbung und Wärmeabgabe.
 

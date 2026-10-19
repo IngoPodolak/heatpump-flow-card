@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.7.0";
+const HP_VERSION = "1.8.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -18,6 +18,7 @@ const HP_I18N = {
       heater_rod: "Heizstab", circulation: "Zirkulation",
       power: "Strom", heat_power: "Wärme", cop: "COP", mode: "Modus",
     },
+    ui: {upload: "Bild hochladen", media: "Aus Medien wählen", search: "Bilder suchen …", loading: "Lade Bilder …", no_images: "Keine Bilder in den Medien gefunden.", no_match: "Keine Treffer.", uploading: "Lade hoch …", uploaded: "Hochgeladen ✓", upload_failed: "Upload fehlgeschlagen – ist die Integration „Image Upload“ (Teil von default_config) aktiv?", selected: "Ausgewählt:", positions: "Positionen im Bild" },
     sec: { hp: "Wärmepumpe (Außengerät & Primärkreis)", dhw: "Speicher, Innengerät & Warmwasser", soft: "Enthärtung & Leckageschutz", energy: "Energie & Status (untere Leiste)", zone: "Heizkreis", img: "Hintergrund" },
     opt: { radiator: "Heizkörper", floor: "Fußbodenheizung", both: "Heizkörper + Fußbodenheizung (2 Heizkreise)", auto: "Automatisch (HA-Sprache)", bg_drawn: "Gezeichnete Grafik", bg_altherma: "Bild: Daikin Altherma 4 (integriert)", bg_custom: "Eigenes Bild (Upload, URL oder Medien)" },
     lbl: {
@@ -32,14 +33,14 @@ const HP_I18N = {
       heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischerstellung im Innengerät",
       softener_flow: "Durchsatz (l/h)", softener_hardness: "Härtegrad", leak_alarm: "Leckage erkannt", leak_valve: "Absperrventil Leckageschutz offen",
       zname: "Name", zvl: "Vorlauftemperatur", zrl: "Rücklauftemperatur", zpump: "aktiv / Pumpe läuft", zspeed: "Pumpe Leistung (%)", zmixer: "Mischerstellung",
-      background: "Darstellung", background_image: "Bild hochladen oder URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
+      background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
       zone1_mixer: "Mischer im Innengerät – mischt Heizkreis und Wärmepumpenkreis",
       zpump: "Leer lassen: aktiv, wenn die Umwälzpumpe läuft und keine Brauchwasserbereitung aktiv ist",
       leak_alarm: "Ein = Leck erkannt (Symbol wird rot)", leak_valve: "Aus/zu = Wasser abgesperrt (Symbol wird gelb)",
-      background: "Altherma-Bild gibt es für Heizkörper und Fußbodenheizung; bei 2 Heizkreisen wird die gezeichnete Grafik verwendet.", background_image: "Bild direkt hier hochladen oder URL eintragen – auch media-source:// aus dem Medienbrowser. Kein Kopieren nötig.", overlay: "Nur Abweichungen eintragen, z. B. labels: { vl_temp: [19, 46] }",
+      background: "Altherma-Bild gibt es für Heizkörper und Fußbodenheizung; bei 2 Heizkreisen wird die gezeichnete Grafik verwendet.", background_image: "z. B. /local/bild.png, https://… oder media-source://… – oder unten hochladen bzw. aus den Medien wählen", overlay: "Nur Abweichungen eintragen, z. B. labels: { vl_temp: [19, 46] }",
     },
   },
   en: {
@@ -51,6 +52,7 @@ const HP_I18N = {
       heater_rod: "Heater", circulation: "Circulation",
       power: "Power", heat_power: "Heat", cop: "COP", mode: "Mode",
     },
+    ui: {upload: "Upload image", media: "Choose from media", search: "Search images …", loading: "Loading images …", no_images: "No images found in media.", no_match: "No matches.", uploading: "Uploading …", uploaded: "Uploaded ✓", upload_failed: "Upload failed – is the \"Image Upload\" integration (part of default_config) active?", selected: "Selected:", positions: "Positions in the image" },
     sec: { hp: "Heat pump (outdoor unit & primary circuit)", dhw: "Tank, indoor unit & hot water", soft: "Water softener & leak protection", energy: "Energy & status (bottom bar)", zone: "Heating circuit", img: "Background" },
     opt: { radiator: "Radiators", floor: "Underfloor heating", both: "Radiators + underfloor heating (2 circuits)", auto: "Automatic (HA language)", bg_drawn: "Drawn graphic", bg_altherma: "Image: Daikin Altherma 4 (built-in)", bg_custom: "Custom image (upload, URL or media)" },
     lbl: {
@@ -65,14 +67,14 @@ const HP_I18N = {
       heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Mixing valve in indoor unit",
       softener_flow: "Flow rate (l/h)", softener_hardness: "Water hardness", leak_alarm: "Leak detected", leak_valve: "Leak protection valve open",
       zname: "Name", zvl: "flow temperature", zrl: "return temperature", zpump: "active / pump running", zspeed: "pump speed (%)", zmixer: "mixing valve position",
-      background: "Display", background_image: "Upload image or URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
+      background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
       pump_speed: "Also controls the speed of the pump and pipe animation",
       zone1_mixer: "Mixing valve inside the indoor unit – blends heating and heat pump circuit",
       zpump: "Leave empty: active when the circulation pump runs and no hot water heating is active",
       leak_alarm: "On = leak detected (icon turns red)", leak_valve: "Off/closed = water shut off (icon turns yellow)",
-      background: "The Altherma image exists for radiators and underfloor heating; with 2 circuits the drawn graphic is used.", background_image: "Upload an image right here or enter a URL – media-source:// from the media browser works too. No copying needed.", overlay: "Only enter changes, e.g. labels: { vl_temp: [19, 46] }",
+      background: "The Altherma image exists for radiators and underfloor heating; with 2 circuits the drawn graphic is used.", background_image: "e.g. /local/image.png, https://… or media-source://… – or upload / choose from media below", overlay: "Only enter changes, e.g. labels: { vl_temp: [19, 46] }",
     },
   },
   fr: {
@@ -84,6 +86,7 @@ const HP_I18N = {
       heater_rod: "Résistance", circulation: "Bouclage",
       power: "Électricité", heat_power: "Chaleur", cop: "COP", mode: "Mode",
     },
+    ui: {upload: "Envoyer une image", media: "Choisir dans les médias", search: "Rechercher des images …", loading: "Chargement des images …", no_images: "Aucune image trouvée dans les médias.", no_match: "Aucun résultat.", uploading: "Envoi …", uploaded: "Envoyée ✓", upload_failed: "Échec de l'envoi – l'intégration « Image Upload » (default_config) est-elle active ?", selected: "Sélectionnée :", positions: "Positions dans l'image" },
     sec: { hp: "Pompe à chaleur (unité extérieure & circuit primaire)", dhw: "Ballon, unité intérieure & eau chaude", soft: "Adoucisseur & protection fuite", energy: "Énergie & état (barre inférieure)", zone: "Circuit de chauffage", img: "Arrière-plan" },
     opt: { radiator: "Radiateurs", floor: "Plancher chauffant", both: "Radiateurs + plancher chauffant (2 circuits)", auto: "Automatique (langue HA)", bg_drawn: "Graphique dessiné", bg_altherma: "Image : Daikin Altherma 4 (intégrée)", bg_custom: "Image personnelle (envoi, URL ou médias)" },
     lbl: {
@@ -98,14 +101,14 @@ const HP_I18N = {
       heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse de l'unité intérieure",
       softener_flow: "Débit (l/h)", softener_hardness: "Dureté de l'eau", leak_alarm: "Fuite détectée", leak_valve: "Vanne de protection fuite ouverte",
       zname: "Nom", zvl: "température départ", zrl: "température retour", zpump: "actif / circulateur en marche", zspeed: "vitesse circulateur (%)", zmixer: "position vanne mélangeuse",
-      background: "Affichage", background_image: "Envoyer une image ou URL", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
+      background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
       zone1_mixer: "Vanne mélangeuse dans l'unité intérieure – mélange circuit de chauffage et circuit PAC",
       zpump: "Laisser vide : actif quand le circulateur tourne et sans production d'eau chaude",
       leak_alarm: "Marche = fuite détectée (icône rouge)", leak_valve: "Arrêt/fermée = eau coupée (icône jaune)",
-      background: "L'image Altherma existe pour radiateurs et plancher chauffant ; avec 2 circuits, le graphique dessiné est utilisé.", background_image: "Envoyez une image ici ou saisissez une URL – media-source:// du navigateur multimédia fonctionne aussi. Aucune copie nécessaire.", overlay: "Saisir seulement les écarts, ex. labels: { vl_temp: [19, 46] }",
+      background: "L'image Altherma existe pour radiateurs et plancher chauffant ; avec 2 circuits, le graphique dessiné est utilisé.", background_image: "ex. /local/image.png, https://… ou media-source://… – ou envoyer / choisir dans les médias ci-dessous", overlay: "Saisir seulement les écarts, ex. labels: { vl_temp: [19, 46] }",
     },
   },
   nl: {
@@ -117,6 +120,7 @@ const HP_I18N = {
       heater_rod: "Element", circulation: "Circulatie",
       power: "Stroom", heat_power: "Warmte", cop: "COP", mode: "Modus",
     },
+    ui: {upload: "Afbeelding uploaden", media: "Kiezen uit media", search: "Afbeeldingen zoeken …", loading: "Afbeeldingen laden …", no_images: "Geen afbeeldingen gevonden in media.", no_match: "Geen resultaten.", uploading: "Uploaden …", uploaded: "Geüpload ✓", upload_failed: "Upload mislukt – is de integratie \"Image Upload\" (default_config) actief?", selected: "Gekozen:", positions: "Posities in de afbeelding" },
     sec: { hp: "Warmtepomp (buitenunit & primair circuit)", dhw: "Boiler, binnenunit & warm water", soft: "Waterontharder & lekbeveiliging", energy: "Energie & status (onderbalk)", zone: "Verwarmingscircuit", img: "Achtergrond" },
     opt: { radiator: "Radiatoren", floor: "Vloerverwarming", both: "Radiatoren + vloerverwarming (2 circuits)", auto: "Automatisch (HA-taal)", bg_drawn: "Getekende afbeelding", bg_altherma: "Afbeelding: Daikin Altherma 4 (ingebouwd)", bg_custom: "Eigen afbeelding (upload, URL of media)" },
     lbl: {
@@ -131,14 +135,14 @@ const HP_I18N = {
       heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep in binnenunit",
       softener_flow: "Doorstroming (l/h)", softener_hardness: "Waterhardheid", leak_alarm: "Lek gedetecteerd", leak_valve: "Afsluiter lekbeveiliging open",
       zname: "Naam", zvl: "aanvoertemperatuur", zrl: "retourtemperatuur", zpump: "actief / pomp draait", zspeed: "pompvermogen (%)", zmixer: "mengklepstand",
-      background: "Weergave", background_image: "Afbeelding uploaden of URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
+      background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
       zone1_mixer: "Mengklep in de binnenunit – mengt verwarmings- en warmtepompcircuit",
       zpump: "Leeg laten: actief als de circulatiepomp draait en er geen tapwater wordt bereid",
       leak_alarm: "Aan = lek gedetecteerd (icoon wordt rood)", leak_valve: "Uit/dicht = water afgesloten (icoon wordt geel)",
-      background: "De Altherma-afbeelding bestaat voor radiatoren en vloerverwarming; bij 2 circuits wordt de getekende afbeelding gebruikt.", background_image: "Upload hier een afbeelding of vul een URL in – media-source:// uit de mediabrowser werkt ook. Niets kopiëren nodig.", overlay: "Alleen afwijkingen invullen, bijv. labels: { vl_temp: [19, 46] }",
+      background: "De Altherma-afbeelding bestaat voor radiatoren en vloerverwarming; bij 2 circuits wordt de getekende afbeelding gebruikt.", background_image: "bijv. /local/afbeelding.png, https://… of media-source://… – of hieronder uploaden / uit media kiezen", overlay: "Alleen afwijkingen invullen, bijv. labels: { vl_temp: [19, 46] }",
     },
   },
   it: {
@@ -150,6 +154,7 @@ const HP_I18N = {
       heater_rod: "Resistenza", circulation: "Ricircolo",
       power: "Potenza", heat_power: "Calore", cop: "COP", mode: "Modalità",
     },
+    ui: {upload: "Carica immagine", media: "Scegli dai media", search: "Cerca immagini …", loading: "Caricamento immagini …", no_images: "Nessuna immagine trovata nei media.", no_match: "Nessun risultato.", uploading: "Caricamento …", uploaded: "Caricata ✓", upload_failed: "Caricamento non riuscito – l'integrazione \"Image Upload\" (default_config) è attiva?", selected: "Selezionata:", positions: "Posizioni nell'immagine" },
     sec: { hp: "Pompa di calore (unità esterna & circuito primario)", dhw: "Accumulo, unità interna & acqua calda", soft: "Addolcitore & protezione perdite", energy: "Energia & stato (barra inferiore)", zone: "Circuito di riscaldamento", img: "Sfondo" },
     opt: { radiator: "Radiatori", floor: "Riscaldamento a pavimento", both: "Radiatori + pavimento (2 circuiti)", auto: "Automatica (lingua HA)", bg_drawn: "Grafica disegnata", bg_altherma: "Immagine: Daikin Altherma 4 (integrata)", bg_custom: "Immagine propria (caricamento, URL o media)" },
     lbl: {
@@ -164,14 +169,14 @@ const HP_I18N = {
       heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Valvola miscelatrice unità interna",
       softener_flow: "Portata (l/h)", softener_hardness: "Durezza dell'acqua", leak_alarm: "Perdita rilevata", leak_valve: "Valvola antiallagamento aperta",
       zname: "Nome", zvl: "temperatura mandata", zrl: "temperatura ritorno", zpump: "attivo / pompa in funzione", zspeed: "velocità pompa (%)", zmixer: "posizione miscelatrice",
-      background: "Visualizzazione", background_image: "Carica immagine o URL", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
+      background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
       zone1_mixer: "Valvola miscelatrice nell'unità interna – miscela circuito di riscaldamento e circuito PdC",
       zpump: "Lasciare vuoto: attivo quando il circolatore funziona e non c'è produzione di acqua calda",
       leak_alarm: "On = perdita rilevata (icona rossa)", leak_valve: "Off/chiusa = acqua chiusa (icona gialla)",
-      background: "L'immagine Altherma esiste per radiatori e pavimento; con 2 circuiti viene usata la grafica disegnata.", background_image: "Carica un'immagine qui o inserisci un URL – funziona anche media-source:// dal browser multimediale. Nessuna copia necessaria.", overlay: "Inserire solo le modifiche, es. labels: { vl_temp: [19, 46] }",
+      background: "L'immagine Altherma esiste per radiatori e pavimento; con 2 circuiti viene usata la grafica disegnata.", background_image: "es. /local/immagine.png, https://… o media-source://… – oppure carica / scegli dai media qui sotto", overlay: "Inserire solo le modifiche, es. labels: { vl_temp: [19, 46] }",
     },
   },
 };
@@ -395,7 +400,12 @@ const HP_STYLE = `
   .stat rect { fill: rgba(150,156,168,.1); stroke: rgba(150,156,168,.25); }
 
   /* Bild-Modus */
+  .halo-c { flood-color: #000; flood-opacity: .85; }
+  ha-card.themed .halo-c { flood-color: var(--hp-bg); flood-opacity: .95; }
   .ovt { font-size: 26px; font-weight: 600; fill: #fff; }
+  ha-card.themed .ovt, ha-card.themed .ovcap { fill: var(--hp-text); }
+  ha-card.themed .ovt .ovl, ha-card.themed .ovt.ovl, ha-card.themed .ovcap.small, ha-card.themed .tag .tp { fill: var(--hp-text2); }
+  ha-card.themed .house.img { stroke: var(--hp-text2); fill: none; }
   .ovt.small { font-size: 19px; }
   .ovt.title { font-size: 40px; font-weight: 500; }
   .ovt .ovl { font-size: 17px; font-weight: 400; fill: #d5dae0; }
@@ -1214,7 +1224,7 @@ class HeatpumpFlowCard extends HTMLElement {
             <filter id="${u}-halo" x="-10%" y="-40%" width="120%" height="180%">
               <feMorphology in="SourceAlpha" operator="dilate" radius="2.4" result="d"/>
               <feGaussianBlur in="d" stdDeviation="1.2" result="b"/>
-              <feFlood flood-color="#000" flood-opacity=".85"/><feComposite in2="b" operator="in" result="s"/>
+              <feFlood class="halo-c"/><feComposite in2="b" operator="in" result="s"/>
               <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
             <clipPath id="${u}-clip"><rect x="0" y="0" width="${W}" height="${IH}" rx="10"/></clipPath>
@@ -1351,6 +1361,30 @@ class HeatpumpFlowCard extends HTMLElement {
 }
 
 /* ---------- Visueller Editor ---------- */
+const HP_EDITOR_STYLE = `
+  .hp-bgpanel { margin: 4px 0 16px; padding: 12px; border: 1px solid var(--divider-color, rgba(127,127,127,.3)); border-radius: 12px; }
+  .hp-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .hp-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 18px; cursor: pointer; font: inherit; font-size: 14px;
+    border: 1px solid var(--primary-color, #03a9f4); background: transparent; color: var(--primary-color, #03a9f4); }
+  .hp-btn:hover { background: rgba(3,169,244,.08); }
+  .hp-btn.primary { background: var(--primary-color, #03a9f4); color: var(--text-primary-color, #fff); }
+  .hp-status { font-size: 13px; color: var(--secondary-text-color, #888); }
+  .hp-status.err { color: var(--error-color, #db4437); }
+  .hp-preview { margin-top: 10px; max-width: 100%; max-height: 140px; border-radius: 8px; display: none;
+    background: repeating-conic-gradient(#8884 0% 25%, transparent 0% 50%) 50% / 16px 16px; }
+  .hp-media { margin-top: 10px; display: none; }
+  .hp-search { width: 100%; box-sizing: border-box; padding: 9px 12px; border-radius: 8px; font: inherit; font-size: 14px;
+    border: 1px solid var(--divider-color, rgba(127,127,127,.4)); background: var(--card-background-color, transparent); color: var(--primary-text-color); }
+  .hp-list { margin-top: 6px; max-height: 260px; overflow: auto; border: 1px solid var(--divider-color, rgba(127,127,127,.3)); border-radius: 8px; }
+  .hp-item { display: flex; align-items: center; gap: 10px; padding: 7px 10px; cursor: pointer; border-bottom: 1px solid var(--divider-color, rgba(127,127,127,.15)); }
+  .hp-item:last-child { border-bottom: none; }
+  .hp-item:hover, .hp-item.sel { background: rgba(3,169,244,.1); }
+  .hp-thumb { width: 44px; height: 32px; object-fit: contain; border-radius: 4px; flex: none; background: rgba(127,127,127,.15); }
+  .hp-item-t { font-size: 14px; color: var(--primary-text-color); }
+  .hp-item-p { font-size: 12px; color: var(--secondary-text-color); word-break: break-all; }
+  .hp-empty { padding: 12px; font-size: 13px; color: var(--secondary-text-color); }
+`;
+
 class HeatpumpFlowCardEditor extends HTMLElement {
   setConfig(config) {
     this._config = { ...config };
@@ -1360,27 +1394,18 @@ class HeatpumpFlowCardEditor extends HTMLElement {
   set hass(hass) {
     const first = !this._hass;
     this._hass = hass;
-    if (this._form) this._form.hass = hass;
+    if (this._form1) { this._form1.hass = hass; this._form2.hass = hass; }
     if (first && this._config) this._render();
   }
 
   _t() { return HP_I18N[hpLang(this._config, this._hass)]; }
+  _bgMode() { return this._config.background || (this._config.background_image ? "custom" : "drawn"); }
 
-  _schema() {
+  /* Oberer Teil: Grundeinstellungen inkl. Hintergrund */
+  _schema1() {
     const t = this._t();
-    const e = (name) => ({ name, selector: { entity: {} } });
-    const both = this._config.heating_type === "both";
-    const bgMode = this._config.background || (this._config.background_image ? "custom" : "drawn");
-    const zone = (i) => ({
-      type: "expandable", name: `sec_zone${i}`, flatten: true,
-      title: `${t.sec.zone} ${i}` + (both ? (i === 1 ? ` (${t.opt.radiator})` : ` (${t.opt.floor})`) : ""),
-      schema: [
-        { name: `zone${i}_name`, selector: { text: {} } },
-        e(`zone${i}_vl_temp`), e(`zone${i}_rl_temp`), e(`zone${i}_pump`), e(`zone${i}_pump_speed`),
-        ...(i === 1 ? [] : [e(`zone${i}_mixer`)]),
-      ],
-    });
-    const schema = [
+    const bgMode = this._bgMode();
+    return [
       { name: "title", selector: { text: {} } },
       {
         name: "language",
@@ -1395,6 +1420,32 @@ class HeatpumpFlowCardEditor extends HTMLElement {
           { value: "radiator", label: t.opt.radiator }, { value: "floor", label: t.opt.floor }, { value: "both", label: t.opt.both },
         ] } },
       },
+      {
+        name: "background",
+        selector: { select: { mode: "dropdown", options: [
+          { value: "drawn", label: t.opt.bg_drawn }, { value: "altherma", label: t.opt.bg_altherma }, { value: "custom", label: t.opt.bg_custom },
+        ] } },
+      },
+      ...(bgMode === "custom" ? [{ name: "background_image", selector: { text: {} } }] : []),
+    ];
+  }
+
+  /* Unterer Teil: Datenpunkte */
+  _schema2() {
+    const t = this._t();
+    const e = (name) => ({ name, selector: { entity: {} } });
+    const both = this._config.heating_type === "both";
+    const bgMode = this._bgMode();
+    const zone = (i) => ({
+      type: "expandable", name: `sec_zone${i}`, flatten: true,
+      title: `${t.sec.zone} ${i}` + (both ? (i === 1 ? ` (${t.opt.radiator})` : ` (${t.opt.floor})`) : ""),
+      schema: [
+        { name: `zone${i}_name`, selector: { text: {} } },
+        e(`zone${i}_vl_temp`), e(`zone${i}_rl_temp`), e(`zone${i}_pump`), e(`zone${i}_pump_speed`),
+        ...(i === 1 ? [] : [e(`zone${i}_mixer`)]),
+      ],
+    });
+    const schema = [
       { name: "theme_background", selector: { boolean: {} } },
       {
         type: "expandable", name: "sec_hp", flatten: true, title: t.sec.hp,
@@ -1418,19 +1469,12 @@ class HeatpumpFlowCardEditor extends HTMLElement {
       zone(1),
     ];
     if (both) schema.push(zone(2));
-    schema.push({
-      type: "expandable", name: "sec_img", flatten: true, title: t.sec.img,
-      schema: [
-        {
-          name: "background",
-          selector: { select: { mode: "dropdown", options: [
-            { value: "drawn", label: t.opt.bg_drawn }, { value: "altherma", label: t.opt.bg_altherma }, { value: "custom", label: t.opt.bg_custom },
-          ] } },
-        },
-        ...(bgMode === "custom" ? [{ name: "background_image", selector: { image: {} } }] : []),
-        ...(bgMode !== "drawn" ? [{ name: "show_grid", selector: { boolean: {} } }, { name: "overlay", selector: { object: {} } }] : []),
-      ],
-    });
+    if (bgMode !== "drawn") {
+      schema.push({
+        type: "expandable", name: "sec_pos", flatten: true, title: t.ui.positions,
+        schema: [{ name: "show_grid", selector: { boolean: {} } }, { name: "overlay", selector: { object: {} } }],
+      });
+    }
     return schema;
   }
 
@@ -1447,27 +1491,193 @@ class HeatpumpFlowCardEditor extends HTMLElement {
   _helper(s) {
     const t = this._t();
     if (/^zone\d_pump$/.test(s.name || "")) return t.help.zpump;
+    if (s.name === "background") return this._bgMode() === "altherma" && this._config.heating_type === "both" ? t.help.background : undefined;
     return t.help[s.name];
   }
 
+  _fire(cfg) {
+    Object.keys(cfg).forEach((k) => { if (cfg[k] === "" || cfg[k] === null || cfg[k] === undefined) delete cfg[k]; });
+    this._config = cfg;
+    const e = new Event("config-changed", { bubbles: true, composed: true });
+    e.detail = { config: cfg };
+    this.dispatchEvent(e);
+  }
+
+  _setValue(key, value) {
+    const cfg = { ...this._config, [key]: value };
+    if (key === "background_image") cfg.background = "custom";
+    this._fire(cfg);
+    this._render();
+  }
+
+  _makeForm() {
+    const f = document.createElement("ha-form");
+    f.computeLabel = (s) => this._label(s);
+    f.computeHelper = (s) => this._helper(s);
+    f.addEventListener("value-changed", (ev) => {
+      this._fire({ ...ev.detail.value });
+      this._render();
+    });
+    return f;
+  }
+
   _render() {
-    if (!this._form) {
-      this._form = document.createElement("ha-form");
-      this._form.computeLabel = (s) => this._label(s);
-      this._form.computeHelper = (s) => this._helper(s);
-      this._form.addEventListener("value-changed", (ev) => {
-        const cfg = { ...ev.detail.value };
-        Object.keys(cfg).forEach((k) => { if (cfg[k] === "" || cfg[k] === null || cfg[k] === undefined) delete cfg[k]; });
-        this._config = cfg;
-        const e = new Event("config-changed", { bubbles: true, composed: true });
-        e.detail = { config: cfg };
-        this.dispatchEvent(e);
-      });
-      this.appendChild(this._form);
+    if (!this._config) return;
+    if (!this._form1) {
+      const st = document.createElement("style");
+      st.textContent = HP_EDITOR_STYLE;
+      this._form1 = this._makeForm();
+      this._panel = document.createElement("div");
+      this._panel.className = "hp-bgpanel";
+      this._form2 = this._makeForm();
+      this.append(st, this._form1, this._panel, this._form2);
     }
-    this._form.hass = this._hass;
-    this._form.data = this._config;
-    this._form.schema = this._schema();
+    for (const f of [this._form1, this._form2]) { f.hass = this._hass; f.data = this._config; }
+    this._form1.schema = this._schema1();
+    this._form2.schema = this._schema2();
+    this._renderPanel();
+  }
+
+  /* ---------- Bildauswahl: Upload, Medienbrowser mit Suche ---------- */
+  _renderPanel() {
+    const t = this._t();
+    const show = this._bgMode() === "custom";
+    this._panel.style.display = show ? "" : "none";
+    if (!show) return;
+    if (!this._panelBuilt) {
+      this._panelBuilt = true;
+      this._panel.innerHTML = `
+        <div class="hp-row">
+          <button type="button" class="hp-btn primary" data-a="upload"></button>
+          <button type="button" class="hp-btn" data-a="media"></button>
+          <span class="hp-status"></span>
+        </div>
+        <input type="file" accept="image/*" style="display:none">
+        <img class="hp-preview" alt="">
+        <div class="hp-media">
+          <input class="hp-search" type="search">
+          <div class="hp-list"></div>
+        </div>`;
+      this._el = {
+        up: this._panel.querySelector('[data-a="upload"]'), media: this._panel.querySelector('[data-a="media"]'),
+        status: this._panel.querySelector(".hp-status"), file: this._panel.querySelector('input[type="file"]'),
+        preview: this._panel.querySelector(".hp-preview"), box: this._panel.querySelector(".hp-media"),
+        search: this._panel.querySelector(".hp-search"), list: this._panel.querySelector(".hp-list"),
+      };
+      this._el.up.addEventListener("click", () => this._el.file.click());
+      this._el.file.addEventListener("change", () => this._upload());
+      this._el.media.addEventListener("click", () => this._toggleMedia());
+      this._el.search.addEventListener("input", () => this._renderList());
+    }
+    this._el.up.textContent = "⬆ " + t.ui.upload;
+    this._el.media.textContent = "🖼 " + t.ui.media;
+    this._el.search.placeholder = t.ui.search;
+    this._updatePreview();
+  }
+
+  _status(text, err) {
+    this._el.status.textContent = text || "";
+    this._el.status.classList.toggle("err", !!err);
+  }
+
+  async _resolve(src) {
+    if (src && src.startsWith("media-source://")) {
+      const r = await this._hass.callWS({ type: "media_source/resolve_media", media_content_id: src });
+      return r.url;
+    }
+    return src;
+  }
+
+  async _updatePreview() {
+    const src = this._config.background_image;
+    if (src === this._previewSrc) return;
+    this._previewSrc = src;
+    const img = this._el.preview;
+    if (!src || !this._hass) { img.style.display = "none"; return; }
+    try {
+      const url = await this._resolve(src);
+      if (this._previewSrc !== src) return;
+      img.src = url;
+      img.style.display = "block";
+    } catch (e) { img.style.display = "none"; }
+  }
+
+  async _upload() {
+    const t = this._t();
+    const file = this._el.file.files && this._el.file.files[0];
+    this._el.file.value = "";
+    if (!file || !this._hass) return;
+    this._status(t.ui.uploading);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const r = await this._hass.fetchWithAuth("/api/image/upload", { method: "POST", body: fd });
+      if (!r.ok) throw new Error(String(r.status));
+      const j = await r.json();
+      this._status(t.ui.uploaded);
+      this._mediaItems = null;
+      this._setValue("background_image", `/api/image/serve/${j.id}/original`);
+    } catch (e) {
+      console.warn("heatpump-flow-card: Upload fehlgeschlagen", e);
+      this._status(t.ui.upload_failed, true);
+    }
+  }
+
+  async _toggleMedia() {
+    const box = this._el.box;
+    const open = box.style.display !== "block";
+    box.style.display = open ? "block" : "none";
+    if (!open) return;
+    this._el.search.focus();
+    if (!this._mediaItems) {
+      this._el.list.innerHTML = `<div class="hp-empty">${this._t().ui.loading}</div>`;
+      try { this._mediaItems = await this._browseImages(); } catch (e) { this._mediaItems = []; }
+    }
+    this._renderList();
+  }
+
+  /* Alle Bilder aus "Meine Medien" und hochgeladenen Bildern sammeln (rekursiv) */
+  async _browseImages() {
+    const out = [];
+    const root = await this._hass.callWS({ type: "media_source/browse_media" });
+    const queue = (root.children || [])
+      .filter((ch) => /^media-source:\/\/(media_source|image_upload)/.test(ch.media_content_id || ""))
+      .map((ch) => ({ id: ch.media_content_id, path: ch.title, depth: 0 }));
+    let calls = 0;
+    while (queue.length && calls < 80 && out.length < 600) {
+      const { id, path, depth } = queue.shift();
+      calls++;
+      let res;
+      try { res = await this._hass.callWS({ type: "media_source/browse_media", media_content_id: id }); } catch (e) { continue; }
+      for (const ch of res.children || []) {
+        const p = `${path} / ${ch.title}`;
+        const isImg = ch.media_class === "image" || String(ch.media_content_type || "").startsWith("image/");
+        if (isImg && !ch.can_expand) out.push({ title: ch.title, path: p, id: ch.media_content_id, thumb: ch.thumbnail });
+        else if (ch.can_expand && depth < 5) queue.push({ id: ch.media_content_id, path: p, depth: depth + 1 });
+      }
+    }
+    return out;
+  }
+
+  _renderList() {
+    const t = this._t();
+    const list = this._el.list;
+    if (!this._mediaItems) return;
+    const q = this._el.search.value.trim().toLowerCase();
+    const items = this._mediaItems.filter((it) => !q || it.path.toLowerCase().includes(q));
+    if (!items.length) { list.innerHTML = `<div class="hp-empty">${q ? t.ui.no_match : t.ui.no_images}</div>`; return; }
+    const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    list.innerHTML = items.slice(0, 200).map((it, n) => `
+      <div class="hp-item${it.id === this._config.background_image ? " sel" : ""}" data-n="${n}">
+        ${it.thumb ? `<img class="hp-thumb" src="${esc(it.thumb)}" alt="" loading="lazy">` : `<div class="hp-thumb"></div>`}
+        <div><div class="hp-item-t">${esc(it.title)}</div><div class="hp-item-p">${esc(it.path)}</div></div>
+      </div>`).join("");
+    list.querySelectorAll(".hp-item").forEach((el) => el.addEventListener("click", () => {
+      const it = items[Number(el.dataset.n)];
+      this._el.box.style.display = "none";
+      this._status(t.ui.selected + " " + it.title);
+      this._setValue("background_image", it.id);
+    }));
   }
 }
 
