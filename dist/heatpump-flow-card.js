@@ -1,11 +1,11 @@
 /*
- * Wärmepumpen Flow Card für Home Assistant
+ * HA Heatpump Flow Card – Wärmepumpen-Karte für Home Assistant
  * Animierte Anlagenansicht: Außengerät, Speicher, Warmwasser, Enthärtung, Heizkörper / FBH
  * Primär entworfen für Daikin Altherma 4 mit ECH2O-Speicher, nutzbar für jede Wärmepumpe.
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.10.0";
+const HP_VERSION = "1.10.3";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -1724,10 +1724,10 @@ window.customCards = window.customCards || [];
 if (!window.customCards.some((c) => c.type === "heatpump-flow-card")) {
   window.customCards.push({
     type: "heatpump-flow-card",
-    name: "Wärmepumpen Flow Card",
+    name: "HA Heatpump Flow Card",
     description: "Animated heat pump system: outdoor unit, tank, hot water, softener, radiators / underfloor heating",
     preview: true,
   });
 }
 
-console.info(`%c WÄRMEPUMPEN-FLOW-CARD %c v${HP_VERSION} `, "color:#fff;background:#d8463c;font-weight:700", "color:#d8463c;background:#fff");
+console.info(`%c HA-HEATPUMP-FLOW-CARD %c v${HP_VERSION} `, "color:#fff;background:#d8463c;font-weight:700", "color:#d8463c;background:#fff");

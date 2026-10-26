@@ -1,4 +1,4 @@
-# Wärmepumpen Flow Card
+# HA Heatpump Flow Card
 
 Animierte Home-Assistant-Karte für Wärmepumpen – entworfen für die **Daikin Altherma 4 mit ECH₂O-Speicher**, aber mit jeder Wärmepumpe nutzbar.
 
@@ -79,7 +79,7 @@ Fluss-Schlüssel: `primary_vl`, `primary_rl`, `circ`, `soft`, `z1_vl`, `z1_rl`, 
 
 1. HACS öffnen → oben rechts ⋮ → **Benutzerdefinierte Repositories**
 2. Repository: `https://github.com/IngoPodolak/heatpump-flow-card`, Typ: **Dashboard**
-3. „Wärmepumpen Flow Card“ suchen → **Herunterladen**
+3. „HA Heatpump Flow Card“ suchen → **Herunterladen**
 4. Browser neu laden (Strg+F5)
 
 ## Manuelle Installation
@@ -89,7 +89,7 @@ Fluss-Schlüssel: `primary_vl`, `primary_rl`, `circ`, `soft`, `z1_vl`, `z1_rl`, 
 
 ## Konfiguration
 
-Karte im Dashboard hinzufügen und nach **„Wärmepumpen Flow Card“** suchen – alles weitere im Editor.
+Karte im Dashboard hinzufügen und nach **„HA Heatpump Flow Card“** suchen – alles weitere im Editor.
 Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfiguration.yaml`](beispiel-konfiguration.yaml).
 
 | Option | Beschreibung |
