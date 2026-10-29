@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.10.3";
+const HP_VERSION = "1.11.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -17,7 +17,7 @@ const HP_I18N = {
       softener: "Enthärtung", indoor: "innen", outdoor: "außen", vl: "VL ", rl: "RL ",
       compressor: "Verdichter", defrost: "Abtauen", dhw_active: "Warmwasser", dhw_boost: "Überhöhung",
       heater_rod: "Heizstab", circulation: "Zirkulation",
-      power: "Strom", heat_power: "Wärme", cop: "COP", mode: "Modus",
+      power: "Strom", heat_power: "Wärme", cop: "COP", mode: "Modus", sg_ready: "SG-Ready", sg: ["Sperre", "Normal", "Empfehlung", "Anlaufbefehl"],
     },
     ui: {upload: "Bild hochladen", media: "Aus Medien wählen", search: "Bilder suchen …", loading: "Lade Bilder …", no_images: "Keine Bilder in den Medien gefunden.", no_match: "Keine Treffer.", uploading: "Lade hoch …", uploaded: "Hochgeladen ✓", upload_failed: "Upload fehlgeschlagen – ist die Integration „Image Upload“ (Teil von default_config) aktiv?", selected: "Ausgewählt:", positions: "Positionen im Bild" },
     sec: { hp: "Wärmepumpe (Außengerät & Primärkreis)", dhw: "Speicher, Innengerät & Warmwasser", soft: "Enthärtung & Leckageschutz", energy: "Energie & Status (untere Leiste)", zone: "Heizkreis", img: "Hintergrund" },
@@ -28,7 +28,7 @@ const HP_I18N = {
       outdoor_temp: "Außentemperatur", indoor_temp: "Innentemperatur", indoor_setpoint: "Solltemperatur innen", compressor: "Verdichter läuft", defrost: "Abtauen / Enteisung aktiv",
       vl_temp: "Vorlauftemperatur Wärmepumpe", rl_temp: "Rücklauftemperatur Wärmepumpe", pump: "Umwälzpumpe läuft",
       pump_speed: "Umwälzpumpe Leistung (%)", pressure: "Druck im Heizsystem", power: "Stromverbrauch Wärmepumpe",
-      heat_power: "Erzeugte Wärme (thermische Leistung)", cop: "COP", mode: "Aktueller Betriebsmodus",
+      heat_power: "Erzeugte Wärme (thermische Leistung)", cop: "COP", mode: "Aktueller Betriebsmodus", sg_ready: "SG-Ready Betriebszustand",
       dhw_temp: "Brauchwassertemperatur", dhw_setpoint: "Sollwert Brauchwasser", tank_top_temp: "Speicher obere Temperatur",
       tank_bottom_temp: "Speicher untere Temperatur", dhw_active: "Brauchwasserbereitung aktiv", dhw_boost: "Speicherüberhöhung (leistungsstark)",
       heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischer Speicher (Stellung)", bypass_valve: "Mischer Bypass (Stellung)",
@@ -37,6 +37,7 @@ const HP_I18N = {
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
+      sg_ready: "Stufe 1–4 wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl); Texte werden direkt übernommen",
       indoor_setpoint: "Sensor, Zahl oder Klima-Entität (bei Klima wird die Zieltemperatur verwendet)",
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
       zone1_mixer: "Mischer im Innengerät für den Speicher – wird mit „Speicher“ beschriftet", bypass_valve: "Zweiter Mischer im Innengerät – wird mit „Bypass“ beschriftet",
@@ -53,7 +54,7 @@ const HP_I18N = {
       softener: "Water softener", indoor: "indoor", outdoor: "outdoor", vl: "Flow ", rl: "Return ",
       compressor: "Compressor", defrost: "Defrost", dhw_active: "Hot water", dhw_boost: "Boost",
       heater_rod: "Heater", circulation: "Circulation",
-      power: "Power", heat_power: "Heat", cop: "COP", mode: "Mode",
+      power: "Power", heat_power: "Heat", cop: "COP", mode: "Mode", sg_ready: "SG-Ready", sg: ["Blocked", "Normal", "Recommended", "Forced on"],
     },
     ui: {upload: "Upload image", media: "Choose from media", search: "Search images …", loading: "Loading images …", no_images: "No images found in media.", no_match: "No matches.", uploading: "Uploading …", uploaded: "Uploaded ✓", upload_failed: "Upload failed – is the \"Image Upload\" integration (part of default_config) active?", selected: "Selected:", positions: "Positions in the image" },
     sec: { hp: "Heat pump (outdoor unit & primary circuit)", dhw: "Tank, indoor unit & hot water", soft: "Water softener & leak protection", energy: "Energy & status (bottom bar)", zone: "Heating circuit", img: "Background" },
@@ -64,7 +65,7 @@ const HP_I18N = {
       outdoor_temp: "Outdoor temperature", indoor_temp: "Indoor temperature", indoor_setpoint: "Indoor target temperature", compressor: "Compressor running", defrost: "Defrost active",
       vl_temp: "Heat pump flow temperature", rl_temp: "Heat pump return temperature", pump: "Circulation pump running",
       pump_speed: "Circulation pump speed (%)", pressure: "System pressure", power: "Heat pump power consumption",
-      heat_power: "Heat output (thermal power)", cop: "COP", mode: "Current operating mode",
+      heat_power: "Heat output (thermal power)", cop: "COP", mode: "Current operating mode", sg_ready: "SG-Ready operating state",
       dhw_temp: "Hot water temperature", dhw_setpoint: "Hot water setpoint", tank_top_temp: "Tank top temperature",
       tank_bottom_temp: "Tank bottom temperature", dhw_active: "Hot water heating active", dhw_boost: "Tank boost (powerful)",
       heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Tank mixing valve (position)", bypass_valve: "Bypass valve (position)",
@@ -73,6 +74,7 @@ const HP_I18N = {
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
+      sg_ready: "Level 1–4 is shown as a word (blocked, normal, recommended, forced on); text states are shown as-is",
       indoor_setpoint: "Sensor, number or climate entity (for climate the target temperature is used)",
       pump_speed: "Also controls the speed of the pump and pipe animation",
       zone1_mixer: "Mixing valve in the indoor unit for the tank – labelled “Tank”", bypass_valve: "Second valve in the indoor unit – labelled “Bypass”",
@@ -89,7 +91,7 @@ const HP_I18N = {
       softener: "Adoucisseur", indoor: "intérieur", outdoor: "extérieur", vl: "Départ ", rl: "Retour ",
       compressor: "Compresseur", defrost: "Dégivrage", dhw_active: "Eau chaude", dhw_boost: "Boost",
       heater_rod: "Résistance", circulation: "Bouclage",
-      power: "Électricité", heat_power: "Chaleur", cop: "COP", mode: "Mode",
+      power: "Électricité", heat_power: "Chaleur", cop: "COP", mode: "Mode", sg_ready: "SG-Ready", sg: ["Blocage", "Normal", "Recommandé", "Forcé"],
     },
     ui: {upload: "Envoyer une image", media: "Choisir dans les médias", search: "Rechercher des images …", loading: "Chargement des images …", no_images: "Aucune image trouvée dans les médias.", no_match: "Aucun résultat.", uploading: "Envoi …", uploaded: "Envoyée ✓", upload_failed: "Échec de l'envoi – l'intégration « Image Upload » (default_config) est-elle active ?", selected: "Sélectionnée :", positions: "Positions dans l'image" },
     sec: { hp: "Pompe à chaleur (unité extérieure & circuit primaire)", dhw: "Ballon, unité intérieure & eau chaude", soft: "Adoucisseur & protection fuite", energy: "Énergie & état (barre inférieure)", zone: "Circuit de chauffage", img: "Arrière-plan" },
@@ -100,7 +102,7 @@ const HP_I18N = {
       outdoor_temp: "Température extérieure", indoor_temp: "Température intérieure", indoor_setpoint: "Consigne température intérieure", compressor: "Compresseur en marche", defrost: "Dégivrage actif",
       vl_temp: "Température départ PAC", rl_temp: "Température retour PAC", pump: "Circulateur en marche",
       pump_speed: "Vitesse du circulateur (%)", pressure: "Pression de l'installation", power: "Consommation électrique PAC",
-      heat_power: "Chaleur produite (puissance thermique)", cop: "COP", mode: "Mode de fonctionnement",
+      heat_power: "Chaleur produite (puissance thermique)", cop: "COP", mode: "Mode de fonctionnement", sg_ready: "État SG-Ready",
       dhw_temp: "Température eau chaude", dhw_setpoint: "Consigne eau chaude", tank_top_temp: "Température haut du ballon",
       tank_bottom_temp: "Température bas du ballon", dhw_active: "Production d'eau chaude active", dhw_boost: "Surchauffe du ballon (puissant)",
       heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse ballon (position)", bypass_valve: "Vanne bypass (position)",
@@ -109,6 +111,7 @@ const HP_I18N = {
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
+      sg_ready: "Niveau 1–4 affiché en toutes lettres (blocage, normal, recommandé, forcé) ; les textes sont repris tels quels",
       indoor_setpoint: "Capteur, nombre ou entité climat (pour climat, la consigne est utilisée)",
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
       zone1_mixer: "Vanne de l'unité intérieure pour le ballon – libellé « Ballon »", bypass_valve: "Deuxième vanne de l'unité intérieure – libellé « Bypass »",
@@ -125,7 +128,7 @@ const HP_I18N = {
       softener: "Waterontharder", indoor: "binnen", outdoor: "buiten", vl: "Aanvoer ", rl: "Retour ",
       compressor: "Compressor", defrost: "Ontdooien", dhw_active: "Warm water", dhw_boost: "Boost",
       heater_rod: "Element", circulation: "Circulatie",
-      power: "Stroom", heat_power: "Warmte", cop: "COP", mode: "Modus",
+      power: "Stroom", heat_power: "Warmte", cop: "COP", mode: "Modus", sg_ready: "SG-Ready", sg: ["Blokkering", "Normaal", "Aanbevolen", "Geforceerd"],
     },
     ui: {upload: "Afbeelding uploaden", media: "Kiezen uit media", search: "Afbeeldingen zoeken …", loading: "Afbeeldingen laden …", no_images: "Geen afbeeldingen gevonden in media.", no_match: "Geen resultaten.", uploading: "Uploaden …", uploaded: "Geüpload ✓", upload_failed: "Upload mislukt – is de integratie \"Image Upload\" (default_config) actief?", selected: "Gekozen:", positions: "Posities in de afbeelding" },
     sec: { hp: "Warmtepomp (buitenunit & primair circuit)", dhw: "Boiler, binnenunit & warm water", soft: "Waterontharder & lekbeveiliging", energy: "Energie & status (onderbalk)", zone: "Verwarmingscircuit", img: "Achtergrond" },
@@ -136,7 +139,7 @@ const HP_I18N = {
       outdoor_temp: "Buitentemperatuur", indoor_temp: "Binnentemperatuur", indoor_setpoint: "Gewenste binnentemperatuur", compressor: "Compressor draait", defrost: "Ontdooien actief",
       vl_temp: "Aanvoertemperatuur warmtepomp", rl_temp: "Retourtemperatuur warmtepomp", pump: "Circulatiepomp draait",
       pump_speed: "Circulatiepomp vermogen (%)", pressure: "Systeemdruk", power: "Stroomverbruik warmtepomp",
-      heat_power: "Geproduceerde warmte (thermisch vermogen)", cop: "COP", mode: "Huidige bedrijfsmodus",
+      heat_power: "Geproduceerde warmte (thermisch vermogen)", cop: "COP", mode: "Huidige bedrijfsmodus", sg_ready: "SG-Ready bedrijfstoestand",
       dhw_temp: "Tapwatertemperatuur", dhw_setpoint: "Doeltemperatuur tapwater", tank_top_temp: "Boiler temperatuur boven",
       tank_bottom_temp: "Boiler temperatuur onder", dhw_active: "Tapwaterbereiding actief", dhw_boost: "Boiler boost (krachtig)",
       heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep boiler (stand)", bypass_valve: "Bypassklep (stand)",
@@ -145,6 +148,7 @@ const HP_I18N = {
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
+      sg_ready: "Niveau 1–4 wordt als woord getoond (blokkering, normaal, aanbevolen, geforceerd); teksten worden direct overgenomen",
       indoor_setpoint: "Sensor, getal of klimaat-entiteit (bij klimaat wordt de doeltemperatuur gebruikt)",
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
       zone1_mixer: "Mengklep in de binnenunit voor de boiler – label „Boiler“", bypass_valve: "Tweede klep in de binnenunit – label „Bypass“",
@@ -161,7 +165,7 @@ const HP_I18N = {
       softener: "Addolcitore", indoor: "interno", outdoor: "esterno", vl: "Mandata ", rl: "Ritorno ",
       compressor: "Compressore", defrost: "Sbrinamento", dhw_active: "Acqua calda", dhw_boost: "Boost",
       heater_rod: "Resistenza", circulation: "Ricircolo",
-      power: "Potenza", heat_power: "Calore", cop: "COP", mode: "Modalità",
+      power: "Potenza", heat_power: "Calore", cop: "COP", mode: "Modalità", sg_ready: "SG-Ready", sg: ["Blocco", "Normale", "Consigliato", "Forzato"],
     },
     ui: {upload: "Carica immagine", media: "Scegli dai media", search: "Cerca immagini …", loading: "Caricamento immagini …", no_images: "Nessuna immagine trovata nei media.", no_match: "Nessun risultato.", uploading: "Caricamento …", uploaded: "Caricata ✓", upload_failed: "Caricamento non riuscito – l'integrazione \"Image Upload\" (default_config) è attiva?", selected: "Selezionata:", positions: "Posizioni nell'immagine" },
     sec: { hp: "Pompa di calore (unità esterna & circuito primario)", dhw: "Accumulo, unità interna & acqua calda", soft: "Addolcitore & protezione perdite", energy: "Energia & stato (barra inferiore)", zone: "Circuito di riscaldamento", img: "Sfondo" },
@@ -172,7 +176,7 @@ const HP_I18N = {
       outdoor_temp: "Temperatura esterna", indoor_temp: "Temperatura interna", indoor_setpoint: "Temperatura interna impostata", compressor: "Compressore in funzione", defrost: "Sbrinamento attivo",
       vl_temp: "Temperatura mandata PdC", rl_temp: "Temperatura ritorno PdC", pump: "Circolatore in funzione",
       pump_speed: "Velocità circolatore (%)", pressure: "Pressione impianto", power: "Consumo elettrico PdC",
-      heat_power: "Calore prodotto (potenza termica)", cop: "COP", mode: "Modalità di funzionamento",
+      heat_power: "Calore prodotto (potenza termica)", cop: "COP", mode: "Modalità di funzionamento", sg_ready: "Stato SG-Ready",
       dhw_temp: "Temperatura acqua calda", dhw_setpoint: "Setpoint acqua calda", tank_top_temp: "Temperatura alta accumulo",
       tank_bottom_temp: "Temperatura bassa accumulo", dhw_active: "Produzione acqua calda attiva", dhw_boost: "Sovratemperatura accumulo (potente)",
       heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Miscelatrice accumulo (posizione)", bypass_valve: "Valvola bypass (posizione)",
@@ -181,6 +185,7 @@ const HP_I18N = {
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
+      sg_ready: "Livello 1–4 mostrato come parola (blocco, normale, consigliato, forzato); i testi vengono mostrati così come sono",
       indoor_setpoint: "Sensore, numero o entità clima (per clima viene usata la temperatura impostata)",
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
       zone1_mixer: "Miscelatrice nell'unità interna per l'accumulo – etichetta «Accumulo»", bypass_valve: "Seconda valvola nell'unità interna – etichetta «Bypass»",
@@ -825,7 +830,7 @@ class HeatpumpFlowCard extends HTMLElement {
     }).join("");
 
     /* Untere Leiste */
-    const bottomKeys = ["power", "heat_power", "cop", "mode"].filter(has);
+    const bottomKeys = ["power", "heat_power", "cop", "mode", "sg_ready"].filter(has);
     const statY = chipDefs.length ? 754 : 700;
     const H = bottomKeys.length ? statY + 72 : chipDefs.length ? 750 : 700;
     const gap = 12, bw = bottomKeys.length ? (940 - gap * (bottomKeys.length - 1)) / bottomKeys.length : 0;
@@ -1227,7 +1232,7 @@ class HeatpumpFlowCard extends HTMLElement {
       return `<g class="chip" data-on="${k}"${ek(k)} style="--chip-c:${col}"><rect x="${x}" y="${chipY}" width="${CW}" height="34" rx="17"/>
         <circle cx="${x + 19}" cy="${chipY + 17}" r="5.5"/><text x="${x + 33}" y="${chipY + 23}">${T[k]}</text></g>`;
     }).join("");
-    const bottomKeys = ["power", "heat_power", "cop", "mode"].filter(has);
+    const bottomKeys = ["power", "heat_power", "cop", "mode", "sg_ready"].filter(has);
     const statY = chipDefs.length ? chipY + 50 : IH + 16;
     const H = bottomKeys.length ? statY + 72 : chipDefs.length ? chipY + 46 : IH;
     const gap = 12, bw = bottomKeys.length ? (940 - gap * (bottomKeys.length - 1)) / bottomKeys.length : 0;
@@ -1321,12 +1326,8 @@ class HeatpumpFlowCard extends HTMLElement {
     };
     this._flagEls.forEach((el) => el.classList.toggle("on", !!flags[el.dataset.on]));
     this._valEls.forEach((el) => { el.textContent = this._fmt(c[el.dataset.val], el.dataset.val); });
-    this.shadowRoot.querySelectorAll(".tag[data-cx]").forEach((g) => {
-      try {
-        const t = g.querySelector("text"), r = g.querySelector("rect"), w = t.getComputedTextLength() + 24, cx = Number(g.dataset.cx);
-        if (w > 30) { r.setAttribute("width", w.toFixed(1)); r.setAttribute("x", (cx - w / 2).toFixed(1)); }
-      } catch (e) { /* noch nicht sichtbar */ }
-    });
+    this._fitText();
+    requestAnimationFrame(() => this._fitText());
 
     if (this._leakEl) {
       const alarm = c.leak_alarm ? on("leak_alarm") : false;
@@ -1372,11 +1373,40 @@ class HeatpumpFlowCard extends HTMLElement {
     if (this._stopBot && bot) this._stopBot.setAttribute("stop-color", bot);
   }
 
+  /* Textbreiten anpassen (untere Leiste, Temperatur-Schilder); braucht eine sichtbare Karte */
+  _fitText() {
+    /* Werte der unteren Leiste bei Bedarf verkleinern, damit sie ins Feld passen */
+    this.shadowRoot.querySelectorAll(".stat").forEach((g) => {
+      try {
+        const r = g.querySelector("rect"), t = g.querySelector("text.v");
+        if (!r || !t) return;
+        t.style.fontSize = "";
+        const max = Number(r.getAttribute("width")) - 18, len = t.getComputedTextLength();
+        if (len > max && len > 0) t.style.fontSize = `${Math.max(12, 26 * max / len).toFixed(1)}px`;
+      } catch (e) { /* noch nicht sichtbar */ }
+    });
+    this.shadowRoot.querySelectorAll(".tag[data-cx]").forEach((g) => {
+      try {
+        const t = g.querySelector("text"), r = g.querySelector("rect"), w = t.getComputedTextLength() + 24, cx = Number(g.dataset.cx);
+        if (w > 30) { r.setAttribute("width", w.toFixed(1)); r.setAttribute("x", (cx - w / 2).toFixed(1)); }
+      } catch (e) { /* noch nicht sichtbar */ }
+    });
+  }
+
+  connectedCallback() {
+    requestAnimationFrame(() => this._fitText());
+  }
+
   _fmt(id, key) {
     const h = this._hass;
     const s = id && h.states[id];
     if (!s) return "n/a";
     if (s.state === "unavailable" || s.state === "unknown") return "–";
+    /* SG-Ready: Stufe 1–4 als Wort anzeigen */
+    if (key === "sg_ready" && /^[1-4](\.0)?$/.test(String(s.state).trim())) {
+      const n = parseInt(s.state, 10);
+      return HP_I18N[this._lang || "de"].card.sg[n - 1];
+    }
     /* Klima-Entität: Soll- bzw. Ist-Temperatur aus den Attributen */
     if (String(id).startsWith("climate.")) {
       const v = s.attributes && s.attributes[key === "indoor_temp" ? "current_temperature" : "temperature"];
@@ -1500,7 +1530,7 @@ class HeatpumpFlowCardEditor extends HTMLElement {
       },
       {
         type: "expandable", name: "sec_energy", flatten: true, title: t.sec.energy,
-        schema: ["power", "heat_power", "cop", "mode"].map(e),
+        schema: ["power", "heat_power", "cop", "mode", "sg_ready"].map(e),
       },
       zone(1),
     ];

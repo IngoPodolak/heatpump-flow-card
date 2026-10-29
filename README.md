@@ -27,7 +27,7 @@ Oben links: mit Enthärtung und Leckageschutz. Unten rechts: Abtauen aktiv, Absp
 - Speicher mit Innengerät, Wärmetauscher-Wendel mit temperaturabhängiger Färbung, senkrechtem Heizstab und Mischer
 - Warmwasser mit Zirkulationspumpe, Sollwert, Speicherüberhöhung (leistungsstark)
 - Wärmeverteilung wählbar: **Heizkörper**, **Fußbodenheizung** oder **beides** (2 Heizkreise mit Pumpe und Mischer)
-- Strom, Wärme, COP und Betriebsmodus in der unteren Leiste
+- Strom, Wärme, COP, Betriebsmodus und SG-Ready in der unteren Leiste
 - Alle Datenpunkte im visuellen Editor auswählbar, nicht belegte werden ausgeblendet
 - Klick auf einen Wert öffnet den Detail-Dialog der Entität
 - Skaliert von der kleinen Karte bis zum Vollbild-Panel
@@ -115,6 +115,7 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `pump`, `pump_speed` | Umwälzpumpe läuft / Leistung in % |
 | `pressure` | Druck im Heizsystem |
 | `power`, `heat_power`, `cop`, `mode` | Strom, Wärme, COP, Betriebsmodus |
+| `sg_ready` | SG-Ready-Zustand in der unteren Leiste; Stufe 1–4 wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl) |
 | `dhw_temp`, `dhw_setpoint` | Brauchwasser Ist / Soll |
 | `tank_top_temp`, `tank_bottom_temp` | Speicher oben / unten |
 | `dhw_active`, `dhw_boost`, `heater_rod`, `circulation` | WW-Bereitung, Überhöhung, Heizstab, Zirkulation |
