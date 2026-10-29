@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.11.0";
+const HP_VERSION = "1.11.1";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -37,7 +37,7 @@ const HP_I18N = {
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
-      sg_ready: "Stufe 1–4 wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl); Texte werden direkt übernommen",
+      sg_ready: "Stufe 1–4 oder forced_off / free_running / recommended_on / forced_on wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl); Texte werden direkt übernommen",
       indoor_setpoint: "Sensor, Zahl oder Klima-Entität (bei Klima wird die Zieltemperatur verwendet)",
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
       zone1_mixer: "Mischer im Innengerät für den Speicher – wird mit „Speicher“ beschriftet", bypass_valve: "Zweiter Mischer im Innengerät – wird mit „Bypass“ beschriftet",
@@ -74,7 +74,7 @@ const HP_I18N = {
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
-      sg_ready: "Level 1–4 is shown as a word (blocked, normal, recommended, forced on); text states are shown as-is",
+      sg_ready: "Level 1–4 or forced_off / free_running / recommended_on / forced_on is shown as a word (blocked, normal, recommended, forced on); text states are shown as-is",
       indoor_setpoint: "Sensor, number or climate entity (for climate the target temperature is used)",
       pump_speed: "Also controls the speed of the pump and pipe animation",
       zone1_mixer: "Mixing valve in the indoor unit for the tank – labelled “Tank”", bypass_valve: "Second valve in the indoor unit – labelled “Bypass”",
@@ -111,7 +111,7 @@ const HP_I18N = {
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
-      sg_ready: "Niveau 1–4 affiché en toutes lettres (blocage, normal, recommandé, forcé) ; les textes sont repris tels quels",
+      sg_ready: "Niveau 1–4 ou forced_off / free_running / recommended_on / forced_on affiché en toutes lettres (blocage, normal, recommandé, forcé) ; les textes sont repris tels quels",
       indoor_setpoint: "Capteur, nombre ou entité climat (pour climat, la consigne est utilisée)",
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
       zone1_mixer: "Vanne de l'unité intérieure pour le ballon – libellé « Ballon »", bypass_valve: "Deuxième vanne de l'unité intérieure – libellé « Bypass »",
@@ -148,7 +148,7 @@ const HP_I18N = {
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
-      sg_ready: "Niveau 1–4 wordt als woord getoond (blokkering, normaal, aanbevolen, geforceerd); teksten worden direct overgenomen",
+      sg_ready: "Niveau 1–4 of forced_off / free_running / recommended_on / forced_on wordt als woord getoond (blokkering, normaal, aanbevolen, geforceerd); teksten worden direct overgenomen",
       indoor_setpoint: "Sensor, getal of klimaat-entiteit (bij klimaat wordt de doeltemperatuur gebruikt)",
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
       zone1_mixer: "Mengklep in de binnenunit voor de boiler – label „Boiler“", bypass_valve: "Tweede klep in de binnenunit – label „Bypass“",
@@ -185,7 +185,7 @@ const HP_I18N = {
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
-      sg_ready: "Livello 1–4 mostrato come parola (blocco, normale, consigliato, forzato); i testi vengono mostrati così come sono",
+      sg_ready: "Livello 1–4 o forced_off / free_running / recommended_on / forced_on mostrato come parola (blocco, normale, consigliato, forzato); i testi vengono mostrati così come sono",
       indoor_setpoint: "Sensore, numero o entità clima (per clima viene usata la temperatura impostata)",
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
       zone1_mixer: "Miscelatrice nell'unità interna per l'accumulo – etichetta «Accumulo»", bypass_valve: "Seconda valvola nell'unità interna – etichetta «Bypass»",
@@ -1402,10 +1402,12 @@ class HeatpumpFlowCard extends HTMLElement {
     const s = id && h.states[id];
     if (!s) return "n/a";
     if (s.state === "unavailable" || s.state === "unknown") return "–";
-    /* SG-Ready: Stufe 1–4 als Wort anzeigen */
-    if (key === "sg_ready" && /^[1-4](\.0)?$/.test(String(s.state).trim())) {
-      const n = parseInt(s.state, 10);
-      return HP_I18N[this._lang || "de"].card.sg[n - 1];
+    /* SG-Ready: Stufe 1–4 bzw. Standard-Zustände als Wort anzeigen */
+    if (key === "sg_ready") {
+      const v = String(s.state).trim().toLowerCase();
+      const map = { "1": 1, "1.0": 1, forced_off: 1, blocked: 1, "2": 2, "2.0": 2, free_running: 2, normal: 2,
+        "3": 3, "3.0": 3, recommended_on: 3, recommended: 3, "4": 4, "4.0": 4, forced_on: 4 };
+      if (map[v]) return HP_I18N[this._lang || "de"].card.sg[map[v] - 1];
     }
     /* Klima-Entität: Soll- bzw. Ist-Temperatur aus den Attributen */
     if (String(id).startsWith("climate.")) {

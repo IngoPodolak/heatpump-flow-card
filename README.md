@@ -115,7 +115,7 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `pump`, `pump_speed` | Umwälzpumpe läuft / Leistung in % |
 | `pressure` | Druck im Heizsystem |
 | `power`, `heat_power`, `cop`, `mode` | Strom, Wärme, COP, Betriebsmodus |
-| `sg_ready` | SG-Ready-Zustand in der unteren Leiste; Stufe 1–4 wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl) |
+| `sg_ready` | SG-Ready-Zustand in der unteren Leiste; Stufe 1–4 bzw. `forced_off` / `free_running` / `recommended_on` / `forced_on` wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl) |
 | `dhw_temp`, `dhw_setpoint` | Brauchwasser Ist / Soll |
 | `tank_top_temp`, `tank_bottom_temp` | Speicher oben / unten |
 | `dhw_active`, `dhw_boost`, `heater_rod`, `circulation` | WW-Bereitung, Überhöhung, Heizstab, Zirkulation |
