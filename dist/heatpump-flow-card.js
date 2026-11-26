@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.12.1";
+const HP_VERSION = "1.12.2";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -1248,9 +1248,9 @@ class HeatpumpFlowCard extends HTMLElement {
       const [r1, r2] = hpSoftRows(has, ek, T, "ovl");
       const row = (r, q) => r ? `<text ${halo} class="ovt small2 soft-row" x="${X(q[0])}" y="${Y(q[1])}" text-anchor="${q[2] || "end"}">${r}</text>` : "";
       const lk = has("leak_alarm") ? "leak_alarm" : has("leak_valve") ? "leak_valve" : has("softener_status") ? "softener_status" : null;
-      const sp3 = L.softener3 || [99, 54.6, "end"];
+      const sp3 = L.softener3 || [lp[0] + 0.6, lp[1] + 4.2, "end"];
       soft = `<g class="softgrp">${row(r1, sp)}${row(r2, sp2)}${lk ? hpShield(X(lp[0]), Y(lp[1]), lk, ek) : ""}
-        <text ${halo} class="ovt small2 softstat" x="${X(sp3[0])}" y="${Y(sp3[1])}" text-anchor="${sp3[2] || "end"}"${ek(has("softener_status") ? "softener_status" : has("softener_vacation") ? "softener_vacation" : null)}></text></g>`;
+        <text ${halo} class="ovt small2 softstat" data-lines="1" x="${X(sp3[0])}" y="${Y(sp3[1])}" text-anchor="${sp3[2] || "end"}"${ek(has("softener_status") ? "softener_status" : has("softener_vacation") ? "softener_vacation" : null)}></text></g>`;
     }
 
     /* Positionier-Raster */
@@ -1380,11 +1380,18 @@ class HeatpumpFlowCard extends HTMLElement {
       const offline = c.softener_connected ? !on("softener_connected") : false;
       if (offline) extra.push(T.sw.offline);
       this.shadowRoot.querySelectorAll(".softstat").forEach((el) => {
-        el.textContent = extra.join(" · ");
+        if (el.dataset.lines) {
+          /* unter dem Schild nur der wichtigste Zustand, alle als Tooltip */
+          const main = offline ? T.sw.offline : softState ? T.sw[softState] : extra[0] || "";
+          el.innerHTML = `<title></title>`;
+          el.firstChild.textContent = extra.join(" · ");
+          el.appendChild(document.createTextNode(main));
+        } else el.textContent = extra.join(" · ");
         el.classList.remove("regen", "locked", "leak", "vacation", "offline");
         if (softState) el.classList.add(softState);
         if (offline) el.classList.add("offline");
         if (!softState && extra.length && !offline) el.classList.add("vacation");
+        if (el.dataset.lines && offline) el.classList.remove("regen", "locked", "leak", "vacation");
       });
       this.shadowRoot.querySelectorAll(".softgrp").forEach((el) => el.classList.toggle("offline", offline));
       this.shadowRoot.querySelectorAll(".softdot").forEach((el) => {
