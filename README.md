@@ -22,7 +22,7 @@ Oben links: mit Enthärtung und Leckageschutz. Unten rechts: Abtauen aktiv, Absp
 - Wasserfluss in den Rohren mit einheitlich ausgerichteten Richtungspfeilen, sobald die jeweilige Pumpe läuft
 - Innen-/Außentemperatur als Haus-Symbol
 - VL/RL-Temperaturen direkt an den Anschlüssen von Heizkörper bzw. FBH
-- Optionaler Strang „Enthärtung“ mit Durchsatz, Härtegrad und Leckageschutz-Symbol (grün = ok, gelb = abgesperrt, rot = Leck)
+- Optionaler Strang „Enthärtung“ mit Durchfluss, Tagesverbrauch, Härte (Eingang → Weichwasser), Salzreichweite, Status und Leckageschutz-Symbol (grün = ok, gelb = abgesperrt, rot = Leck) – passend zur JUDO-Integration [ha-judo-isoft](https://github.com/mibragri/ha-judo-isoft)
 - Sprachen: Deutsch, English, Français, Nederlands, Italiano
 - Speicher mit Innengerät, Wärmetauscher-Wendel mit temperaturabhängiger Färbung, senkrechtem Heizstab und Mischer
 - Warmwasser mit Zirkulationspumpe, Sollwert, Speicherüberhöhung (leistungsstark)
@@ -98,7 +98,12 @@ Ein vollständiges YAML-Beispiel für die Altherma 4 steht in [`beispiel-konfigu
 | `heating_type` | `radiator`, `floor` oder `both` |
 | `language` | `auto` (HA-Sprache), `de`, `en`, `fr`, `nl`, `it` |
 | `softener` | `true` = Strang „Enthärtung“ anzeigen |
-| `softener_flow`, `softener_hardness` | Durchsatz (l/h) und Härtegrad der Enthärtung |
+| `softener_flow` | Aktueller Durchfluss (l/h) |
+| `softener_daily` | Tagesverbrauch |
+| `softener_hardness`, `softener_input_hardness` | Weichwasser- und Eingangshärte – zusammen als „21 → 6 °dH“ |
+| `softener_salt_range` | Salzreichweite (Tage) |
+| `softener_status` | Status (z. B. JUDO: `normal`, `regenerating`, `valve locked`, `leakage protection`) |
+| `softener_vacation`, `softener_connected` | Urlaubsmodus, Verbindung |
 | `leak_alarm`, `leak_valve` | Leckage erkannt (an = Alarm) / Absperrventil offen |
 | `background` | `drawn` (Standard), `altherma` (integriertes Bild) oder `custom` |
 | `background_image` | Eigenes Bild bei `custom`: Upload, URL oder `media-source://…` |

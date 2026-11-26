@@ -5,12 +5,13 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.11.1";
+const HP_VERSION = "1.12.0";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
   de: {
     card: {
+      today: "heute", salt: "Salz", sw: {"regen": "Regeneration", "locked": "Ventil gesperrt", "leak": "Leckageschutz", "vacation": "Urlaub", "offline": "offline"},
       primary: "Primärkreis", heatpump: "(Wärmepumpe)", dhw: "Brauchwasserkreis", set: "Soll",
       tank: "Speicher", unit: "Außengerät", radiator: "Heizkörper", floor: "Fußbodenheizung",
       bypass: "Bypass",
@@ -32,11 +33,13 @@ const HP_I18N = {
       dhw_temp: "Brauchwassertemperatur", dhw_setpoint: "Sollwert Brauchwasser", tank_top_temp: "Speicher obere Temperatur",
       tank_bottom_temp: "Speicher untere Temperatur", dhw_active: "Brauchwasserbereitung aktiv", dhw_boost: "Speicherüberhöhung (leistungsstark)",
       heater_rod: "Heizstab im Speicher an", circulation: "Warmwasser-Zirkulation läuft", zone1_mixer: "Mischer Speicher (Stellung)", bypass_valve: "Mischer Bypass (Stellung)",
-      softener_flow: "Durchsatz (l/h)", softener_hardness: "Härtegrad", leak_alarm: "Leckage erkannt", leak_valve: "Absperrventil Leckageschutz offen",
+      softener_flow: "Aktueller Durchfluss (l/h)", softener_daily: "Tagesverbrauch", softener_hardness: "Weichwasserhärte (Wunschwasserhärte)", softener_input_hardness: "Eingangshärte (Rohwasser)", softener_salt_range: "Salzreichweite", softener_status: "Status Enthärtung", softener_vacation: "Urlaubsmodus", softener_connected: "Verbunden (online)", leak_alarm: "Leckage erkannt", leak_valve: "Absperrventil Leckageschutz offen",
       zname: "Name", zvl: "Vorlauftemperatur", zrl: "Rücklauftemperatur", zpump: "aktiv / Pumpe läuft", zspeed: "Pumpe Leistung (%)", zmixer: "Mischerstellung",
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
+      softener_status: "JUDO-Status: normal, regenerating, valve locked, leakage protection – wird an „Enthärtung“ angezeigt, gesperrt/Leckageschutz färbt das Schild gelb",
+      softener_input_hardness: "Mit Weichwasserhärte zusammen als „21 → 6 °dH“ angezeigt",
       sg_ready: "Stufe 1–4 oder forced_off / free_running / recommended_on / forced_on wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl); Texte werden direkt übernommen",
       indoor_setpoint: "Sensor, Zahl oder Klima-Entität (bei Klima wird die Zieltemperatur verwendet)",
       pump_speed: "Steuert auch die Geschwindigkeit der Pumpen- und Rohranimation",
@@ -48,6 +51,7 @@ const HP_I18N = {
   },
   en: {
     card: {
+      today: "today", salt: "Salt", sw: {"regen": "Regeneration", "locked": "Valve locked", "leak": "Leak protection", "vacation": "Vacation", "offline": "offline"},
       primary: "Primary circuit", heatpump: "(heat pump)", dhw: "Domestic hot water", set: "Target",
       tank: "Tank", unit: "Outdoor unit", radiator: "Radiators", floor: "Underfloor heating",
       bypass: "Bypass",
@@ -69,11 +73,13 @@ const HP_I18N = {
       dhw_temp: "Hot water temperature", dhw_setpoint: "Hot water setpoint", tank_top_temp: "Tank top temperature",
       tank_bottom_temp: "Tank bottom temperature", dhw_active: "Hot water heating active", dhw_boost: "Tank boost (powerful)",
       heater_rod: "Tank heater on", circulation: "Hot water circulation running", zone1_mixer: "Tank mixing valve (position)", bypass_valve: "Bypass valve (position)",
-      softener_flow: "Flow rate (l/h)", softener_hardness: "Water hardness", leak_alarm: "Leak detected", leak_valve: "Leak protection valve open",
+      softener_flow: "Current flow (l/h)", softener_daily: "Daily consumption", softener_hardness: "Soft water hardness (target)", softener_input_hardness: "Input hardness (raw water)", softener_salt_range: "Salt range", softener_status: "Softener status", softener_vacation: "Vacation mode", softener_connected: "Connected (online)", leak_alarm: "Leak detected", leak_valve: "Leak protection valve open",
       zname: "Name", zvl: "flow temperature", zrl: "return temperature", zpump: "active / pump running", zspeed: "pump speed (%)", zmixer: "mixing valve position",
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
+      softener_status: "JUDO status: normal, regenerating, valve locked, leakage protection – shown next to “Water softener”, locked/leak protection turns the shield yellow",
+      softener_input_hardness: "Shown together with soft water hardness as “21 → 6 °dH”",
       sg_ready: "Level 1–4 or forced_off / free_running / recommended_on / forced_on is shown as a word (blocked, normal, recommended, forced on); text states are shown as-is",
       indoor_setpoint: "Sensor, number or climate entity (for climate the target temperature is used)",
       pump_speed: "Also controls the speed of the pump and pipe animation",
@@ -85,6 +91,7 @@ const HP_I18N = {
   },
   fr: {
     card: {
+      today: "auj.", salt: "Sel", sw: {"regen": "Régénération", "locked": "Vanne bloquée", "leak": "Protection fuite", "vacation": "Vacances", "offline": "hors ligne"},
       primary: "Circuit primaire", heatpump: "(pompe à chaleur)", dhw: "Eau chaude sanitaire", set: "Consigne",
       tank: "Ballon", unit: "Unité extérieure", radiator: "Radiateurs", floor: "Plancher chauffant",
       bypass: "Bypass",
@@ -106,11 +113,13 @@ const HP_I18N = {
       dhw_temp: "Température eau chaude", dhw_setpoint: "Consigne eau chaude", tank_top_temp: "Température haut du ballon",
       tank_bottom_temp: "Température bas du ballon", dhw_active: "Production d'eau chaude active", dhw_boost: "Surchauffe du ballon (puissant)",
       heater_rod: "Résistance du ballon active", circulation: "Bouclage eau chaude en marche", zone1_mixer: "Vanne mélangeuse ballon (position)", bypass_valve: "Vanne bypass (position)",
-      softener_flow: "Débit (l/h)", softener_hardness: "Dureté de l'eau", leak_alarm: "Fuite détectée", leak_valve: "Vanne de protection fuite ouverte",
+      softener_flow: "Débit actuel (l/h)", softener_daily: "Consommation du jour", softener_hardness: "Dureté eau adoucie (consigne)", softener_input_hardness: "Dureté d'entrée (eau brute)", softener_salt_range: "Autonomie en sel", softener_status: "État adoucisseur", softener_vacation: "Mode vacances", softener_connected: "Connecté (en ligne)", leak_alarm: "Fuite détectée", leak_valve: "Vanne de protection fuite ouverte",
       zname: "Nom", zvl: "température départ", zrl: "température retour", zpump: "actif / circulateur en marche", zspeed: "vitesse circulateur (%)", zmixer: "position vanne mélangeuse",
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
+      softener_status: "État JUDO : normal, regenerating, valve locked, leakage protection – affiché à côté de « Adoucisseur », bloqué/protection fuite colore le bouclier en jaune",
+      softener_input_hardness: "Affiché avec la dureté adoucie sous la forme « 21 → 6 °dH »",
       sg_ready: "Niveau 1–4 ou forced_off / free_running / recommended_on / forced_on affiché en toutes lettres (blocage, normal, recommandé, forcé) ; les textes sont repris tels quels",
       indoor_setpoint: "Capteur, nombre ou entité climat (pour climat, la consigne est utilisée)",
       pump_speed: "Règle aussi la vitesse de l'animation des pompes et tuyaux",
@@ -122,6 +131,7 @@ const HP_I18N = {
   },
   nl: {
     card: {
+      today: "vandaag", salt: "Zout", sw: {"regen": "Regeneratie", "locked": "Klep geblokkeerd", "leak": "Lekbeveiliging", "vacation": "Vakantie", "offline": "offline"},
       primary: "Primair circuit", heatpump: "(warmtepomp)", dhw: "Tapwater", set: "Doel",
       tank: "Boiler", unit: "Buitenunit", radiator: "Radiatoren", floor: "Vloerverwarming",
       bypass: "Bypass",
@@ -143,11 +153,13 @@ const HP_I18N = {
       dhw_temp: "Tapwatertemperatuur", dhw_setpoint: "Doeltemperatuur tapwater", tank_top_temp: "Boiler temperatuur boven",
       tank_bottom_temp: "Boiler temperatuur onder", dhw_active: "Tapwaterbereiding actief", dhw_boost: "Boiler boost (krachtig)",
       heater_rod: "Verwarmingselement aan", circulation: "Tapwatercirculatie draait", zone1_mixer: "Mengklep boiler (stand)", bypass_valve: "Bypassklep (stand)",
-      softener_flow: "Doorstroming (l/h)", softener_hardness: "Waterhardheid", leak_alarm: "Lek gedetecteerd", leak_valve: "Afsluiter lekbeveiliging open",
+      softener_flow: "Actuele doorstroming (l/h)", softener_daily: "Dagverbruik", softener_hardness: "Zachtwaterhardheid (doel)", softener_input_hardness: "Ingangshardheid (ruw water)", softener_salt_range: "Zoutvoorraad (dagen)", softener_status: "Status ontharder", softener_vacation: "Vakantiemodus", softener_connected: "Verbonden (online)", leak_alarm: "Lek gedetecteerd", leak_valve: "Afsluiter lekbeveiliging open",
       zname: "Naam", zvl: "aanvoertemperatuur", zrl: "retourtemperatuur", zpump: "actief / pomp draait", zspeed: "pompvermogen (%)", zmixer: "mengklepstand",
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
+      softener_status: "JUDO-status: normal, regenerating, valve locked, leakage protection – getoond bij „Waterontharder“, geblokkeerd/lekbeveiliging kleurt het schild geel",
+      softener_input_hardness: "Samen met de zachtwaterhardheid getoond als „21 → 6 °dH“",
       sg_ready: "Niveau 1–4 of forced_off / free_running / recommended_on / forced_on wordt als woord getoond (blokkering, normaal, aanbevolen, geforceerd); teksten worden direct overgenomen",
       indoor_setpoint: "Sensor, getal of klimaat-entiteit (bij klimaat wordt de doeltemperatuur gebruikt)",
       pump_speed: "Bepaalt ook de snelheid van de pomp- en leidinganimatie",
@@ -159,6 +171,7 @@ const HP_I18N = {
   },
   it: {
     card: {
+      today: "oggi", salt: "Sale", sw: {"regen": "Rigenerazione", "locked": "Valvola bloccata", "leak": "Protezione perdite", "vacation": "Vacanza", "offline": "offline"},
       primary: "Circuito primario", heatpump: "(pompa di calore)", dhw: "Acqua calda sanitaria", set: "Target",
       tank: "Accumulo", unit: "Unità esterna", radiator: "Radiatori", floor: "Riscaldamento a pavimento",
       bypass: "Bypass",
@@ -180,11 +193,13 @@ const HP_I18N = {
       dhw_temp: "Temperatura acqua calda", dhw_setpoint: "Setpoint acqua calda", tank_top_temp: "Temperatura alta accumulo",
       tank_bottom_temp: "Temperatura bassa accumulo", dhw_active: "Produzione acqua calda attiva", dhw_boost: "Sovratemperatura accumulo (potente)",
       heater_rod: "Resistenza accumulo accesa", circulation: "Ricircolo acqua calda attivo", zone1_mixer: "Miscelatrice accumulo (posizione)", bypass_valve: "Valvola bypass (posizione)",
-      softener_flow: "Portata (l/h)", softener_hardness: "Durezza dell'acqua", leak_alarm: "Perdita rilevata", leak_valve: "Valvola antiallagamento aperta",
+      softener_flow: "Portata attuale (l/h)", softener_daily: "Consumo giornaliero", softener_hardness: "Durezza acqua addolcita (target)", softener_input_hardness: "Durezza in ingresso (acqua grezza)", softener_salt_range: "Autonomia sale", softener_status: "Stato addolcitore", softener_vacation: "Modalità vacanza", softener_connected: "Connesso (online)", leak_alarm: "Perdita rilevata", leak_valve: "Valvola antiallagamento aperta",
       zname: "Nome", zvl: "temperatura mandata", zrl: "temperatura ritorno", zpump: "attivo / pompa in funzione", zspeed: "velocità pompa (%)", zmixer: "posizione miscelatrice",
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
+      softener_status: "Stato JUDO: normal, regenerating, valve locked, leakage protection – mostrato accanto ad «Addolcitore», bloccato/protezione perdite colora lo scudo di giallo",
+      softener_input_hardness: "Mostrata con la durezza addolcita come «21 → 6 °dH»",
       sg_ready: "Livello 1–4 o forced_off / free_running / recommended_on / forced_on mostrato come parola (blocco, normale, consigliato, forzato); i testi vengono mostrati così come sono",
       indoor_setpoint: "Sensore, numero o entità clima (per clima viene usata la temperatura impostata)",
       pump_speed: "Regola anche la velocità dell'animazione di pompe e tubi",
@@ -211,11 +226,11 @@ const HP_IMG_DEFAULT = {
     dhw_temp: [74, 20.2], dhw_setpoint: [79.8, 20.2, "start"], vl_temp: [23.6, 46.6], rl_temp: [38.1, 47.1],
     pump_speed: [35.3, 41, "start"], tank_top_temp: [49, 60], tank_bottom_temp: [49, 80],
     zone1_pump_speed: [75.5, 66.6], zone1_vl_temp: [85.5, 60], zone1_rl_temp: [85.5, 79.5],
-    softener: [89.3, 39.4], leak: [98, 38.6],
+    softener: [99, 39.4, "end"], softener2: [99, 50.4, "end"], leak: [86, 42.45],
   },
   captions: {
     primary: [45.5, 14.2], primary2: [45.5, 18], dhw: [74, 14.2],
-    unit: [18.6, 96.8], tank: [64, 96.8], emitter: [88.6, 88.4], softener: [89.5, 47.6],
+    unit: [18.6, 96.8], tank: [64, 96.8], emitter: [88.6, 88.4], softener: [99, 46.6, "end"],
   },
   flows: {
     primary_vl: "29.1,49.5 29.1,26.9 60.4,26.9 60.4,40.7",
@@ -256,6 +271,26 @@ const hpMixer = (key, name, cx, cy, sc, ek, txt = "", flt = "") => `
     <path class="mixer" transform="translate(${cx} ${cy}) scale(${sc})" d="M-11 -7 L11 7 L11 -7 L-11 7 Z M0 0 L-7 13 L7 13 Z"/>
     <text class="mixval${txt}" ${flt} x="${cx}" y="${cy + 31 * sc}" text-anchor="middle"><tspan data-val="${key}">–</tspan></text>
   </g>`;
+
+/* Enthärtung: Schild (Leckageschutz) und zwei Wertezeilen */
+const hpShield = (sx, sy, key, ek) => `
+  <g class="leak"${ek(key)}>
+    <circle class="shield-bg" cx="${sx}" cy="${sy}" r="17"/>
+    <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
+    <path class="drop" d="M${sx} ${sy - 8} C${sx + 5} ${sy - 2} ${sx + 6} ${sy + 2} ${sx + 6} ${sy + 4} A6 6 0 0 1 ${sx - 6} ${sy + 4} C${sx - 6} ${sy + 2} ${sx - 5} ${sy - 2} ${sx} ${sy - 8} Z"/>
+  </g>`;
+const hpSoftRows = (has, ek, T, sepCls) => {
+  const v = (k, pre = "") => has(k) ? `<tspan${ek(k)}>${pre ? `<tspan class="${sepCls}">${pre} </tspan>` : ""}<tspan data-val="${k}">–</tspan></tspan>` : "";
+  const sep = `<tspan class="${sepCls}"> · </tspan>`;
+  let hard = "";
+  if (has("softener_input_hardness") && has("softener_hardness"))
+    hard = `<tspan${ek("softener_input_hardness")} data-num="softener_input_hardness">–</tspan><tspan class="${sepCls}"> → </tspan>${v("softener_hardness")}`;
+  else hard = v("softener_input_hardness") || v("softener_hardness");
+  const row1 = [v("softener_flow"), v("softener_daily", T.today)].filter(Boolean).join(sep);
+  const row2 = [hard, v("softener_salt_range", T.salt)].filter(Boolean).join(sep);
+  return [row1, row2];
+};
+const HP_SOFT_STATUS = { regenerating: "regen", regeneration: "regen", "valve locked": "locked", "valve closed": "locked", "leakage protection": "leak", vacation: "vacation" };
 const HP_NON_ENTITY_KEYS = ["type", "title", "heating_type", "zone1_name", "zone2_name", "theme_background", "language", "softener", "background", "background_image", "background_aspect", "overlay", "show_grid"];
 const HP_ON_STATES = ["on", "true", "running", "heating", "an", "ein", "aktiv", "active", "open", "yes", "1"];
 
@@ -412,6 +447,15 @@ const HP_STYLE = `
   .thread { fill: none; stroke: rgba(0,0,0,.4); stroke-width: 1; }
   .tap-hl { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 1.8; stroke-linecap: round; }
   .spout-hl { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 2; stroke-linecap: round; }
+  .shield-bg { fill: var(--hp-bg); }
+  .softgrp.offline .soft-row, .softgrp.offline .leak { opacity: .4; }
+  .softstat { font-weight: 600; }
+  .softdot { stroke: var(--hp-bg); stroke-width: 2; }
+  .softdot.regen { fill: #38bdf8; } .softdot.locked, .softdot.leak { fill: #f59e0b; }
+  .softdot.vacation { fill: #a78bfa; } .softdot.offline { fill: #ef4444; }
+  .softstat.regen { fill: #38bdf8; } .softstat.locked, .softstat.leak { fill: #f59e0b; }
+  .softstat.vacation { fill: #a78bfa; } .softstat.offline { fill: #ef4444; }
+  .ovt.small2 { font-size: 16px; }
   .leak path.shield { fill: rgba(34,197,94,.15); stroke: #22c55e; stroke-width: 2.5; stroke-linejoin: round; transition: all .4s; }
   .leak path.drop { fill: #22c55e; transition: fill .4s; }
   .leak.closed path.shield { fill: rgba(245,158,11,.18); stroke: #f59e0b; }
@@ -592,20 +636,17 @@ class HeatpumpFlowCard extends HTMLElement {
       back += pipe("M985 264 H830 V206", "dw");
       back += flowOnly(`M985 264 H830 V206 H562 V${PY}`, "soft");
       front += arrow(905, 264, "l", "dw");
-      const hasLeak = has("leak_alarm") || has("leak_valve");
-      const lk = has("leak_alarm") ? "leak_alarm" : "leak_valve";
-      const sx = 846, sy = 294;
-      const data = [
-        has("softener_flow") ? `<tspan data-val="softener_flow"${ek("softener_flow")}>–</tspan>` : "",
-        has("softener_hardness") ? `<tspan data-val="softener_hardness"${ek("softener_hardness")}>–</tspan>` : "",
-      ].filter(Boolean).join(`<tspan class="l"> · </tspan>`);
+      const lk = has("leak_alarm") ? "leak_alarm" : has("leak_valve") ? "leak_valve" : has("softener_status") ? "softener_status" : null;
+      const [r1, r2] = hpSoftRows(has, ek, T, "l");
       softSvg = `
-        <text class="l" x="985" y="253" text-anchor="end">${T.softener}</text>
-        ${hasLeak ? `<g class="leak"${ek(lk)}>
-          <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
-          <path class="drop" d="M${sx} ${sy - 8} C${sx + 5} ${sy - 2} ${sx + 6} ${sy + 2} ${sx + 6} ${sy + 4} A6 6 0 0 1 ${sx - 6} ${sy + 4} C${sx - 6} ${sy + 2} ${sx - 5} ${sy - 2} ${sx} ${sy - 8} Z"/>
-        </g>` : ""}
-        ${data ? `<text class="s" x="${hasLeak ? 868 : 836}" y="${sy + 6}">${data}</text>` : ""}`;
+        <g class="softgrp">
+          <text class="l" x="985" y="253" text-anchor="end">${T.softener}</text>
+          ${lk ? hpShield(860, 264, lk, ek) : ""}
+          ${type === "both" ? `<circle class="softdot" cx="878" cy="250" r="6"${ek(has("softener_status") ? "softener_status" : null)}><title class="softtitle"></title></circle>` : ""}
+          ${r1 ? `<text class="s soft-row" x="988" y="294" text-anchor="end">${r1}</text>` : ""}
+          ${r2 ? `<text class="s soft-row" x="988" y="316" text-anchor="end">${r2}</text>` : ""}
+          ${type === "both" ? "" : `<text class="s softstat" x="988" y="${r2 ? 338 : 316}" text-anchor="end"${ek(has("softener_status") ? "softener_status" : has("softener_vacation") ? "softener_vacation" : null)}></text>`}
+        </g>`;
     }
 
     /* Heizkreise */
@@ -1163,7 +1204,7 @@ class HeatpumpFlowCard extends HTMLElement {
     const tags = { vl_temp: ["h", T.vl], rl_temp: ["c", T.rl], zone1_vl_temp: ["h"], zone1_rl_temp: ["c"], zone2_vl_temp: ["h"], zone2_rl_temp: ["c"] };
     const pref = { dhw_setpoint: T.set + " " };
     const spdFlag = { pump_speed: "primary", zone1_pump_speed: "z1", zone2_pump_speed: "z2" };
-    const skip = ["softener", "leak", "indoor_temp", "outdoor_temp", "zone1_mixer", "bypass_valve"];
+    const skip = ["softener", "softener2", "softener3", "leak", "indoor_temp", "outdoor_temp", "zone1_mixer", "bypass_valve"];
     const labels = Object.entries(L).filter(([k, p]) => !skip.includes(k) && has(k) && Array.isArray(p)).map(([k, p]) => {
       const x = X(p[0]), y = Y(p[1]), anchor = p[2] || "middle";
       if (tags[k]) {
@@ -1197,20 +1238,18 @@ class HeatpumpFlowCard extends HTMLElement {
     const emitName = (i, kind) => c[`zone${i}_name`] || (kind === "floor" ? T.floor : T.radiator);
     let captions = cap("primary", T.primary) + cap("primary2", T.heatpump, "ovcap small") + cap("dhw", T.dhw) +
       cap("unit", T.unit) + cap("tank", T.tank) + cap("emitter", emitName(1, floor ? "floor" : "radiator"));
-    if (c.softener) captions += cap("softener", T.softener, "ovcap small");
+    if (c.softener && CP.softener) captions += `<text ${halo} class="ovcap small softgrp-cap" x="${X(CP.softener[0])}" y="${Y(CP.softener[1])}" text-anchor="${CP.softener[2] || "end"}">${esc(T.softener)}</text>`;
 
     /* Enthärtung: Werte + Leckageschutz */
     let soft = "";
     if (c.softener) {
-      const sp = L.softener || [89.3, 39.4], lp = L.leak || [98, 38.6];
-      const data = [has("softener_flow") ? `<tspan data-val="softener_flow"${ek("softener_flow")}>–</tspan>` : "", has("softener_hardness") ? `<tspan data-val="softener_hardness"${ek("softener_hardness")}>–</tspan>` : ""].filter(Boolean).join(`<tspan class="ovl"> · </tspan>`);
-      if (data) soft += `<text ${halo} class="ovt small" x="${X(sp[0])}" y="${Y(sp[1])}" text-anchor="middle">${data}</text>`;
-      if (has("leak_alarm") || has("leak_valve")) {
-        const sx = X(lp[0]), sy = Y(lp[1]), lk = has("leak_alarm") ? "leak_alarm" : "leak_valve";
-        soft += `<g class="leak"${ek(lk)}>
-          <path class="shield" d="M${sx} ${sy - 15} L${sx + 13} ${sy - 10} V${sy + 1} C${sx + 13} ${sy + 9} ${sx + 7} ${sy + 14} ${sx} ${sy + 17} C${sx - 7} ${sy + 14} ${sx - 13} ${sy + 9} ${sx - 13} ${sy + 1} V${sy - 10} Z"/>
-          <path class="drop" d="M${sx} ${sy - 8} C${sx + 5} ${sy - 2} ${sx + 6} ${sy + 2} ${sx + 6} ${sy + 4} A6 6 0 0 1 ${sx - 6} ${sy + 4} C${sx - 6} ${sy + 2} ${sx - 5} ${sy - 2} ${sx} ${sy - 8} Z"/></g>`;
-      }
+      const sp = L.softener || [99, 39.4, "end"], sp2 = L.softener2 || [99, 50.4, "end"], lp = L.leak || [86, 42.45];
+      const [r1, r2] = hpSoftRows(has, ek, T, "ovl");
+      const row = (r, q) => r ? `<text ${halo} class="ovt small2 soft-row" x="${X(q[0])}" y="${Y(q[1])}" text-anchor="${q[2] || "end"}">${r}</text>` : "";
+      const lk = has("leak_alarm") ? "leak_alarm" : has("leak_valve") ? "leak_valve" : has("softener_status") ? "softener_status" : null;
+      const sp3 = L.softener3 || [99, 54.6, "end"];
+      soft = `<g class="softgrp">${row(r1, sp)}${row(r2, sp2)}${lk ? hpShield(X(lp[0]), Y(lp[1]), lk, ek) : ""}
+        <text ${halo} class="ovt small2 softstat" x="${X(sp3[0])}" y="${Y(sp3[1])}" text-anchor="${sp3[2] || "end"}"${ek(has("softener_status") ? "softener_status" : has("softener_vacation") ? "softener_vacation" : null)}></text></g>`;
     }
 
     /* Positionier-Raster */
@@ -1322,16 +1361,46 @@ class HeatpumpFlowCard extends HTMLElement {
       heater_rod: on("heater_rod"),
       dhw_active: on("dhw_active"),
       dhw_boost: on("dhw_boost"),
-      soft: (num("softener_flow") || 0) > 0,
+      soft: (num("softener_flow") || 0) > 0 || (c.softener_status ? HP_SOFT_STATUS[String((st("softener_status") || {}).state || "").trim().toLowerCase()] === "regen" : false),
     };
     this._flagEls.forEach((el) => el.classList.toggle("on", !!flags[el.dataset.on]));
     this._valEls.forEach((el) => { el.textContent = this._fmt(c[el.dataset.val], el.dataset.val); });
     this._fitText();
     requestAnimationFrame(() => this._fitText());
 
+    /* Enthärtung: Status, Urlaub, Verbindung, Leckageschutz */
+    const sst = st("softener_status");
+    const softState = sst ? HP_SOFT_STATUS[String(sst.state).trim().toLowerCase()] : undefined;
+    if (c.softener) {
+      const T = HP_I18N[this._lang || "de"].card;
+      const extra = [];
+      if (softState) extra.push(T.sw[softState]);
+      if (c.softener_vacation && on("softener_vacation") && softState !== "vacation") extra.push(T.sw.vacation);
+      const offline = c.softener_connected ? !on("softener_connected") : false;
+      if (offline) extra.push(T.sw.offline);
+      this.shadowRoot.querySelectorAll(".softstat").forEach((el) => {
+        el.textContent = extra.join(" · ");
+        el.classList.remove("regen", "locked", "leak", "vacation", "offline");
+        if (softState) el.classList.add(softState);
+        if (offline) el.classList.add("offline");
+        if (!softState && extra.length && !offline) el.classList.add("vacation");
+      });
+      this.shadowRoot.querySelectorAll(".softgrp").forEach((el) => el.classList.toggle("offline", offline));
+      this.shadowRoot.querySelectorAll(".softdot").forEach((el) => {
+        el.classList.remove("regen", "locked", "leak", "vacation", "offline");
+        const cls = offline ? "offline" : softState || (extra.length ? "vacation" : "");
+        if (cls) el.classList.add(cls);
+        el.style.display = cls ? "" : "none";
+        const tt = el.querySelector("title"); if (tt) tt.textContent = extra.join(" · ");
+      });
+      this.shadowRoot.querySelectorAll("[data-num]").forEach((el) => {
+        const n = num(el.dataset.num);
+        el.textContent = n === null ? "–" : n.toLocaleString(h.locale?.language || h.language || undefined, { maximumFractionDigits: 1 });
+      });
+    }
     if (this._leakEl) {
       const alarm = c.leak_alarm ? on("leak_alarm") : false;
-      const closed = c.leak_valve ? !on("leak_valve") : false;
+      const closed = (c.leak_valve ? !on("leak_valve") : false) || softState === "locked" || softState === "leak";
       this._leakEl.classList.toggle("alarm", alarm);
       this._leakEl.classList.toggle("closed", !alarm && closed);
     }
@@ -1527,7 +1596,7 @@ class HeatpumpFlowCardEditor extends HTMLElement {
         type: "expandable", name: "sec_soft", flatten: true, title: t.sec.soft,
         schema: [
           { name: "softener", selector: { boolean: {} } },
-          ...(this._config.softener ? ["softener_flow", "softener_hardness", "leak_alarm", "leak_valve"].map(e) : []),
+          ...(this._config.softener ? ["softener_flow", "softener_daily", "softener_hardness", "softener_input_hardness", "softener_salt_range", "softener_status", "softener_vacation", "softener_connected", "leak_alarm", "leak_valve"].map(e) : []),
         ],
       },
       {
