@@ -5,13 +5,13 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.12.0";
+const HP_VERSION = "1.12.1";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
   de: {
     card: {
-      today: "heute", salt: "Salz", sw: {"regen": "Regeneration", "locked": "Ventil gesperrt", "leak": "Leckageschutz", "vacation": "Urlaub", "offline": "offline"},
+      today: "heute", salt: "Salz", sw: {"regen": "Regeneration", "locked": "Ventil gesperrt", "leak": "Schutz aktiv", "vacation": "Urlaub", "offline": "offline"},
       primary: "Primärkreis", heatpump: "(Wärmepumpe)", dhw: "Brauchwasserkreis", set: "Soll",
       tank: "Speicher", unit: "Außengerät", radiator: "Heizkörper", floor: "Fußbodenheizung",
       bypass: "Bypass",
@@ -38,7 +38,7 @@ const HP_I18N = {
       background: "Darstellung", background_image: "Bild-URL", show_grid: "Positionier-Raster anzeigen (%)", overlay: "Positionen anpassen (YAML, in % des Bildes)",
     },
     help: {
-      softener_status: "JUDO-Status: normal, regenerating, valve locked, leakage protection – wird an „Enthärtung“ angezeigt, gesperrt/Leckageschutz färbt das Schild gelb",
+      softener_status: "JUDO-Status: normal, regenerating, valve locked, leakage protection – wird an „Enthärtung“ angezeigt, Ventil gesperrt = Schild gelb, Leckageschutz aktiv = grün",
       softener_input_hardness: "Mit Weichwasserhärte zusammen als „21 → 6 °dH“ angezeigt",
       sg_ready: "Stufe 1–4 oder forced_off / free_running / recommended_on / forced_on wird als Wort angezeigt (Sperre, Normal, Empfehlung, Anlaufbefehl); Texte werden direkt übernommen",
       indoor_setpoint: "Sensor, Zahl oder Klima-Entität (bei Klima wird die Zieltemperatur verwendet)",
@@ -51,7 +51,7 @@ const HP_I18N = {
   },
   en: {
     card: {
-      today: "today", salt: "Salt", sw: {"regen": "Regeneration", "locked": "Valve locked", "leak": "Leak protection", "vacation": "Vacation", "offline": "offline"},
+      today: "today", salt: "Salt", sw: {"regen": "Regeneration", "locked": "Valve locked", "leak": "Protection on", "vacation": "Vacation", "offline": "offline"},
       primary: "Primary circuit", heatpump: "(heat pump)", dhw: "Domestic hot water", set: "Target",
       tank: "Tank", unit: "Outdoor unit", radiator: "Radiators", floor: "Underfloor heating",
       bypass: "Bypass",
@@ -78,7 +78,7 @@ const HP_I18N = {
       background: "Display", background_image: "Image URL", show_grid: "Show positioning grid (%)", overlay: "Adjust positions (YAML, in % of the image)",
     },
     help: {
-      softener_status: "JUDO status: normal, regenerating, valve locked, leakage protection – shown next to “Water softener”, locked/leak protection turns the shield yellow",
+      softener_status: "JUDO status: normal, regenerating, valve locked, leakage protection – shown next to “Water softener”, valve locked = yellow shield, protection on = green",
       softener_input_hardness: "Shown together with soft water hardness as “21 → 6 °dH”",
       sg_ready: "Level 1–4 or forced_off / free_running / recommended_on / forced_on is shown as a word (blocked, normal, recommended, forced on); text states are shown as-is",
       indoor_setpoint: "Sensor, number or climate entity (for climate the target temperature is used)",
@@ -91,7 +91,7 @@ const HP_I18N = {
   },
   fr: {
     card: {
-      today: "auj.", salt: "Sel", sw: {"regen": "Régénération", "locked": "Vanne bloquée", "leak": "Protection fuite", "vacation": "Vacances", "offline": "hors ligne"},
+      today: "auj.", salt: "Sel", sw: {"regen": "Régénération", "locked": "Vanne bloquée", "leak": "Protection active", "vacation": "Vacances", "offline": "hors ligne"},
       primary: "Circuit primaire", heatpump: "(pompe à chaleur)", dhw: "Eau chaude sanitaire", set: "Consigne",
       tank: "Ballon", unit: "Unité extérieure", radiator: "Radiateurs", floor: "Plancher chauffant",
       bypass: "Bypass",
@@ -118,7 +118,7 @@ const HP_I18N = {
       background: "Affichage", background_image: "URL de l'image", show_grid: "Afficher la grille de positionnement (%)", overlay: "Ajuster les positions (YAML, en % de l'image)",
     },
     help: {
-      softener_status: "État JUDO : normal, regenerating, valve locked, leakage protection – affiché à côté de « Adoucisseur », bloqué/protection fuite colore le bouclier en jaune",
+      softener_status: "État JUDO : normal, regenerating, valve locked, leakage protection – affiché à côté de « Adoucisseur », vanne bloquée = bouclier jaune, protection active = vert",
       softener_input_hardness: "Affiché avec la dureté adoucie sous la forme « 21 → 6 °dH »",
       sg_ready: "Niveau 1–4 ou forced_off / free_running / recommended_on / forced_on affiché en toutes lettres (blocage, normal, recommandé, forcé) ; les textes sont repris tels quels",
       indoor_setpoint: "Capteur, nombre ou entité climat (pour climat, la consigne est utilisée)",
@@ -131,7 +131,7 @@ const HP_I18N = {
   },
   nl: {
     card: {
-      today: "vandaag", salt: "Zout", sw: {"regen": "Regeneratie", "locked": "Klep geblokkeerd", "leak": "Lekbeveiliging", "vacation": "Vakantie", "offline": "offline"},
+      today: "vandaag", salt: "Zout", sw: {"regen": "Regeneratie", "locked": "Klep geblokkeerd", "leak": "Beveiliging actief", "vacation": "Vakantie", "offline": "offline"},
       primary: "Primair circuit", heatpump: "(warmtepomp)", dhw: "Tapwater", set: "Doel",
       tank: "Boiler", unit: "Buitenunit", radiator: "Radiatoren", floor: "Vloerverwarming",
       bypass: "Bypass",
@@ -158,7 +158,7 @@ const HP_I18N = {
       background: "Weergave", background_image: "Afbeeldings-URL", show_grid: "Positioneerraster tonen (%)", overlay: "Posities aanpassen (YAML, in % van de afbeelding)",
     },
     help: {
-      softener_status: "JUDO-status: normal, regenerating, valve locked, leakage protection – getoond bij „Waterontharder“, geblokkeerd/lekbeveiliging kleurt het schild geel",
+      softener_status: "JUDO-status: normal, regenerating, valve locked, leakage protection – getoond bij „Waterontharder“, klep geblokkeerd = schild geel, beveiliging actief = groen",
       softener_input_hardness: "Samen met de zachtwaterhardheid getoond als „21 → 6 °dH“",
       sg_ready: "Niveau 1–4 of forced_off / free_running / recommended_on / forced_on wordt als woord getoond (blokkering, normaal, aanbevolen, geforceerd); teksten worden direct overgenomen",
       indoor_setpoint: "Sensor, getal of klimaat-entiteit (bij klimaat wordt de doeltemperatuur gebruikt)",
@@ -171,7 +171,7 @@ const HP_I18N = {
   },
   it: {
     card: {
-      today: "oggi", salt: "Sale", sw: {"regen": "Rigenerazione", "locked": "Valvola bloccata", "leak": "Protezione perdite", "vacation": "Vacanza", "offline": "offline"},
+      today: "oggi", salt: "Sale", sw: {"regen": "Rigenerazione", "locked": "Valvola bloccata", "leak": "Protezione attiva", "vacation": "Vacanza", "offline": "offline"},
       primary: "Circuito primario", heatpump: "(pompa di calore)", dhw: "Acqua calda sanitaria", set: "Target",
       tank: "Accumulo", unit: "Unità esterna", radiator: "Radiatori", floor: "Riscaldamento a pavimento",
       bypass: "Bypass",
@@ -198,7 +198,7 @@ const HP_I18N = {
       background: "Visualizzazione", background_image: "URL immagine", show_grid: "Mostra griglia di posizionamento (%)", overlay: "Regola posizioni (YAML, in % dell'immagine)",
     },
     help: {
-      softener_status: "Stato JUDO: normal, regenerating, valve locked, leakage protection – mostrato accanto ad «Addolcitore», bloccato/protezione perdite colora lo scudo di giallo",
+      softener_status: "Stato JUDO: normal, regenerating, valve locked, leakage protection – mostrato accanto ad «Addolcitore», valvola bloccata = scudo giallo, protezione attiva = verde",
       softener_input_hardness: "Mostrata con la durezza addolcita come «21 → 6 °dH»",
       sg_ready: "Livello 1–4 o forced_off / free_running / recommended_on / forced_on mostrato come parola (blocco, normale, consigliato, forzato); i testi vengono mostrati così come sono",
       indoor_setpoint: "Sensore, numero o entità clima (per clima viene usata la temperatura impostata)",
@@ -451,11 +451,12 @@ const HP_STYLE = `
   .softgrp.offline .soft-row, .softgrp.offline .leak { opacity: .4; }
   .softstat { font-weight: 600; }
   .softdot { stroke: var(--hp-bg); stroke-width: 2; }
-  .softdot.regen { fill: #38bdf8; } .softdot.locked, .softdot.leak { fill: #f59e0b; }
+  .softdot.regen { fill: #38bdf8; } .softdot.locked { fill: #f59e0b; } .softdot.leak { fill: #22c55e; }
   .softdot.vacation { fill: #a78bfa; } .softdot.offline { fill: #ef4444; }
-  .softstat.regen { fill: #38bdf8; } .softstat.locked, .softstat.leak { fill: #f59e0b; }
+  .softstat.regen { fill: #38bdf8; } .softstat.locked { fill: #f59e0b; } .softstat.leak { fill: #22c55e; }
   .softstat.vacation { fill: #a78bfa; } .softstat.offline { fill: #ef4444; }
   .ovt.small2 { font-size: 16px; }
+  .leak.armed path.shield { fill: rgba(34,197,94,.35); stroke-width: 3; }
   .leak path.shield { fill: rgba(34,197,94,.15); stroke: #22c55e; stroke-width: 2.5; stroke-linejoin: round; transition: all .4s; }
   .leak path.drop { fill: #22c55e; transition: fill .4s; }
   .leak.closed path.shield { fill: rgba(245,158,11,.18); stroke: #f59e0b; }
@@ -1400,9 +1401,10 @@ class HeatpumpFlowCard extends HTMLElement {
     }
     if (this._leakEl) {
       const alarm = c.leak_alarm ? on("leak_alarm") : false;
-      const closed = (c.leak_valve ? !on("leak_valve") : false) || softState === "locked" || softState === "leak";
+      const closed = (c.leak_valve ? !on("leak_valve") : false) || softState === "locked";
       this._leakEl.classList.toggle("alarm", alarm);
       this._leakEl.classList.toggle("closed", !alarm && closed);
+      this._leakEl.classList.toggle("armed", !alarm && !closed && softState === "leak");
     }
 
     const s = this._svg.style;
