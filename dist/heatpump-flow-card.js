@@ -5,7 +5,7 @@
  * https://github.com/IngoPodolak/heatpump-flow-card
  */
 
-const HP_VERSION = "1.12.2";
+const HP_VERSION = "1.12.3";
 
 /* ====================== Übersetzungen ====================== */
 const HP_I18N = {
@@ -226,7 +226,7 @@ const HP_IMG_DEFAULT = {
     dhw_temp: [74, 20.2], dhw_setpoint: [79.8, 20.2, "start"], vl_temp: [23.6, 46.6], rl_temp: [38.1, 47.1],
     pump_speed: [35.3, 41, "start"], tank_top_temp: [49, 60], tank_bottom_temp: [49, 80],
     zone1_pump_speed: [75.5, 66.6], zone1_vl_temp: [85.5, 60], zone1_rl_temp: [85.5, 79.5],
-    softener: [99, 39.4, "end"], softener2: [99, 50.4, "end"], leak: [86, 42.45],
+    softener: [99, 39.4, "end"], softener2: [99, 50.4, "end"], leak: [83.4, 42.45],
   },
   captions: {
     primary: [45.5, 14.2], primary2: [45.5, 18], dhw: [74, 14.2],
@@ -1244,11 +1244,11 @@ class HeatpumpFlowCard extends HTMLElement {
     /* Enthärtung: Werte + Leckageschutz */
     let soft = "";
     if (c.softener) {
-      const sp = L.softener || [99, 39.4, "end"], sp2 = L.softener2 || [99, 50.4, "end"], lp = L.leak || [86, 42.45];
+      const sp = L.softener || [99, 39.4, "end"], sp2 = L.softener2 || [99, 50.4, "end"], lp = L.leak || [83.4, 42.45];
       const [r1, r2] = hpSoftRows(has, ek, T, "ovl");
       const row = (r, q) => r ? `<text ${halo} class="ovt small2 soft-row" x="${X(q[0])}" y="${Y(q[1])}" text-anchor="${q[2] || "end"}">${r}</text>` : "";
       const lk = has("leak_alarm") ? "leak_alarm" : has("leak_valve") ? "leak_valve" : has("softener_status") ? "softener_status" : null;
-      const sp3 = L.softener3 || [lp[0] + 0.6, lp[1] + 4.2, "end"];
+      const sp3 = L.softener3 || [lp[0], lp[1] + 4.2, "middle"];
       soft = `<g class="softgrp">${row(r1, sp)}${row(r2, sp2)}${lk ? hpShield(X(lp[0]), Y(lp[1]), lk, ek) : ""}
         <text ${halo} class="ovt small2 softstat" data-lines="1" x="${X(sp3[0])}" y="${Y(sp3[1])}" text-anchor="${sp3[2] || "end"}"${ek(has("softener_status") ? "softener_status" : has("softener_vacation") ? "softener_vacation" : null)}></text></g>`;
     }
